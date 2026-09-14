@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Le timbre fiscal sur une facture en Tunisie — le guide</title>
+<meta name="description" content="Combien vaut le timbre fiscal, sur quelles pièces il s'ajoute, où il se place dans le total, et le piège d'une facture libellée en devise.">
+<meta name="theme-color" content="#0a4a43">
+<link rel="canonical" href="https://saouthq.github.io/skanfact-site/guide-timbre-fiscal.html">
+<link rel="icon" href="img/icone.png" type="image/png">
+<link rel="apple-touch-icon" href="img/icone.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Le timbre fiscal sur une facture en Tunisie — le guide">
+<meta property="og:description" content="Combien vaut le timbre fiscal, sur quelles pièces il s'ajoute, où il se place dans le total, et le piège d'une facture libellée en devise.">
+<meta property="og:image" content="https://saouthq.github.io/skanfact-site/img/tva.jpg">
+<meta property="og:locale" content="fr_TN">
+<meta property="og:url" content="https://saouthq.github.io/skanfact-site/guide-timbre-fiscal.html">
+<meta property="og:site_name" content="SkanFact">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "BreadcrumbList",
+ "itemListElement": [
+  {
+   "@type": "ListItem",
+   "position": 1,
+   "name": "Accueil",
+   "item": "https://saouthq.github.io/skanfact-site/"
+  },
+  {
+   "@type": "ListItem",
+   "position": 2,
+   "name": "Guides",
+   "item": "https://saouthq.github.io/skanfact-site/guides.html"
+  },
+  {
+   "@type": "ListItem",
+   "position": 3,
+   "name": "Le timbre fiscal",
+   "item": "https://saouthq.github.io/skanfact-site/guide-timbre-fiscal.html"
+  }
+ ]
+}
+</script>
+<link rel="stylesheet" href="assets/style.css">
+<link rel="preload" href="assets/polices/lexend-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/polices/bricolage-latin.woff2" as="font" type="font/woff2" crossorigin>
+</head>
+<body>
+
+<a class="saut-contenu" href="#contenu">Aller au contenu</a>
+
+<header class="entete" id="entete">
+  <div class="conteneur">
+    <a class="marque" href="index.html" aria-label="SkanFact, accueil">
+      <svg width="30" height="30" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="26" height="26" rx="9" fill="#0a4a43"></rect>
+        <path d="M8 10.5h12M8 14h12M8 17.5h7" stroke="#e8a33d" stroke-width="2.1" stroke-linecap="round"></path>
+      </svg>
+      <span class="mot">SkanFact</span>
+    </a>
+    <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-site">
+      <span></span>
+    </button>
+    <nav class="nav-site" id="nav-site" aria-label="Navigation principale">
+      <div class="sous" id="sous-fonc">
+        <button class="lien-menu" id="btn-fonc" aria-expanded="false" aria-controls="menu-fonc">
+          Le logiciel
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="m2.5 4.5 3.5 3.5 3.5-3.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </button>
+        <div class="panneau" id="menu-fonc">
+          <a href="visite.html"><b>Voir SkanFact en images</b><span>La visite guidée, sans rien installer</span></a>
+          <a href="facturation.html"><b>Devis et factures</b><span>Clients, relances, contrats récurrents</span></a>
+          <a href="gestion.html"><b>Achats, stock et trésorerie</b><span>Marges, immobilisations, paie</span></a>
+          <a href="tunisie.html"><b>Les règles tunisiennes</b><span>Timbre, TVA, retenue à la source</span></a>
+          <a href="excel.html"><b>SkanFact ou Excel ?</b><span>Ce qu'un classeur ne peut pas faire</span></a>
+          <a href="nouveautes.html"><b>Nouveautés</b><span>Ce qui a changé, version par version</span></a>
+        </div>
+      </div>
+      <a href="guides.html">Guides</a>
+      <a href="comptables.html">Comptables</a>
+      <a href="tarifs.html">Tarifs</a>
+      <a href="contact.html">Contact</a>
+      <a class="btn btn-vert btn-petit" href="telecharger.html">Essayer 30 jours</a>
+    </nav>
+  </div>
+</header>
+
+<main id="contenu">
+
+  <section class="page-titre">
+    <div class="conteneur">
+      <p class="fil"><a href="index.html">Accueil</a> <span aria-hidden="true">›</span>
+        <a href="guides.html">Guides</a> <span aria-hidden="true">›</span> Le timbre fiscal</p>
+      <p class="oeil">Guide</p>
+      <h1 class="h1-page">Le timbre fiscal sur une facture</h1>
+      <p class="chapeau">Un dinar. C'est le montant que presque tout le monde connaît — et l'endroit où presque
+      tous les classeurs Excel se trompent, parce que le timbre ne se comporte comme aucune autre
+      ligne de la facture.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: clamp(26px, 3.5vw, 38px);">
+    <div class="conteneur">
+      <article class="guide">
+
+      <h2>Ce qu'il est</h2>
+      <p>Le timbre fiscal est un droit que vous <b>encaissez pour le compte de l'État</b> : il
+        n'est ni un produit, ni de la TVA. Dans un plan comptable, il ne va pas dans vos ventes mais
+        dans un compte d'État à reverser — c'est pour ça qu'il se déclare séparément de la TVA.</p>
+
+      <h2>Où il se place, exactement</h2>
+      <p>Il s'ajoute <b>après</b> le total toutes taxes comprises, et il ne supporte pas de TVA :</p>
+      <div class="calcul">
+        <div><span>Total hors taxes</span><b>1 000,000 DT</b></div>
+        <div><span>+ TVA 19 %</span><b>190,000 DT</b></div>
+        <div class="st"><span>= Total TTC</span><b>1 190,000 DT</b></div>
+        <div><span>+ Timbre fiscal</span><b>1,000 DT</b></div>
+        <div class="tot"><span>= Net à payer</span><b>1 191,000 DT</b></div>
+      </div>
+      <p class="apres-calcul">Le dinar se divise en <b>millimes</b> : les montants s'écrivent avec
+        <b>trois décimales</b>. Un logiciel qui arrondit au centime vous fait perdre ou gagner
+        quelques millimes sur chaque pièce, et votre comptable le verra passer.</p>
+
+      <h2>Sur quelles pièces</h2>
+      <ul class="guide-puces">
+        <li><b>Sur les factures</b> — c'est là qu'il vit.</li>
+        <li><b>Jamais sur un devis.</b> Un devis est une proposition : rien n'est dû, donc aucun
+          droit n'est encaissé. Un devis qui porte un timbre annonce un montant que la facture ne
+          confirmera pas.</li>
+        <li><b>Sur un avoir</b>, l'usage courant est de ne pas le reprendre — à vérifier avec votre
+          comptable, car cela dépend de ce que l'avoir corrige.</li>
+      </ul>
+
+      <h2>Le piège : une facture en euros</h2>
+      <p>Celui-ci ne se voit sur aucun écran, et il coûte de l'argent sur une pièce officielle.
+        Le timbre est fixé <b>en dinars</b>. Sur une facture libellée en euros, ajouter « 1 » tel
+        quel revient à facturer <b>1 euro</b> — soit environ trois fois et demie le montant dû.</p>
+      <p>Un montant réglementaire porte une unité. Il doit être <b>converti</b> dans la devise du
+        document, au taux de change de la pièce — et ce taux doit donc être saisi, sans quoi toute
+        votre comptabilité compte 1 euro = 1 dinar, en silence.</p>
+
+        <div class="avis-legal avis-large">
+          <b>À vérifier avec votre comptable.</b> Les taux, les assiettes et les obligations
+          dépendent de votre forme juridique, de votre régime et de la loi de finances en cours.
+          Cette page décrit l'usage courant et ce que SkanFact applique par défaut — elle ne
+          remplace pas l'avis de votre expert-comptable, qui reste seul responsable du traitement
+          de votre comptabilité.
+        </div>
+      </article>
+      <div class="guide-produit">
+        <div>
+          <p class="oeil">Et dans SkanFact</p>
+          <p>SkanFact ajoute le timbre aux factures et jamais aux devis, le convertit dans la devise
+      du document, l'écrit au millime, et le fige sur la pièce à l'émission — changer le réglage
+      ne réécrit jamais une facture déjà envoyée.</p>
+          <div class="actions">
+            <a class="btn btn-vert" href="tunisie.html">Voir les règles tunisiennes dans SkanFact</a>
+            <a class="btn btn-creux" href="telecharger.html">Essayer 30 jours</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section suite">
+    <div class="conteneur">
+      <p class="oeil">Continuer la visite</p>
+      <div class="cartes-mini">
+        <a class="mini" href="guide-facture-tunisie.html"><b>Que doit contenir une facture</b><span>Ce qu'une facture doit porter en Tunisie : raison sociale, matricule fiscal, numéro continu, TVA…</span><span class="fleche" aria-hidden="true">→</span></a>
+        <a class="mini" href="guide-tva-tunisie.html"><b>La TVA et sa déclaration</b><span>Les quatre taux de TVA, comment se calcule la déclaration du mois, et pourquoi additionner douze…</span><span class="fleche" aria-hidden="true">→</span></a>
+        <a class="mini" href="guides.html"><b>Tous les guides</b><span>Les règles tunisiennes expliquées, sans jargon.</span><span class="fleche" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="bande-fin">
+    <div class="conteneur">
+      <h2>Ces règles, appliquées sans y penser.</h2>
+      <p class="chapeau">SkanFact les applique et les explique au moment où elles servent. Trente jours d’essai, toutes les fonctions, sans carte bancaire.</p>
+      <div class="actions">
+        <a class="btn btn-safran" href="telecharger.html">Télécharger et essayer 30 jours</a>
+        <a class="btn btn-clair" href="contact.html">Poser une question</a>
+      </div>
+      <p class="sous-actions">Mac et Windows · aucune carte bancaire · vos données restent chez vous</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="pied">
+  <div class="conteneur">
+    <div class="pied-grille">
+      <div>
+        <a class="marque" href="index.html" style="margin-bottom: 14px;">
+          <svg width="26" height="26" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="26" height="26" rx="9" fill="#0a4a43"></rect>
+        <path d="M8 10.5h12M8 14h12M8 17.5h7" stroke="#e8a33d" stroke-width="2.1" stroke-linecap="round"></path>
+      </svg>
+          <span class="mot">SkanFact</span>
+        </a>
+        <p class="pied-mot">Devis, factures et gestion pour les petites entreprises tunisiennes.
+          Édité en Tunisie par SKANCYBER SECURITY SUARL.</p>
+      </div>
+      <div class="col">
+        <h2 class="pied-titre">Le logiciel</h2>
+        <a href="visite.html">Visite guidée</a>
+        <a href="facturation.html">Devis et factures</a>
+        <a href="gestion.html">Achats, stock, trésorerie</a>
+        <a href="tunisie.html">Les règles tunisiennes</a>
+        <a href="telecharger.html">Télécharger</a>
+      </div>
+      <div class="col">
+        <h2 class="pied-titre">Vous aider</h2>
+        <a href="guides.html">Guides : facture, TVA, timbre</a>
+        <a href="excel.html">SkanFact ou Excel ?</a>
+        <a href="questions.html">Questions fréquentes</a>
+        <a href="comptables.html">Pour les comptables</a>
+        <a href="tarifs.html">Tarifs</a>
+        <a href="nouveautes.html">Nouveautés</a>
+      </div>
+      <div class="col">
+        <h2 class="pied-titre">La société</h2>
+        <a href="contact.html">Nous écrire</a>
+        <a href="mentions-legales.html">Mentions légales</a>
+        <a href="confidentialite.html">Confidentialité</a>
+        <p class="pied-adresse">SKANCYBER SECURITY SUARL<br>08 rue de l'Université, Manar 1<br>El Menzah, 2092 Tunis<br>
+          MF 1998268D/A/M/000</p>
+      </div>
+    </div>
+    <div class="bas">
+      <span>© 2026 SKANCYBER SECURITY SUARL — tous droits réservés</span>
+      <span>SkanFact <span data-version>8.0.0</span> · macOS et Windows</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/site.js" defer></script>
+</body>
+</html>

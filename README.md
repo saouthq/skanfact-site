@@ -16,6 +16,12 @@ index.html              l'accueil : la promesse, les quatre portes, les prix
 visite.html             la visite guidée : sept écrans, du devis à la déclaration
 excel.html              « SkanFact ou Excel ? » — la page qu'on cherche quand on hésite
 nouveautes.html         ce qui a changé, version par version (API GitHub + repli écrit)
+guides.html             le sommaire des guides
+guide-facture-tunisie.html    ce qu'une facture doit contenir
+guide-timbre-fiscal.html      le timbre fiscal, et le piège de la devise
+guide-tva-tunisie.html        les taux et la déclaration mensuelle
+guide-retenue-source.html     la retenue à la source et son attestation
+robots.txt · sitemap.xml      ce qui guide les moteurs (à régénérer au changement de domaine)
 pour-votre-client.html  la page qu'un comptable envoie à son client
 404.html                page introuvable (chemins ABSOLUS, voir plus bas)
 facturation.html        devis, factures, avoirs, relances, clients
@@ -165,6 +171,34 @@ messagerie du visiteur, et il le dit. Même chose si le relais répond mal ou me
 secondes. On ne perd jamais un message parce qu'un service est en panne. Le reste — clés, variables,
 vérification — est dans `worker/README.md` du dépôt de l'application.
 
+## Le référencement — ce qui a été fait, et la règle
+
+Le site expliquait bien le produit à quelqu'un qui connaissait déjà la marque. Il ne répondait à
+**aucune** question de recherche.
+
+- **Les titres portaient la marque d'abord.** « Tarifs — SkanFact », « Questions fréquentes —
+  SkanFact » : aucun ne contenait « logiciel de facturation », la phrase que les gens tapent.
+  La requête vient maintenant en premier, la marque à la fin.
+- **`robots.txt` et `sitemap.xml`** existent. Le sitemap **exclut les pages en `noindex`** :
+  les annoncer tout en demandant de ne pas les indexer serait contradictoire. Il se régénère à
+  la main ou par `outils-bascule-domaine.sh` le jour du domaine.
+- **Données structurées** : `Organization` + `SoftwareApplication` sur l'accueil, `BreadcrumbList`
+  sur chaque page intérieure, `FAQPage` sur `questions.html` — et sur elle seule, deux pages qui
+  le portent se faisant concurrence. Le balisage FAQ est **extrait du HTML visible**, jamais
+  réécrit à côté : une réponse enjolivée dans le balisage est une pénalité, pas une optimisation.
+- **Quatre guides** (`guide-*.html`) répondent aux questions informationnelles — mentions d'une
+  facture, timbre fiscal, TVA, retenue à la source.
+
+**La règle à ne pas casser : une page = une requête.** `tunisie.html` est une page PRODUIT (« SkanFact
+applique ces règles ») ; les guides sont INFORMATIONNELS (« voici comment la règle marche »). Deux
+intentions différentes, donc deux pages. Les confondre, c'est se faire concurrence à soi-même et ne
+monter sur aucune des deux. Les deux se renvoient l'une à l'autre, dans les deux sens.
+
+**Et la règle de fond sur le contenu fiscal :** on n'affirme QUE ce que l'application affirme déjà,
+avec la même réserve qu'elle (`À VÉRIFIER avec ton comptable`, visible sur chaque guide). Aucun
+article de code invoqué, aucune échéance, aucune pénalité chiffrée — ce sont exactement les éléments
+qu'on ne peut pas sourcer, et se tromper dessus coûterait plus cher que tout le trafic gagné.
+
 ## Le site et l'application dérivent — comment le vérifier
 
 Le 14/09/2026, l'application est passée en **8.0.0** et le site vendait encore le modèle d'avant.
@@ -263,6 +297,10 @@ que le contrôle tombe. Un contrôle qui reste vert avec le défaut ne prouve ri
 - **Brancher le formulaire** : déployer la route `/contact` du relais (voir `worker/README.md`) puis
   remplir `RELAIS_CONTACT` dans `assets/site.js`. Tant que ce n'est pas fait, le formulaire retombe
   sur le logiciel de messagerie du visiteur — ce qui ne marche pas depuis un webmail sur téléphone.
+- **Inscrire le site à la Search Console de Google** (et à Bing Webmaster Tools) et y soumettre
+  `sitemap.xml`. Sans ça, l'indexation prend des semaines au lieu de jours, et surtout on ne voit
+  **jamais** sur quelles requêtes le site sort ni à quelle position — c'est-à-dire qu'on travaille
+  le référencement à l'aveugle. À faire une fois le domaine branché, avec l'adresse définitive.
 - Un **compteur de visites** qui respecte la promesse du site : sans cookie et sans bandeau.
   [GoatCounter](https://www.goatcounter.com) (gratuit) ou [Plausible](https://plausible.io). Une
   seule ligne à poser avant `</head>` **des 14 pages**, une fois le compte créé :
