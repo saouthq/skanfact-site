@@ -15,6 +15,7 @@ navigateur et on voit le site — c'est la même philosophie que l'application.
 index.html              l'accueil : la promesse, les quatre portes, les prix
 visite.html             la visite guidée : sept écrans, du devis à la déclaration
 excel.html              « SkanFact ou Excel ? » — la page qu'on cherche quand on hésite
+nouveautes.html         ce qui a changé, version par version (API GitHub + repli écrit)
 pour-votre-client.html  la page qu'un comptable envoie à son client
 404.html                page introuvable (chemins ABSOLUS, voir plus bas)
 facturation.html        devis, factures, avoirs, relances, clients
@@ -53,6 +54,15 @@ Trois pages ont été ajoutées en septembre 2026, pour trois manques précis :
 - **`excel.html`** — le concurrent réel n'est pas un autre logiciel, c'est le classeur. La page dit
   les sept endroits où ça casse, et **ce qu'Excel fait mieux** : un tableau qui donne toujours raison
   à celui qui l'écrit ne se lit pas jusqu'au bout.
+- **`nouveautes.html`** — plusieurs versions sortent par semaine et un visiteur n'en voyait rien :
+  « Notes de version » l'envoyait sur GitHub, ce qui est technique et le fait quitter le site.
+  C'est pourtant la seule preuve **honnête** dont on dispose : pas de témoignage inventé, pas de
+  compteur d'utilisateurs — un produit qui bouge toutes les semaines. La liste vient de l'API des
+  releases, mais **les six dernières sont écrites en dur dans la page** : une page qui dépend d'une
+  API est une page qui peut être vide. Vérifié sur cinq chemins — JavaScript coupé, API réelle,
+  quota atteint, liste vide, et des notes contenant du HTML et une URL crue.
+  ⚠️ **Conséquence à connaître : le titre d'une entrée du `CHANGELOG.md` devient du texte public.**
+  La première phrase en gras de chaque version s'affiche ici telle quelle.
 - **`pour-votre-client.html`** — tout le reste du site s'adresse au comptable ; rien ne lui donnait
   de quoi parler à **son** client. C'est pourtant toute la stratégie : le cabinet est le canal, pas
   la cible. Page courte exprès — elle s'ouvre depuis un lien WhatsApp, sur un téléphone. La page
@@ -155,6 +165,33 @@ messagerie du visiteur, et il le dit. Même chose si le relais répond mal ou me
 secondes. On ne perd jamais un message parce qu'un service est en panne. Le reste — clés, variables,
 vérification — est dans `worker/README.md` du dépôt de l'application.
 
+## Le site et l'application dérivent — comment le vérifier
+
+Le 14/09/2026, l'application est passée en **8.0.0** et le site vendait encore le modèle d'avant.
+`src/licence.js` fait foi : la clé porte l'**offre** et le **matricule fiscal**, et rien d'autre.
+
+Ce qui était faux, et qu'il ne faut pas réintroduire :
+
+- **« 1 poste / 3 postes »**, présent à cinq endroits plus les données structurées. Cette notion
+  n'existe nulle part dans la clé. Une licence est rattachée au matricule fiscal de la société : elle
+  s'active sur ses postes et refuse de s'activer sur le dossier d'une autre société.
+- **« — » sur les cinq modules réservés à Entreprise.** Le code dit exactement l'inverse :
+  `reserves` ferme la **création**, *jamais la lecture*. En Indépendant, Achats, Stock,
+  Immobilisations, Trésorerie et Paie restent lisibles, imprimables et exportables. Le « — » disait
+  « vous n'avez pas ça » et jetait l'argument « jamais de données en otage » — celui qui vend.
+  D'où la cellule `.compare .lecture`, qui n'est ni un oui ni un non.
+- **Le numéro de version de repli** du pied, resté à 7.29.0 alors que la 8.0.0 était publiée.
+
+Le contrôle qui prend dix secondes, à refaire après chaque version majeure de l'application :
+
+```bash
+curl -s https://api.github.com/repos/saouthq/skanfact/releases/latest | grep tag_name
+grep -rn "poste\|Lecture seule\|data-version" *.html | head
+```
+
+Règle apprise : **le site est une promesse, le code est la vérité.** Quand l'application change de
+modèle commercial, la page Tarifs ment jusqu'à ce que quelqu'un aille lire `src/licence.js`.
+
 ## Audit UI/UX de septembre 2026
 
 Onze pages mesurées dans un vrai navigateur, à quatre largeurs (1440, 1024, 768, 380) : débordement
@@ -193,11 +230,23 @@ que le contrôle tombe. Un contrôle qui reste vert avec le défaut ne prouve ri
 
 ## Ce qui reste à compléter
 
-- Le **nom de domaine** (`skanfact.tn`) : une fois acheté, ajouter un fichier `CNAME` contenant le
-  domaine et faire pointer les DNS vers GitHub Pages. Ajouter alors `robots.txt` et `sitemap.xml`
-  (pas avant : ils doivent porter l'adresse définitive). **Reprendre aussi les `og:url` et
-  `link rel=canonical` des onze pages** : ils portent l'adresse GitHub Pages, et une canonique qui
-  désigne une autre adresse que celle qu'on sert annule le bénéfice du domaine.
+- Le **nom de domaine** `skanfact.tn` est **acheté chez OVH** (commande 258885149 du 14/09/2026,
+  avec la zone DNS, l'hébergement et Zimbra pour `contact@skanfact.tn`) et attend sa livraison.
+  Le jour où il répond, la bascule se fait dans cet ordre — **et pas avant**, parce qu'un fichier
+  `CNAME` posé trop tôt fait cesser de servir `saouthq.github.io` alors que le domaine ne répond pas
+  encore :
+
+  1. chez OVH, faire pointer le domaine vers GitHub Pages (4 enregistrements `A` + un `CNAME` `www`) ;
+  2. `echo skanfact.tn > CNAME` à la racine du dépôt ;
+  3. remplacer l'adresse dans les `og:url`, `og:image` et `link rel=canonical` des pages :
+     `sed -i 's|https://saouthq.github.io/skanfact-site/|https://skanfact.tn/|g' *.html`
+  4. reprendre les chemins **absolus** de `404.html` : `sed -i 's|/skanfact-site/|/|g' 404.html` ;
+  5. et le lien à remettre aux clients, dans `comptables.html` (`data-lien`) ;
+  6. **alors seulement**, ajouter `robots.txt` et `sitemap.xml` : ils doivent porter l'adresse
+     définitive, et c'est maintenant une question de jours.
+
+  GitHub redirige ensuite `saouthq.github.io/skanfact-site/` vers le domaine : ce qui aura été
+  indexé d'ici là n'est pas perdu.
 - L'adresse **contact@skanfact.tn**, à créer avec le domaine.
 - Le **numéro de téléphone**, écrit `+216 XX XXX XXX` partout.
 - **Brancher le formulaire** : déployer la route `/contact` du relais (voir `worker/README.md`) puis

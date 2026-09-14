@@ -760,6 +760,10 @@ legend { font-size: 14px; color: #9fc3bd; padding: 0 0 10px; }
 /* Une case qui n'est ni oui ni non — « compris dans Office », « presque ». Un tableau
    qui force tout en oui/non ment sur les deux lignes où la réponse est nuancée. */
 .compare .nuance { color: var(--gris); font-size: 14px; }
+/* « Lecture seule » n'est ni un oui ni un non : les pages existent, s'impriment et s'exportent,
+   seule la création y attend l'offre du dessus. La peindre en gris comme un « — » redirait le
+   défaut qu'on vient de corriger — que le client n'a pas la fonction. */
+.compare .lecture { color: var(--safran-fonce); font-size: 14px; font-weight: 500; }
 
 @media (max-width: 760px) {
   .cas-duo { grid-template-columns: minmax(0, 1fr); gap: 12px; }
@@ -790,3 +794,32 @@ legend { font-size: 14px; color: #9fc3bd; padding: 0 0 10px; }
   font-size: 15px; color: var(--vert); font-weight: 500;
 }
 .sous-capture:hover { color: var(--safran-fonce); }
+
+/* =============================================================================
+   La page Nouveautés. Skander publie plusieurs versions par semaine et personne
+   ne le voyait : « Notes de version » envoyait le visiteur sur GitHub.
+   ============================================================================= */
+.versions { list-style: none; padding: 0; margin: 36px 0 0; display: flex; flex-direction: column; gap: 0; }
+.version {
+  display: grid; grid-template-columns: 148px minmax(0, 1fr); gap: 24px;
+  padding: 22px 0; border-top: 1px solid var(--filet); align-items: start;
+}
+.version:first-child { border-top: none; }
+.v-num {
+  font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 21px;
+  letter-spacing: -.03em; color: var(--encre); display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+}
+.v-neuf {
+  font-family: "Lexend", sans-serif; font-weight: 500; font-size: 12px; letter-spacing: 0;
+  background: var(--safran); color: #40280a; border-radius: 100px; padding: 3px 10px;
+}
+.derniere .v-num { color: var(--vert); }
+.v-quoi { font-size: 16.5px; line-height: 1.55; max-width: 66ch; }
+.v-quand { color: var(--gris); font-size: 14px; margin-top: 7px; }
+.v-quand a { color: var(--gris); text-decoration: underline; }
+.v-quand a:hover { color: var(--vert); }
+
+@media (max-width: 620px) {
+  .version { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .v-num { font-size: 19px; }
+}

@@ -306,6 +306,62 @@
     });
   }
 
+
+  /* ------------------------------------------------ la page Nouveautés
+     La liste est déjà écrite dans la page : si cette requête échoue, on ne touche à rien et
+     le visiteur voit quand même les six dernières versions. Une page qui dépend d'une API
+     est une page qui peut être vide. */
+  var listeVersions = document.getElementById('versions');
+  if (listeVersions) {
+    var MOIS = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août',
+                'septembre', 'octobre', 'novembre', 'décembre'];
+    var enClair = function (iso) {
+      var p = iso.slice(0, 10).split('-');
+      return (+p[2]) + ' ' + MOIS[+p[1] - 1] + ' ' + p[0];
+    };
+    var ech = function (x) {
+      return String(x).replace(/&/g, '&amp;').replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    };
+    /* Le titre d'une version est la première phrase en gras de ses notes. Une URL crue y est
+       illisible — c'est arrivé une fois, avec un message d'erreur cité entre guillemets. */
+    var resumeDe = function (corps) {
+      var b = String(corps || '').trim();
+      var m = b.match(/^\*\*([\s\S]+?)\*\*/);
+      var t = m ? m[1] : b.split('\n\n')[0];
+      t = t.replace(/https?:\/\/\S+/g, '…').replace(/[*`_]/g, '').replace(/\s+/g, ' ').trim();
+      return t.length > 190 ? t.slice(0, 187).replace(/\s\S*$/, '') + '…' : t;
+    };
+
+    fetch('https://api.github.com/repos/' + DEPOT + '/releases?per_page=12', {
+      headers: { Accept: 'application/vnd.github+json' }
+    })
+      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function (rels) {
+        var vraies = (rels || []).filter(function (r) { return !r.prerelease && !r.draft; });
+        if (!vraies.length) return;                 // rien de mieux à montrer que ce qui est déjà là
+        listeVersions.innerHTML = vraies.map(function (r, i) {
+          var v = (r.tag_name || '').replace(/^v/, '');
+          return '<li class="version' + (i === 0 ? ' derniere' : '') + '">'
+            + '<div class="v-num">' + ech(v) + (i === 0 ? '<span class="v-neuf">dernière</span>' : '') + '</div>'
+            + '<div class="v-corps">'
+            + '<p class="v-quoi">' + ech(resumeDe(r.body)) + '</p>'
+            + '<p class="v-quand"><time datetime="' + ech((r.published_at || '').slice(0, 10)) + '">'
+            + ech(enClair(r.published_at || '')) + '</time> · '
+            + '<a href="' + ech(r.html_url) + '" rel="noopener">Notes complètes</a></p>'
+            + '</div></li>';
+        }).join('');
+        var dit = document.getElementById('dit-versions');
+        if (dit) {
+          dit.innerHTML = (vraies.length === 1 ? 'La dernière version.'
+              : 'Les ' + vraies.length + ' dernières versions.')
+            + ' La liste complète est sur '
+            + '<a href="' + RELEASES + '" rel="noopener">la page des versions</a>.';
+        }
+      })
+      .catch(function () { /* la liste écrite dans la page reste affichée */ });
+  }
+
   /* --------------------------------------- mettre en avant le bon système
      On ne cache jamais l'autre : quelqu'un télécharge souvent pour un collègue. */
   if (pageTele) {
