@@ -57,15 +57,24 @@
 <main id="contenu">
 
   <section class="page-titre">
-    <div class="conteneur">
-      <p class="fil"><a href="index.html">Accueil</a> <span aria-hidden="true">›</span> Devis et factures</p>
-      <p class="oeil">Ce que vous faites tous les jours</p>
-      <h1 class="h1-page">Du devis à l'encaissement, sans rien retaper.</h1>
-      <p class="chapeau">Un devis accepté devient une facture d'un clic. La facture réglée change de
-        statut toute seule. Celle qui traîne remonte le matin, avec sa relance déjà écrite.</p>
-      <div class="actions">
-        <a class="btn btn-vert" href="telecharger.html">Essayer 30 jours</a>
-        <a class="btn btn-creux" href="tarifs.html">Voir les tarifs</a>
+    <div class="conteneur duo">
+      <div>
+        <p class="fil"><a href="index.html">Accueil</a> <span aria-hidden="true">›</span> Devis et factures</p>
+        <p class="oeil">Ce que vous faites tous les jours</p>
+        <h1 class="h1-page">Du devis à l'encaissement, sans rien retaper.</h1>
+        <p class="chapeau">Un devis accepté devient une facture d'un clic. La facture réglée change de
+          statut toute seule. Celle qui traîne remonte le matin, avec sa relance déjà écrite.</p>
+        <div class="actions">
+          <a class="btn btn-vert" href="telecharger.html">Essayer 30 jours</a>
+          <a class="btn btn-creux" href="tarifs.html">Voir les tarifs</a>
+        </div>
+      </div>
+      <div class="capture capture-detail">
+        <img src="img/d-factures.jpg"
+             srcset="img/d-factures@small.jpg 620w, img/d-factures.jpg 869w"
+             sizes="(max-width: 900px) 100vw, 610px"
+             alt="La liste des factures : numéro, client, montant, et le statut déduit des règlements."
+             width="869" height="430" loading="lazy">
       </div>
     </div>
   </section>
@@ -87,7 +96,7 @@
       <div class="capture">
         <img src="img/editeur.jpg"
              srcset="img/editeur@small.jpg 720w, img/editeur.jpg 1400w"
-             sizes="(max-width: 900px) 100vw, 560px"
+             sizes="(max-width: 900px) 100vw, 610px"
              alt="L'éditeur de devis : formulaire à gauche, aperçu du document à droite."
              width="1400" height="875" loading="lazy">
       </div>
@@ -100,7 +109,7 @@
       <h2>Toutes celles dont une petite entreprise a besoin.</h2>
       <p class="chapeau">Chacune porte sa numérotation, ses règles et son statut. Une facture émise
         se verrouille : on la corrige par un avoir, comme le veut la comptabilité.</p>
-      <div class="modules">
+      <div class="modules modules-3">
         <div class="module"><b>Devis</b><span>Validité, relance, réponse du client</span></div>
         <div class="module"><b>Facture</b><span>DEV → FAC en un clic, verrouillée à l'émission</span></div>
         <div class="module"><b>Avoir</b><span>La seule façon correcte de corriger</span></div>
@@ -116,12 +125,12 @@
 
   <section class="section">
     <div class="conteneur duo">
-      <div class="capture">
-        <img src="img/relances.jpg"
-             srcset="img/relances@small.jpg 720w, img/relances.jpg 1400w"
-             sizes="(max-width: 900px) 100vw, 560px"
-             alt="La page des relances : les factures en retard, le niveau de relance, et le message déjà rédigé."
-             width="1400" height="875" loading="lazy">
+      <div class="capture capture-detail">
+        <img src="img/d-relances.jpg"
+             srcset="img/d-relances@small.jpg 620w, img/d-relances.jpg 869w"
+             sizes="(max-width: 900px) 100vw, 610px"
+             alt="Les relances : chaque impayé avec son âge, son niveau de relance et le message déjà rédigé."
+             width="869" height="264" loading="lazy">
       </div>
       <div>
         <p class="oeil">Se faire payer</p>
@@ -150,12 +159,12 @@
           <div class="puce"><span class="rond" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="m3 7.3 2.7 2.7L11 4.6" stroke="#0a4a43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span><b>Classement par payeur</b><span class="t">Qui règle à l’heure, qui règle à soixante jours. C’est utile avant de signer.</span></span></div>
         </div>
       </div>
-      <div class="capture">
-        <img src="img/clients.jpg"
-             srcset="img/clients@small.jpg 720w, img/clients.jpg 1400w"
-             sizes="(max-width: 900px) 100vw, 560px"
-             alt="La liste des clients de SkanFact avec leur encours."
-             width="1400" height="875" loading="lazy">
+      <div class="capture capture-detail">
+        <img src="img/d-clients.jpg"
+             srcset="img/d-clients@small.jpg 620w, img/d-clients.jpg 900w"
+             sizes="(max-width: 900px) 100vw, 610px"
+             alt="La liste des clients : ce que chacun doit, et comment il règle d'habitude."
+             width="900" height="396" loading="lazy">
       </div>
     </div>
   </section>

@@ -57,16 +57,25 @@
 <main id="contenu">
 
   <section class="page-titre">
-    <div class="conteneur">
-      <p class="fil"><a href="index.html">Accueil</a> <span aria-hidden="true">›</span> Achats, stock et trésorerie</p>
-      <p class="oeil">Au-delà de la facture</p>
-      <h1 class="h1-page">Savez-vous si vous gagnez de l'argent ?</h1>
-      <p class="chapeau">Facturer, c'est la moitié du travail. SkanFact suit aussi ce que vous
-        achetez, ce qui dort sur l'étagère, ce que vous gardez vraiment sur chaque affaire, et le
-        jour où votre compte passe sous zéro.</p>
-      <div class="actions">
-        <a class="btn btn-vert" href="telecharger.html">Essayer 30 jours</a>
-        <a class="btn btn-creux" href="tarifs.html">Voir les tarifs</a>
+    <div class="conteneur duo">
+      <div>
+        <p class="fil"><a href="index.html">Accueil</a> <span aria-hidden="true">›</span> Achats, stock et trésorerie</p>
+        <p class="oeil">Au-delà de la facture</p>
+        <h1 class="h1-page">Savez-vous si vous gagnez de l'argent ?</h1>
+        <p class="chapeau">Facturer, c'est la moitié du travail. SkanFact suit aussi ce que vous
+          achetez, ce qui dort sur l'étagère, ce que vous gardez vraiment sur chaque affaire, et le
+          jour où votre compte passe sous zéro.</p>
+        <div class="actions">
+          <a class="btn btn-vert" href="telecharger.html">Essayer 30 jours</a>
+          <a class="btn btn-creux" href="tarifs.html">Voir les tarifs</a>
+        </div>
+      </div>
+      <div class="capture">
+        <img src="img/tresorerie.jpg"
+             srcset="img/tresorerie@small.jpg 720w, img/tresorerie.jpg 1400w"
+             sizes="(max-width: 900px) 100vw, 610px"
+             alt="La page Trésorerie de SkanFact : la courbe du solde prévu et le détail des mouvements."
+             width="1400" height="875" loading="lazy">
       </div>
     </div>
   </section>
@@ -85,24 +94,24 @@
           <div class="puce"><span class="rond" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="m3 7.3 2.7 2.7L11 4.6" stroke="#0a4a43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span><b>Le pointage du relevé</b><span class="t">Vous cochez ce qui est passé en banque, et ce qui reste en attente se voit d’un coup d’œil.</span></span></div>
         </div>
       </div>
-      <div class="capture">
-        <img src="img/tresorerie.jpg"
-             srcset="img/tresorerie@small.jpg 720w, img/tresorerie.jpg 1400w"
-             sizes="(max-width: 900px) 100vw, 560px"
-             alt="Prévision de trésorerie : la courbe du solde sur les prochaines semaines, et le moment où il passe sous zéro."
-             width="1400" height="875" loading="lazy">
+      <div class="capture capture-detail">
+        <img src="img/d-tresorerie.jpg"
+             srcset="img/d-tresorerie@small.jpg 620w, img/d-tresorerie.jpg 869w"
+             sizes="(max-width: 900px) 100vw, 610px"
+             alt="La courbe du solde prévu sur les prochaines semaines, et le moment où il passe sous zéro."
+             width="869" height="339" loading="lazy">
       </div>
     </div>
   </section>
 
   <section class="section section-creme">
     <div class="conteneur duo">
-      <div class="capture">
-        <img src="img/marges.jpg"
-             srcset="img/marges@small.jpg 720w, img/marges.jpg 1400w"
-             sizes="(max-width: 900px) 100vw, 560px"
-             alt="La page des marges : par client, par prestation et par affaire."
-             width="1400" height="875" loading="lazy">
+      <div class="capture capture-detail">
+        <img src="img/d-marges.jpg"
+             srcset="img/d-marges@small.jpg 620w, img/d-marges.jpg 884w"
+             sizes="(max-width: 900px) 100vw, 610px"
+             alt="Les marges par affaire : ce qui a été facturé, ce qui a été acheté, et ce qui reste."
+             width="884" height="308" loading="lazy">
       </div>
       <div>
         <p class="oeil">La vraie question</p>
@@ -133,12 +142,12 @@
           <div class="puce"><span class="rond" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="m3 7.3 2.7 2.7L11 4.6" stroke="#0a4a43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span><b>Un doublon est signalé</b><span class="t">La même facture fournisseur saisie deux fois compte deux fois la TVA déductible.</span></span></div>
         </div>
       </div>
-      <div class="capture">
-        <img src="img/stock.jpg"
-             srcset="img/stock@small.jpg 720w, img/stock.jpg 1400w"
-             sizes="(max-width: 900px) 100vw, 560px"
-             alt="L'état du stock de SkanFact : quantités, coût moyen pondéré et alertes de réapprovisionnement."
-             width="1400" height="875" loading="lazy">
+      <div class="capture capture-detail">
+        <img src="img/d-stock.jpg"
+             srcset="img/d-stock@small.jpg 620w, img/d-stock.jpg 884w"
+             sizes="(max-width: 900px) 100vw, 610px"
+             alt="L'état du stock : quantités, coût moyen pondéré et alertes de réapprovisionnement."
+             width="884" height="412" loading="lazy">
       </div>
     </div>
   </section>
@@ -150,7 +159,7 @@
       <p class="chapeau">Au départ, vous n'affichez que les devis et les factures : le menu reste
         court. Le jour où vous embauchez ou tenez du stock, vous allumez le module — il était déjà
         là, et rien de ce que vous avez saisi n'est perdu.</p>
-      <div class="modules modules-sombre">
+      <div class="modules modules-4 modules-sombre">
         <div class="module"><b>Devis et factures</b><span>Acompte, solde, avoir, relances</span></div>
         <div class="module"><b>Contrats récurrents</b><span>Les factures du mois, préparées</span></div>
         <div class="module"><b>Achats</b><span>Fournisseurs et TVA déductible</span></div>
@@ -169,12 +178,12 @@
 
   <section class="section">
     <div class="conteneur duo">
-      <div class="capture">
-        <img src="img/paie.jpg"
-             srcset="img/paie@small.jpg 720w, img/paie.jpg 1400w"
-             sizes="(max-width: 900px) 100vw, 560px"
-             alt="Un bulletin de paie établi par SkanFact, avec les cotisations et la retenue IRPP."
-             width="1400" height="875" loading="lazy">
+      <div class="capture capture-detail">
+        <img src="img/d-paie.jpg"
+             srcset="img/d-paie@small.jpg 620w, img/d-paie.jpg 884w"
+             sizes="(max-width: 900px) 100vw, 610px"
+             alt="Les bulletins du mois : brut, CNSS, IRPP, net à payer et coût employeur, salarié par salarié."
+             width="884" height="368" loading="lazy">
       </div>
       <div>
         <p class="oeil">Vos salariés</p>
