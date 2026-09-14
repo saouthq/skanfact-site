@@ -159,7 +159,36 @@ Ce parcours charge le jeu d'exemple puis **masque ses deux marqueurs** — le ba
 d'exemple » et le tampon sur les documents. Ils n'existent que parce que les données sont fictives :
 les montrer sur le site donnerait une image fausse du produit, dans l'autre sens.
 
-Les images sont ensuite réduites en deux tailles (1400 px et 720 px) et servies avec `srcset`.
+Les images sont ensuite réduites en deux tailles et servies avec `srcset` :
+
+```bash
+node outils/images.mjs <dossier des PNG> [nom…]     # écrit img/<nom>.jpg et img/<nom>@small.jpg
+```
+
+Deux profils, et ils viennent des attributs `width` des pages, pas d'un goût : une capture
+d'écran **entière** part à 1400 px (720 en petit), un **panneau recadré** à 900 (620). Les
+réduire au même format donnerait soit des panneaux flous, soit des écrans inutilement lourds.
+L'outil n'agrandit jamais, et il imprime les dimensions à recopier dans les attributs `width` et
+`height`. Aucune dépendance : le redimensionnement se fait dans le Chromium déjà installé, par un
+`<canvas>` — le moteur même qui affichera les images.
+
+### Une vignette doit dire ce que son texte dit
+
+Signalé par le propriétaire sur l'accueil : « le texte dit une chose et la photo dit autre
+chose ». Trois cas, et ils ne se voient qu'en regardant l'image **à côté** de sa phrase :
+
+- La carte promettait « le jour où le solde passe sous zéro » au-dessus d'une courbe qui ne
+  passe **jamais** sous zéro. C'est l'état du stock qui est là maintenant : il montre
+  littéralement l'étagère, l'emplacement, le coût moyen et l'article passé sous son seuil.
+- La déclaration de TVA était photographiée sur le **mois en cours**, à la moitié : 42 000 DT
+  collectés contre 189 240 DT déductibles, soit une entreprise qui aurait acheté quatre fois et
+  demie ce qu'elle a vendu. Arithmétiquement juste, commercialement absurde — personne ne se
+  reconnaît là-dedans. On photographie un **mois complet**.
+- La carte « Votre comptable » promettait « un bouton lui envoie tout » au-dessus de la liste de
+  ce qui **manque** au dossier. Elle montre désormais ce que le paquet contient.
+
+Et les textes de remplacement (`alt`) suivent : ils décrivaient l'ancienne image, donc ils
+étaient faux — pour la seule personne qui n'a qu'eux.
 
 Règle apprise : une balise `<img>` qui porte ses attributs `width` et `height` **doit** recevoir
 `height: auto` en CSS. Sans quoi la largeur se réduit avec l'écran pendant que la hauteur reste
