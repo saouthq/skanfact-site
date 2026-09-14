@@ -7,12 +7,19 @@ tunisiennes. Édité par SKANCYBER SECURITY SUARL.
 
 ## Ce que c'est
 
-Un site **statique** : quatre pages en HTML, une feuille de style, un petit fichier JavaScript.
-Aucun framework, aucune étape de construction, aucune dépendance à installer. On ouvre un fichier
-dans un navigateur et on voit le site — c'est la même philosophie que l'application.
+Un site **statique** : des pages en HTML, une feuille de style, un petit fichier JavaScript. Aucun
+framework, aucune étape de construction, aucune dépendance à installer. On ouvre un fichier dans un
+navigateur et on voit le site — c'est la même philosophie que l'application.
 
 ```
-index.html              la page principale
+index.html              l'accueil : la promesse, les quatre portes, les prix
+facturation.html        devis, factures, avoirs, relances, clients
+gestion.html            achats, stock, trésorerie, marges, paie, les 16 modules
+tunisie.html            timbre fiscal, TVA, retenue à la source, clôture
+comptables.html         SkanFact Cabinet, gratuite, et le dossier mensuel
+tarifs.html             les trois offres et le tableau comparatif
+questions.html          les questions fréquentes, classées
+contact.html            le formulaire et les coordonnées
 telecharger.html        le téléchargement, Mac et Windows
 mentions-legales.html   mentions légales
 confidentialite.html    ce que le site et l'application font de vos données
@@ -21,10 +28,25 @@ assets/site.js          menu, formulaire de contact, dernière version publiée
 img/                    les captures de l'application, en deux tailles
 ```
 
+## Une page par intention
+
+Le site était **une seule longue page** dont les liens ne faisaient que défiler. Il a été découpé en
+septembre 2026 : chaque sujet a désormais son adresse, son titre et sa description. C'est ce qui
+permet à quelqu'un de partager un lien précis, et à Google de proposer la bonne page à la bonne
+question — une page unique ne peut se positionner que sur une seule recherche.
+
+**Aucune page ne se termine en cul-de-sac** : chacune finit par « Continuer la visite » (trois pages
+voisines) puis par un rappel de l'essai.
+
 ## Modifier un texte
 
-Ouvrez le fichier `.html` concerné, changez la phrase, enregistrez, et poussez sur `main` :
-le site est mis à jour tout seul en une minute environ.
+Ouvrez le fichier `.html` concerné, changez la phrase, enregistrez, et poussez sur `main` : le site
+est mis à jour tout seul en une minute environ.
+
+⚠️ **L'en-tête et le pied de page sont recopiés dans chaque fichier.** Si vous ajoutez une entrée au
+menu ou changez l'adresse du pied, il faut le faire dans *toutes* les pages — c'est le prix à payer
+pour un site sans étape de construction. La page courante, elle, se marque toute seule
+(`assets/site.js` compare l'adresse aux liens du menu) : il n'y a rien à indiquer à la main.
 
 ## Voir le site sur son ordinateur
 
@@ -60,12 +82,20 @@ les montrer sur le site donnerait une image fausse du produit, dans l'autre sens
 
 Les images sont ensuite réduites en deux tailles (1400 px et 720 px) et servies avec `srcset`.
 
+Règle apprise : une balise `<img>` qui porte ses attributs `width` et `height` **doit** recevoir
+`height: auto` en CSS. Sans quoi la largeur se réduit avec l'écran pendant que la hauteur reste
+celle de l'attribut, et toutes les captures sont étirées en hauteur — ça ne se voit sur aucune
+relecture du code, seulement en mesurant `getBoundingClientRect()` dans un vrai navigateur.
+
 ## Ce qui reste à compléter
 
 - Le **nom de domaine** (`skanfact.tn`) : une fois acheté, ajouter un fichier `CNAME` contenant le
-  domaine et faire pointer les DNS vers GitHub Pages.
+  domaine et faire pointer les DNS vers GitHub Pages. Ajouter alors `robots.txt` et `sitemap.xml`
+  (pas avant : ils doivent porter l'adresse définitive).
 - L'adresse **contact@skanfact.tn**, à créer avec le domaine.
 - Le **numéro de téléphone**, écrit `+216 XX XXX XXX` partout.
+- Un **vrai formulaire de contact** : aujourd'hui le bouton ouvre le logiciel de messagerie du
+  visiteur, ce qui ne marche pas pour qui consulte depuis un webmail sur téléphone.
 - Dans les mentions légales : le **numéro au registre national des entreprises** et le **capital
   social**, qui ne figurent pas sur la carte d'identification fiscale.
 

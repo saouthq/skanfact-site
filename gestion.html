@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Achats, stock, trésorerie et marges — SkanFact</title>
+<meta name="description" content="Achats et TVA déductible, stock au coût moyen pondéré, prévision de trésorerie, marges par client et par affaire, immobilisations et paie : les seize modules de SkanFact.">
+<meta name="theme-color" content="#0a4a43">
+<link rel="icon" href="img/icone.png" type="image/png">
+<link rel="apple-touch-icon" href="img/icone.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Achats, stock, trésorerie et marges — SkanFact">
+<meta property="og:description" content="Achats et TVA déductible, stock au coût moyen pondéré, prévision de trésorerie, marges par client et par affaire, immobilisations et paie : les seize modules de SkanFact.">
+<meta property="og:image" content="img/tresorerie.jpg">
+<meta property="og:locale" content="fr_TN">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Lexend:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<a class="saut-contenu" href="#contenu">Aller au contenu</a>
+
+<header class="entete" id="entete">
+  <div class="conteneur">
+    <a class="marque" href="index.html" aria-label="SkanFact, accueil">
+      <svg width="30" height="30" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="26" height="26" rx="9" fill="#0a4a43"></rect>
+        <path d="M8 10.5h12M8 14h12M8 17.5h7" stroke="#e8a33d" stroke-width="2.1" stroke-linecap="round"></path>
+      </svg>
+      <span class="mot">SkanFact</span>
+    </a>
+    <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-site">
+      <span></span>
+    </button>
+    <nav class="nav-site" id="nav-site" aria-label="Navigation principale">
+      <div class="sous" id="sous-fonc">
+        <button class="lien-menu" id="btn-fonc" aria-expanded="false" aria-controls="menu-fonc">
+          Fonctionnalités
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="m2.5 4.5 3.5 3.5 3.5-3.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </button>
+        <div class="panneau" id="menu-fonc">
+          <a href="facturation.html"><b>Devis et factures</b><span>Clients, relances, contrats récurrents</span></a>
+          <a href="gestion.html"><b>Achats, stock et trésorerie</b><span>Marges, immobilisations, paie</span></a>
+          <a href="tunisie.html"><b>Les règles tunisiennes</b><span>Timbre, TVA, retenue à la source</span></a>
+        </div>
+      </div>
+      <a href="comptables.html">Comptables</a>
+      <a href="tarifs.html">Tarifs</a>
+      <a href="contact.html">Contact</a>
+      <a class="btn btn-vert btn-petit" href="telecharger.html">Essayer 30 jours</a>
+    </nav>
+  </div>
+</header>
+
+<main id="contenu">
+
+  <section class="page-titre">
+    <div class="conteneur">
+      <p class="fil"><a href="index.html">Accueil</a> <span aria-hidden="true">›</span> Achats, stock et trésorerie</p>
+      <p class="oeil">Au-delà de la facture</p>
+      <h1 class="h1-page">Savez-vous si vous gagnez de l'argent ?</h1>
+      <p class="chapeau">Facturer, c'est la moitié du travail. SkanFact suit aussi ce que vous
+        achetez, ce qui dort sur l'étagère, ce que vous gardez vraiment sur chaque affaire, et le
+        jour où votre compte passe sous zéro.</p>
+      <div class="actions">
+        <a class="btn btn-vert" href="telecharger.html">Essayer 30 jours</a>
+        <a class="btn btn-creux" href="tarifs.html">Voir les tarifs</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="conteneur duo">
+      <div>
+        <p class="oeil">Dormir tranquille</p>
+        <h2>Saurez-vous payer vos fournisseurs le 15 ?</h2>
+        <p class="chapeau">La prévision ne compte que ce qui est vraiment engagé : les factures à
+          encaisser, les règlements à sortir, les échéances déjà connues. Et elle vous dit le jour où
+          le solde passe sous zéro.</p>
+        <div class="puces">
+          <div class="puce"><span class="rond" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="m3 7.3 2.7 2.7L11 4.6" stroke="#0a4a43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span><b>La caisse et la banque séparées</b><span class="t">Un règlement en espèces ne monte pas sur le compte bancaire : c’est la première chose qu’un cahier fait mal.</span></span></div>
+          <div class="puce"><span class="rond" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="m3 7.3 2.7 2.7L11 4.6" stroke="#0a4a43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span><b>Aucune ressaisie</b><span class="t">Les mouvements se déduisent des paiements clients et des règlements fournisseurs déjà notés.</span></span></div>
+          <div class="puce"><span class="rond" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="m3 7.3 2.7 2.7L11 4.6" stroke="#0a4a43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span><b>Le pointage du relevé</b><span class="t">Vous cochez ce qui est passé en banque, et ce qui reste en attente se voit d’un coup d’œil.</span></span></div>
+        </div>
+      </div>
+      <div class="capture">
+        <img src="img/tresorerie.jpg"
+             srcset="img/tresorerie@small.jpg 720w, img/tresorerie.jpg 1400w"
+             sizes="(max-width: 900px) 100vw, 560px"
+             alt="Prévision de trésorerie : la courbe du solde sur les prochaines semaines, et le moment où il passe sous zéro."
+             width="1400" height="875" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-creme">
+    <div class="conteneur duo">
+      <div class="capture">
+        <img src="img/marges.jpg"
+             srcset="img/marges@small.jpg 720w, img/marges.jpg 1400w"
+             sizes="(max-width: 900px) 100vw, 560px"
+             alt="La page des marges : par client, par prestation et par affaire."
+             width="1400" height="875" loading="lazy">
+      </div>
+      <div>
+        <p class="oeil">La vraie question</p>
+        <h2>Quelle affaire vous rapporte, et laquelle vous coûte.</h2>
+        <p class="chapeau">Une marge estimée pendant que vous tapez le devis, à partir de vos coûts
+          d'achat. Et une marge <em>exacte</em> sur chaque affaire terminée : les factures réelles
+          contre les achats réellement rattachés.</p>
+        <div class="puces">
+          <div class="puce"><span class="rond" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="m3 7.3 2.7 2.7L11 4.6" stroke="#0a4a43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span><b>Par client et par prestation</b><span class="t">On découvre souvent que le plus gros client n’est pas le plus rentable.</span></span></div>
+          <div class="puce"><span class="rond" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="m3 7.3 2.7 2.7L11 4.6" stroke="#0a4a43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span><b>Le seuil de rentabilité</b><span class="t">Ce qu’il faut facturer dans le mois pour couvrir les charges fixes, salaires compris.</span></span></div>
+          <div class="puce"><span class="rond" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="m3 7.3 2.7 2.7L11 4.6" stroke="#0a4a43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span><b>Une remise ampute le prix, pas le coût</b><span class="t">C’est ce détail qui fait qu’une marge calculée à la main est presque toujours trop belle.</span></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="conteneur duo">
+      <div>
+        <p class="oeil">Ce qui entre</p>
+        <h2>Achats, fournisseurs et TVA déductible.</h2>
+        <p class="chapeau">Chaque facture d'achat porte sa destination : charge, marchandise ou bien
+          durable. C'est ce qui permet à l'application de ne pas raconter n'importe quoi sur votre
+          résultat du mois.</p>
+        <div class="puces">
+          <div class="puce"><span class="rond" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="m3 7.3 2.7 2.7L11 4.6" stroke="#0a4a43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span><b>Acheter du stock n’est pas une charge</b><span class="t">C’est de l’argent transformé en marchandise. La charge, c’est ce qui sort de l’étagère.</span></span></div>
+          <div class="puce"><span class="rond" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="m3 7.3 2.7 2.7L11 4.6" stroke="#0a4a43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span><b>Le justificatif se joint à la pièce</b><span class="t">Une photo, un PDF : il part ensuite dans le dossier du comptable avec le reste.</span></span></div>
+          <div class="puce"><span class="rond" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="m3 7.3 2.7 2.7L11 4.6" stroke="#0a4a43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span><b>Un doublon est signalé</b><span class="t">La même facture fournisseur saisie deux fois compte deux fois la TVA déductible.</span></span></div>
+        </div>
+      </div>
+      <div class="capture">
+        <img src="img/stock.jpg"
+             srcset="img/stock@small.jpg 720w, img/stock.jpg 1400w"
+             sizes="(max-width: 900px) 100vw, 560px"
+             alt="L'état du stock de SkanFact : quantités, coût moyen pondéré et alertes de réapprovisionnement."
+             width="1400" height="875" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-vert">
+    <div class="conteneur">
+      <p class="oeil">Seize modules</p>
+      <h2>Elle grandit avec votre entreprise.</h2>
+      <p class="chapeau">Au départ, vous n'affichez que les devis et les factures : le menu reste
+        court. Le jour où vous embauchez ou tenez du stock, vous allumez le module — il était déjà
+        là, et rien de ce que vous avez saisi n'est perdu.</p>
+      <div class="modules modules-sombre">
+        <div class="module"><b>Devis et factures</b><span>Acompte, solde, avoir, relances</span></div>
+        <div class="module"><b>Contrats récurrents</b><span>Les factures du mois, préparées</span></div>
+        <div class="module"><b>Achats</b><span>Fournisseurs et TVA déductible</span></div>
+        <div class="module"><b>Stock</b><span>Coût moyen pondéré, alertes</span></div>
+        <div class="module"><b>Numéros de série</b><span>Garanties et parc installé</span></div>
+        <div class="module"><b>Immobilisations</b><span>Amortissement, VNC, cession</span></div>
+        <div class="module"><b>Trésorerie</b><span>Prévision et rapprochement</span></div>
+        <div class="module"><b>Marges</b><span>Par client, par affaire, seuil</span></div>
+        <div class="module"><b>Paie</b><span>CNSS, IRPP, congés, avances</span></div>
+        <div class="module"><b>TVA</b><span>Report de crédit enchaîné</span></div>
+        <div class="module"><b>Écritures comptables</b><span>Export vers le cabinet</span></div>
+        <div class="module"><b>Clôture</b><span>Le mois déclaré se verrouille</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="conteneur duo">
+      <div class="capture">
+        <img src="img/paie.jpg"
+             srcset="img/paie@small.jpg 720w, img/paie.jpg 1400w"
+             sizes="(max-width: 900px) 100vw, 560px"
+             alt="Un bulletin de paie établi par SkanFact, avec les cotisations et la retenue IRPP."
+             width="1400" height="875" loading="lazy">
+      </div>
+      <div>
+        <p class="oeil">Vos salariés</p>
+        <h2>Les bulletins, et tout ce qu'il y a autour.</h2>
+        <p class="chapeau">Cotisations CNSS, barème IRPP progressif, congés, avances, documents du
+          personnel et déclarations à déposer. Tous les taux sont des réglages, jamais des chiffres
+          écrits dans le programme.</p>
+        <div class="puces">
+          <div class="puce"><span class="rond" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="m3 7.3 2.7 2.7L11 4.6" stroke="#0a4a43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span><b>Un bulletin remis ne se réécrit pas</b><span class="t">Il garde une copie de son propre calcul : changer un barème n’en modifie aucun déjà remis.</span></span></div>
+          <div class="puce"><span class="rond" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="m3 7.3 2.7 2.7L11 4.6" stroke="#0a4a43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span><b>Les congés remplissent le bulletin</b><span class="t">Une absence à cheval sur deux mois se répartit entre les deux, au lieu d’être comptée deux fois.</span></span></div>
+          <div class="puce"><span class="rond" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="m3 7.3 2.7 2.7L11 4.6" stroke="#0a4a43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span><b>À faire valider par votre comptable</b><span class="t">L’application le dit elle-même sur les premiers bulletins : ce sont des barèmes, pas un conseil.</span></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section suite">
+    <div class="conteneur">
+      <p class="oeil">Continuer la visite</p>
+      <div class="cartes-mini">
+        <a class="mini" href="facturation.html"><b>Devis et factures</b><span>Ce que vous faites tous les jours : devis, factures, acomptes, relances.</span><span class="fleche" aria-hidden="true">→</span></a>
+        <a class="mini" href="tunisie.html"><b>Les règles tunisiennes</b><span>Timbre fiscal, TVA, retenue à la source et déclarations.</span><span class="fleche" aria-hidden="true">→</span></a>
+        <a class="mini" href="comptables.html"><b>Votre comptable</b><span>Le dossier du mois part en un bouton. Son application est gratuite.</span><span class="fleche" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="bande-fin">
+    <div class="conteneur">
+      <h2>Voyez vos chiffres, pas seulement vos factures.</h2>
+      <p class="chapeau">Trente jours d’essai, tous les modules ouverts, sans carte bancaire.</p>
+      <div class="actions">
+        <a class="btn btn-safran" href="telecharger.html">Télécharger et essayer 30 jours</a>
+        <a class="btn btn-clair" href="contact.html">Poser une question</a>
+      </div>
+      <p class="sous-actions">Mac et Windows · aucune carte bancaire · vos données restent chez vous</p>
+    </div>
+  </section>
+
+
+</main>
+
+<footer class="pied">
+  <div class="conteneur">
+    <div class="pied-grille">
+      <div>
+        <a class="marque" href="index.html" style="margin-bottom: 14px;">
+          <svg width="26" height="26" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="26" height="26" rx="9" fill="#0a4a43"></rect>
+        <path d="M8 10.5h12M8 14h12M8 17.5h7" stroke="#e8a33d" stroke-width="2.1" stroke-linecap="round"></path>
+      </svg>
+          <span class="mot">SkanFact</span>
+        </a>
+        <p class="pied-mot">Devis, factures et gestion pour les petites entreprises tunisiennes.
+          Édité en Tunisie par SKANCYBER SECURITY SUARL.</p>
+      </div>
+      <div class="col">
+        <h4>Le logiciel</h4>
+        <a href="facturation.html">Devis et factures</a>
+        <a href="gestion.html">Achats, stock, trésorerie</a>
+        <a href="tunisie.html">Les règles tunisiennes</a>
+        <a href="telecharger.html">Télécharger</a>
+      </div>
+      <div class="col">
+        <h4>Vous aider</h4>
+        <a href="questions.html">Questions fréquentes</a>
+        <a href="comptables.html">Pour les comptables</a>
+        <a href="tarifs.html">Tarifs</a>
+        <a href="https://github.com/saouthq/skanfact/releases" rel="noopener">Notes de version</a>
+      </div>
+      <div class="col">
+        <h4>La société</h4>
+        <a href="contact.html">Nous écrire</a>
+        <a href="mentions-legales.html">Mentions légales</a>
+        <a href="confidentialite.html">Confidentialité</a>
+        <p class="pied-adresse">SKANCYBER SECURITY SUARL<br>08 rue de l'Université, Manar 1<br>El Menzah, 2092 Tunis<br>
+          MF 1998268D/A/M/000</p>
+      </div>
+    </div>
+    <div class="bas">
+      <span>© 2026 SKANCYBER SECURITY SUARL — tous droits réservés</span>
+      <span>SkanFact <span data-version>7.29.0</span> · macOS et Windows</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/site.js" defer></script>
+</body>
+</html>

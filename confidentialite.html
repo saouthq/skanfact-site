@@ -4,9 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Confidentialité — SkanFact</title>
-<meta name="description" content="Ce que SkanFact fait de vos données : rien ne quitte votre ordinateur sans votre geste. Le site n'utilise aucun cookie et aucun traceur.">
+<meta name="description" content="Ce que le site et l’application SkanFact font de vos données : rien ne quitte votre ordinateur sans que vous le demandiez.">
+<meta name="robots" content="noindex">
 <meta name="theme-color" content="#0a4a43">
 <link rel="icon" href="img/icone.png" type="image/png">
+<link rel="apple-touch-icon" href="img/icone.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Confidentialité — SkanFact">
+<meta property="og:description" content="Ce que le site et l’application SkanFact font de vos données : rien ne quitte votre ordinateur sans que vous le demandiez.">
+<meta property="og:image" content="img/accueil.jpg">
+<meta property="og:locale" content="fr_TN">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Lexend:wght@300;400;500;600&display=swap">
@@ -29,16 +36,28 @@
       <span></span>
     </button>
     <nav class="nav-site" id="nav-site" aria-label="Navigation principale">
-      <a href="index.html#ce-que-ca-fait">Ce que ça fait</a>
-      <a href="index.html#tarifs">Tarifs</a>
-      <a href="index.html#contact">Contact</a>
-      <a class="btn btn-vert btn-petit" href="telecharger.html">Télécharger</a>
+      <div class="sous" id="sous-fonc">
+        <button class="lien-menu" id="btn-fonc" aria-expanded="false" aria-controls="menu-fonc">
+          Fonctionnalités
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="m2.5 4.5 3.5 3.5 3.5-3.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </button>
+        <div class="panneau" id="menu-fonc">
+          <a href="facturation.html"><b>Devis et factures</b><span>Clients, relances, contrats récurrents</span></a>
+          <a href="gestion.html"><b>Achats, stock et trésorerie</b><span>Marges, immobilisations, paie</span></a>
+          <a href="tunisie.html"><b>Les règles tunisiennes</b><span>Timbre, TVA, retenue à la source</span></a>
+        </div>
+      </div>
+      <a href="comptables.html">Comptables</a>
+      <a href="tarifs.html">Tarifs</a>
+      <a href="contact.html">Contact</a>
+      <a class="btn btn-vert btn-petit" href="telecharger.html">Essayer 30 jours</a>
     </nav>
   </div>
 </header>
 
 <main id="contenu">
-  <section class="section">
+
+<section class="section">
     <div class="conteneur">
       <p class="oeil">Vos données</p>
       <h1 style="font-size: clamp(28px, 4vw, 40px);">Confidentialité</h1>
@@ -118,13 +137,49 @@
       </div>
     </div>
   </section>
+
 </main>
 
 <footer class="pied">
   <div class="conteneur">
-    <div class="bas" style="border-top: none; margin-top: 0; padding-top: 0;">
+    <div class="pied-grille">
+      <div>
+        <a class="marque" href="index.html" style="margin-bottom: 14px;">
+          <svg width="26" height="26" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="26" height="26" rx="9" fill="#0a4a43"></rect>
+        <path d="M8 10.5h12M8 14h12M8 17.5h7" stroke="#e8a33d" stroke-width="2.1" stroke-linecap="round"></path>
+      </svg>
+          <span class="mot">SkanFact</span>
+        </a>
+        <p class="pied-mot">Devis, factures et gestion pour les petites entreprises tunisiennes.
+          Édité en Tunisie par SKANCYBER SECURITY SUARL.</p>
+      </div>
+      <div class="col">
+        <h4>Le logiciel</h4>
+        <a href="facturation.html">Devis et factures</a>
+        <a href="gestion.html">Achats, stock, trésorerie</a>
+        <a href="tunisie.html">Les règles tunisiennes</a>
+        <a href="telecharger.html">Télécharger</a>
+      </div>
+      <div class="col">
+        <h4>Vous aider</h4>
+        <a href="questions.html">Questions fréquentes</a>
+        <a href="comptables.html">Pour les comptables</a>
+        <a href="tarifs.html">Tarifs</a>
+        <a href="https://github.com/saouthq/skanfact/releases" rel="noopener">Notes de version</a>
+      </div>
+      <div class="col">
+        <h4>La société</h4>
+        <a href="contact.html">Nous écrire</a>
+        <a href="mentions-legales.html">Mentions légales</a>
+        <a href="confidentialite.html">Confidentialité</a>
+        <p class="pied-adresse">SKANCYBER SECURITY SUARL<br>08 rue de l'Université, Manar 1<br>El Menzah, 2092 Tunis<br>
+          MF 1998268D/A/M/000</p>
+      </div>
+    </div>
+    <div class="bas">
       <span>© 2026 SKANCYBER SECURITY SUARL — tous droits réservés</span>
-      <span><a href="index.html">Accueil</a> · <a href="mentions-legales.html">Mentions légales</a></span>
+      <span>SkanFact <span data-version>7.29.0</span> · macOS et Windows</span>
     </div>
   </div>
 </footer>

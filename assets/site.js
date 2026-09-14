@@ -9,6 +9,46 @@
   var DEPOT = 'saouthq/skanfact';
   var RELEASES = 'https://github.com/' + DEPOT + '/releases';
 
+  /* ------------------------------------------------- la page où l'on se trouve
+     Marquée ici plutôt qu'à la main dans dix fichiers : une seule vérité, et
+     aucune page ne peut oublier de se signaler. */
+  var ici = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+  Array.prototype.forEach.call(document.querySelectorAll('.nav-site a, .panneau a'), function (a) {
+    var cible = (a.getAttribute('href') || '').split('#')[0].split('/').pop().toLowerCase();
+    if (cible && cible === ici && !a.classList.contains('btn')) {
+      a.setAttribute('aria-current', 'page');
+      var sous = a.closest('.sous');
+      if (sous) sous.classList.add('actif');
+    }
+  });
+
+  /* ------------------------------------------- le menu « Fonctionnalités »
+     Sous 900 px il est déplié dans le panneau du burger : la CSS s'en charge,
+     et ce bouton n'existe plus. */
+  var sousFonc = document.getElementById('sous-fonc');
+  var btnFonc = document.getElementById('btn-fonc');
+  if (sousFonc && btnFonc) {
+    var fermerSous = function () {
+      sousFonc.classList.remove('ouvert');
+      btnFonc.setAttribute('aria-expanded', 'false');
+    };
+    btnFonc.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var ouvert = sousFonc.classList.toggle('ouvert');
+      btnFonc.setAttribute('aria-expanded', ouvert ? 'true' : 'false');
+    });
+    // Un menu qui ne se referme pas ailleurs reste en travers du contenu.
+    document.addEventListener('click', function (e) {
+      if (!sousFonc.contains(e.target)) fermerSous();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && sousFonc.classList.contains('ouvert')) {
+        fermerSous();
+        btnFonc.focus();
+      }
+    });
+  }
+
   /* ------------------------------------------------------------- le menu */
   var burger = document.getElementById('burger');
   var nav = document.getElementById('nav-site');

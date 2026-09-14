@@ -10,7 +10,7 @@
 <link rel="apple-touch-icon" href="img/icone.png">
 <meta property="og:type" content="website">
 <meta property="og:title" content="SkanFact — Devis et factures pour les petites entreprises tunisiennes">
-<meta property="og:description" content="Timbre fiscal, TVA, retenue à la source : les règles tunisiennes sont déjà dans l'application. Vos données restent chez vous.">
+<meta property="og:description" content="Logiciel de devis, factures et gestion pour une petite entreprise en Tunisie. Timbre fiscal, TVA, retenue à la source. Vos données restent sur votre ordinateur. Mac et Windows.">
 <meta property="og:image" content="img/accueil.jpg">
 <meta property="og:locale" content="fr_TN">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,11 +35,20 @@
       <span></span>
     </button>
     <nav class="nav-site" id="nav-site" aria-label="Navigation principale">
-      <a href="#ce-que-ca-fait">Ce que ça fait</a>
-      <a href="#obligations">Vos obligations</a>
-      <a href="#comptable">Votre comptable</a>
-      <a href="#tarifs">Tarifs</a>
-      <a href="#questions">Questions</a>
+      <div class="sous" id="sous-fonc">
+        <button class="lien-menu" id="btn-fonc" aria-expanded="false" aria-controls="menu-fonc">
+          Fonctionnalités
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="m2.5 4.5 3.5 3.5 3.5-3.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </button>
+        <div class="panneau" id="menu-fonc">
+          <a href="facturation.html"><b>Devis et factures</b><span>Clients, relances, contrats récurrents</span></a>
+          <a href="gestion.html"><b>Achats, stock et trésorerie</b><span>Marges, immobilisations, paie</span></a>
+          <a href="tunisie.html"><b>Les règles tunisiennes</b><span>Timbre, TVA, retenue à la source</span></a>
+        </div>
+      </div>
+      <a href="comptables.html">Comptables</a>
+      <a href="tarifs.html">Tarifs</a>
+      <a href="contact.html">Contact</a>
       <a class="btn btn-vert btn-petit" href="telecharger.html">Essayer 30 jours</a>
     </nav>
   </div>
@@ -51,14 +60,13 @@
   <section class="hero">
     <div class="conteneur duo">
       <div>
-        <span class="etiquette">Pour ceux qui n'ont jamais tenu de comptabilité</span>
-        <h1>Votre première facture, <span class="surligne">ce matin</span>.</h1>
-        <p class="chapeau">Chaque champ porte une petite bulle qui explique à quoi il sert, avec des
-          mots normaux. Trente-deux articles répondent aux questions qu'on n'ose pas poser à son
-          comptable.</p>
+        <span class="etiquette">Logiciel tunisien, installé sur votre ordinateur</span>
+        <h1>Facturez en règle, dès votre <span class="surligne">première facture</span>.</h1>
+        <p class="chapeau">Le timbre fiscal, les quatre taux de TVA et la retenue à la source sont
+          déjà dedans. Vous saisissez, SkanFact calcule — et vous explique chaque champ au passage.</p>
         <div class="actions">
           <a class="btn btn-vert" href="telecharger.html">Essayer gratuitement 30 jours</a>
-          <a class="btn btn-creux" href="#tarifs">Voir les tarifs</a>
+          <a class="btn btn-creux" href="tarifs.html">Voir les tarifs</a>
         </div>
         <p class="sous-actions">Mac et Windows · aucun compte à créer · vos données restent chez vous</p>
       </div>
@@ -80,13 +88,75 @@
     </div>
   </section>
 
-  <!-- ======================================================== PREMIER JOUR -->
+  <!-- ============================================================== BANDE -->
+  <section class="bande">
+    <div class="conteneur">
+      <div class="bande-grille">
+        <div><b>30 jours</b><span>d'essai, toutes les fonctions</span></div>
+        <div><b>16 modules</b><span>allumés au fur et à mesure</span></div>
+        <div><b>0 DT</b><span>pour votre comptable, toujours</span></div>
+        <div><b>Hors ligne</b><span>vos données ne partent pas</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ LE TOUR -->
+  <section class="section">
+    <div class="conteneur">
+      <p class="oeil">Le tour du propriétaire</p>
+      <h2>Quatre choses que SkanFact fait pour vous.</h2>
+      <p class="chapeau">Chacune a sa page : vous n'êtes pas obligé de tout lire pour savoir si
+        l'application répond à votre question.</p>
+
+      <div class="cartes">
+        <a class="carte" href="facturation.html">
+          <div class="vign">
+            <img src="img/factures@small.jpg" alt="La liste des factures de SkanFact, avec le statut de chacune." width="720" height="450" loading="lazy">
+          </div>
+          <b>Devis et factures</b>
+          <p>Le devis se transforme en facture d'un clic. Les statuts « payée », « partielle »,
+            « en retard » se déduisent des règlements : vous n'avez rien à cocher.</p>
+          <span class="fleche" aria-hidden="true">→</span>
+        </a>
+        <a class="carte" href="gestion.html">
+          <div class="vign">
+            <img src="img/tresorerie@small.jpg" alt="La prévision de trésorerie de SkanFact." width="720" height="450" loading="lazy">
+          </div>
+          <b>Achats, stock et trésorerie</b>
+          <p>Ce que vous achetez, ce qu'il vous reste sur l'étagère, ce que vous gagnez vraiment, et
+            le jour où le solde passe sous zéro.</p>
+          <span class="fleche" aria-hidden="true">→</span>
+        </a>
+        <a class="carte" href="tunisie.html">
+          <div class="vign">
+            <img src="img/tva@small.jpg" alt="L'écran de préparation de la déclaration de TVA." width="720" height="450" loading="lazy">
+          </div>
+          <b>Les règles d'ici</b>
+          <p>Timbre fiscal, TVA à quatre taux avec report de crédit, retenue à la source, échéances :
+            appliqués, et expliqués au moment où ils servent.</p>
+          <span class="fleche" aria-hidden="true">→</span>
+        </a>
+        <a class="carte" href="comptables.html">
+          <div class="vign">
+            <img src="img/comptable@small.jpg" alt="La préparation du dossier mensuel destiné au comptable." width="720" height="450" loading="lazy">
+          </div>
+          <b>Votre comptable</b>
+          <p>À la fin du mois, un bouton lui envoie tout : PDF, journaux, écritures. Son application
+            est gratuite et sans limite de dossiers.</p>
+          <span class="fleche" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== PREMIER JOUR -->
   <section class="section section-creme">
     <div class="conteneur">
-      <h2>Le premier jour, l'application vous tient la main.</h2>
-      <p class="chapeau">Un assistant vous pose les questions dans l'ordre, propose le catalogue de
-        votre métier et les taux qui vont avec. Vous pouvez tout changer ensuite.</p>
-      <ol class="etapes" style="list-style: none; padding: 0;">
+      <p class="oeil">Le premier jour</p>
+      <h2>Vous n'avez pas besoin de savoir pour commencer.</h2>
+      <p class="chapeau">Un assistant pose les questions dans l'ordre, propose le catalogue de votre
+        métier et le régime fiscal qui va avec. Vous pouvez tout changer ensuite.</p>
+      <ol class="etapes">
         <li class="etape"><span class="n">1</span><b>Votre société</b><p>Nom, matricule fiscal, activité. Cinq écrans.</p></li>
         <li class="etape"><span class="n">2</span><b>Votre métier</b><p>Il propose vos prestations et votre régime fiscal.</p></li>
         <li class="etape"><span class="n">3</span><b>Votre client</b><p>Un nom et une adresse suffisent pour commencer.</p></li>
@@ -97,7 +167,7 @@
   </section>
 
   <!-- ====================================================== NE RIEN OUBLIER -->
-  <section class="section" id="ce-que-ca-fait">
+  <section class="section">
     <div class="conteneur duo">
       <div>
         <p class="oeil">Ne rien oublier</p>
@@ -106,18 +176,12 @@
           réponse, les contrats à facturer et les déclarations qui approchent. Rien à cocher
           soi-même : tout se déduit de vos pièces.</p>
         <div class="puces">
-          <div class="puce">
-            <span class="rond" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="m3 7.3 2.7 2.7L11 4.6" stroke="#0a4a43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
-            <span><b>Les impayés remontent seuls</b><span class="t">Avec la relance déjà écrite, à envoyer ou à noter par téléphone.</span></span>
-          </div>
-          <div class="puce">
-            <span class="rond" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="m3 7.3 2.7 2.7L11 4.6" stroke="#0a4a43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
-            <span><b>Les statuts ne se saisissent pas</b><span class="t">« Payée », « partielle », « en retard » se déduisent des règlements.</span></span>
-          </div>
-          <div class="puce">
-            <span class="rond" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="m3 7.3 2.7 2.7L11 4.6" stroke="#0a4a43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
-            <span><b>Et si vous vous trompez</b><span class="t">La plupart des gestes offrent « Annuler » juste après le clic.</span></span>
-          </div>
+          <div class="puce"><span class="rond" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="m3 7.3 2.7 2.7L11 4.6" stroke="#0a4a43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span><b>Les impayés remontent seuls</b><span class="t">Avec la relance déjà écrite, à envoyer ou à noter par téléphone.</span></span></div>
+          <div class="puce"><span class="rond" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="m3 7.3 2.7 2.7L11 4.6" stroke="#0a4a43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span><b>Chaque champ porte une bulle « i »</b><span class="t">Trente-deux articles d’aide répondent aux questions qu’on n’ose pas poser.</span></span></div>
+          <div class="puce"><span class="rond" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="m3 7.3 2.7 2.7L11 4.6" stroke="#0a4a43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span><b>Et si vous vous trompez</b><span class="t">La plupart des gestes offrent « Annuler » juste après le clic.</span></span></div>
+        </div>
+        <div class="actions">
+          <a class="btn btn-creux" href="facturation.html">Voir la facturation en détail</a>
         </div>
       </div>
       <div class="capture">
@@ -130,28 +194,31 @@
     </div>
   </section>
 
-  <!-- ========================================================= OBLIGATIONS -->
-  <section class="section section-vert" id="obligations">
+  <!-- =========================================================== SÉCURITÉ -->
+  <section class="section section-vert">
     <div class="conteneur">
-      <p class="oeil">Tunisie</p>
-      <h2>Les règles d'ici sont déjà dedans.</h2>
-      <p class="chapeau">Vous n'avez pas besoin de les connaître pour être en règle. L'application les
-        applique, et vous explique chacune au moment où elle sert.</p>
+      <p class="oeil">Vos données</p>
+      <h2>Elles sont chez vous, et elles y restent.</h2>
+      <p class="chapeau">SkanFact n'est pas un site web où l'on se connecte : c'est une application
+        installée sur votre ordinateur. Vos factures sont un fichier que vous pouvez copier.</p>
       <div class="trio">
         <div class="bloc">
-          <div class="val">1,000 DT</div>
-          <h3>Le timbre fiscal</h3>
-          <p>Ajouté à chaque facture, jamais aux devis ni aux avoirs. Vous n'avez rien à retenir.</p>
+          <div class="val">Aucun compte</div>
+          <h3>Rien à créer</h3>
+          <p>Pas de mot de passe à retenir, pas de serveur qui garde vos chiffres, pas d'abonnement
+            qui coupe l'accès du jour au lendemain.</p>
         </div>
         <div class="bloc">
-          <div class="val">0 · 7 · 13 · 19</div>
-          <h3>Les quatre taux de TVA</h3>
-          <p>Par ligne, et la déclaration du mois se prépare toute seule, crédit reporté compris.</p>
+          <div class="val">30 jours</div>
+          <h3>De sauvegardes</h3>
+          <p>Une copie de l'état de chaque matin est conservée un mois, plus une copie miroir vers le
+            dossier de votre choix — clé USB, iCloud, disque réseau.</p>
         </div>
         <div class="bloc">
-          <div class="val">1,5 → 15 %</div>
-          <h3>La retenue à la source</h3>
-          <p>Calculée pour vous, avec le rappel des attestations que vos clients doivent vous remettre.</p>
+          <div class="val">Sans internet</div>
+          <h3>Tout fonctionne</h3>
+          <p>La connexion ne sert qu'aux mises à jour et à l'envoi d'un email, quand vous le
+            demandez. Une coupure n'arrête pas votre facturation.</p>
         </div>
       </div>
       <div class="rassure">
@@ -159,278 +226,43 @@
           <path d="M13 3 4 6.5v6c0 5 3.8 9.6 9 10.5 5.2-.9 9-5.5 9-10.5v-6L13 3Z" stroke="#e8a33d" stroke-width="1.7" stroke-linejoin="round"></path>
           <path d="m9.5 12.8 2.4 2.4 5-5" stroke="#e8a33d" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path>
         </svg>
-        <p><b>Vos données restent sur votre ordinateur.</b> Une copie de chaque matin est conservée
-          trente jours, et rien ne part sur internet sans que vous le demandiez. L'application
-          fonctionne même sans connexion.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- =========================================================== COMPTABLE -->
-  <section class="section section-safran" id="comptable">
-    <div class="conteneur duo">
-      <div>
-        <span class="etiquette" style="background:#fff;">Gratuit pour votre comptable</span>
-        <h2>Il ne vous réclamera plus de papiers.</h2>
-        <p class="chapeau">À la fin du mois, un bouton lui envoie tout le dossier d'un coup : les PDF
-          de vos pièces, les journaux, les écritures comptables. Le fichier est chiffré pour son
-          cabinet et lisible par lui seul.</p>
-        <div class="liste-cab">
-          <div class="lc"><span class="num">1</span><span><b>Vous clôturez le mois</b><span>Le mois déclaré se verrouille : plus rien ne bouge derrière vous.</span></span></div>
-          <div class="lc"><span class="num">2</span><span><b>L'application vérifie</b><span>Elle nomme ce qui manque avant d'envoyer, au lieu de vous laisser le découvrir.</span></span></div>
-          <div class="lc"><span class="num">3</span><span><b>Le dossier part</b><span>Et votre comptable l'ouvre dans son application, qui ne lui coûte rien.</span></span></div>
-        </div>
-      </div>
-      <div class="capture">
-        <img src="img/comptable.jpg"
-             srcset="img/comptable@small.jpg 720w, img/comptable.jpg 1400w"
-             sizes="(max-width: 900px) 100vw, 560px"
-             alt="Préparation du dossier mensuel destiné au comptable, avec la liste de ce qui manque encore."
-             width="1400" height="875" loading="lazy">
-      </div>
-    </div>
-  </section>
-
-  <!-- ========================================================== TRÉSORERIE -->
-  <section class="section">
-    <div class="conteneur duo">
-      <div class="capture">
-        <img src="img/tresorerie.jpg"
-             srcset="img/tresorerie@small.jpg 720w, img/tresorerie.jpg 1400w"
-             sizes="(max-width: 900px) 100vw, 560px"
-             alt="Prévision de trésorerie : la courbe du solde sur les prochaines semaines, et le moment où il passe sous zéro."
-             width="1400" height="875" loading="lazy">
-      </div>
-      <div>
-        <p class="oeil">Dormir tranquille</p>
-        <h2>Saurez-vous payer vos fournisseurs le 15 ?</h2>
-        <p class="chapeau">La prévision ne compte que ce qui est vraiment engagé, et vous dit le jour
-          où le solde passe sous zéro. C'est la question qu'on se pose la nuit, et à laquelle un
-          cahier ne répond jamais.</p>
-        <div class="puces">
-          <div class="puce">
-            <span class="rond" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="m3 7.3 2.7 2.7L11 4.6" stroke="#0a4a43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
-            <span><b>La caisse et la banque séparées</b><span class="t">Un règlement en espèces ne monte pas sur le compte bancaire.</span></span>
-          </div>
-          <div class="puce">
-            <span class="rond" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="m3 7.3 2.7 2.7L11 4.6" stroke="#0a4a43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
-            <span><b>Vos marges, client par client</b><span class="t">Et par affaire, avec les achats rattachés — pas une estimation.</span></span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================ MODULES -->
-  <section class="section section-creme">
-    <div class="conteneur">
-      <p class="oeil">Seize modules</p>
-      <h2>Elle grandit avec votre entreprise.</h2>
-      <p class="chapeau">Au départ, vous n'affichez que les devis et les factures. Le jour où vous
-        embauchez ou tenez du stock, vous allumez le module — il était déjà là.</p>
-      <div class="modules">
-        <div class="module"><b>Devis et factures</b><span>Acompte, solde, avoir, relances</span></div>
-        <div class="module"><b>Contrats récurrents</b><span>Les factures du mois, préparées</span></div>
-        <div class="module"><b>Achats</b><span>Fournisseurs et TVA déductible</span></div>
-        <div class="module"><b>Stock</b><span>Coût moyen pondéré, alertes</span></div>
-        <div class="module"><b>Numéros de série</b><span>Garanties et parc installé</span></div>
-        <div class="module"><b>Immobilisations</b><span>Amortissement, VNC, cession</span></div>
-        <div class="module"><b>Trésorerie</b><span>Prévision et rapprochement</span></div>
-        <div class="module"><b>Marges</b><span>Par client, par affaire, seuil</span></div>
-        <div class="module"><b>Paie</b><span>CNSS, IRPP, congés, avances</span></div>
-        <div class="module"><b>TVA</b><span>Report de crédit enchaîné</span></div>
-        <div class="module"><b>Écritures comptables</b><span>Export vers le cabinet</span></div>
-        <div class="module"><b>Clôture</b><span>Le mois déclaré se verrouille</span></div>
+        <p><b>Le code de l'application est public.</b> N'importe qui peut vérifier ce qui tourne sur
+          son ordinateur, et constater qu'aucune donnée ne part ailleurs. C'est rare pour un logiciel
+          de facturation, et c'est volontaire.</p>
       </div>
     </div>
   </section>
 
   <!-- ============================================================= TARIFS -->
-  <section class="section" id="tarifs">
+  <section class="section section-creme">
     <div class="conteneur">
       <p class="oeil">Tarifs</p>
       <h2>Vous payez la licence, jamais le droit d'ouvrir vos données.</h2>
-      <p class="chapeau">Une licence annuelle, un paiement. À l'échéance, vous continuez à lire,
-        imprimer et exporter tout ce que vous avez fait.</p>
-
-      <div class="grille-prix">
-        <div class="offre">
-          <div class="haut"><span class="nom">Essai</span></div>
-          <p class="prix"><span class="v">0</span><span class="u">DT · 30 jours</span></p>
-          <p class="pour">Pour vous faire un avis sur vos vraies factures.</p>
-          <ul>
-            <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3 8.3 3 3 6.5-6.6" stroke="#0a4a43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>Toutes les fonctions</li>
-            <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3 8.3 3 3 6.5-6.6" stroke="#0a4a43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>Un jeu d'exemple pour apprendre</li>
-            <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3 8.3 3 3 6.5-6.6" stroke="#0a4a43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>Sans carte bancaire</li>
-          </ul>
-          <a class="btn btn-creux prendre" href="telecharger.html">Télécharger</a>
-        </div>
-
-        <div class="offre phare">
-          <div class="haut"><span class="nom">Indépendant</span><span class="ruban">Le plus pris</span></div>
-          <p class="prix"><span class="v">390</span><span class="u">DT HT / an</span></p>
-          <p class="pour">Artisan, consultant, profession libérale : vous facturez seul.</p>
-          <ul>
-            <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3 8.3 3 3 6.5-6.6" stroke="#e8a33d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>Devis, factures, avoirs, acomptes</li>
-            <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3 8.3 3 3 6.5-6.6" stroke="#e8a33d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>Relances et contrats récurrents</li>
-            <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3 8.3 3 3 6.5-6.6" stroke="#e8a33d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>TVA et dossier du comptable</li>
-            <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3 8.3 3 3 6.5-6.6" stroke="#e8a33d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>Mises à jour comprises</li>
-          </ul>
-          <a class="btn btn-safran prendre" href="telecharger.html">Commencer l'essai</a>
-        </div>
-
-        <div class="offre">
-          <div class="haut"><span class="nom">Entreprise</span></div>
-          <p class="prix"><span class="v">690</span><span class="u">DT HT / an</span></p>
-          <p class="pour">Vous achetez, vous stockez, vous employez.</p>
-          <ul>
-            <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3 8.3 3 3 6.5-6.6" stroke="#0a4a43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>Tout ce que contient Indépendant</li>
-            <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3 8.3 3 3 6.5-6.6" stroke="#0a4a43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>Achats, stock, immobilisations</li>
-            <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3 8.3 3 3 6.5-6.6" stroke="#0a4a43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>Paie : bulletins, CNSS, IRPP, congés</li>
-            <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3 8.3 3 3 6.5-6.6" stroke="#0a4a43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>Trois postes, dossier partagé</li>
-          </ul>
-          <a class="btn btn-vert prendre" href="#contact">Nous écrire</a>
-        </div>
+      <p class="chapeau">Une licence annuelle. À l'échéance, seule la création de nouvelles pièces
+        s'arrête : lire, imprimer, exporter et sauvegarder restent possibles pour toujours.</p>
+      <div class="prix-resume">
+        <a class="pr" href="tarifs.html"><span class="n">Essai</span><span class="v">0 DT</span><span class="d">30 jours, toutes les fonctions</span></a>
+        <a class="pr phare" href="tarifs.html"><span class="n">Indépendant</span><span class="v">390 DT</span><span class="d">HT / an · vous facturez seul</span></a>
+        <a class="pr" href="tarifs.html"><span class="n">Entreprise</span><span class="v">690 DT</span><span class="d">HT / an · achats, stock, paie</span></a>
       </div>
-
-      <div class="note-prix">
-        <div style="flex: 1; min-width: 260px;">
-          <p><b>Votre comptable ne paie rien, jamais.</b> Son application est gratuite et sans limite
-            de dossiers — elle lui sert même pour les clients qui n'utilisent pas SkanFact. Si c'est
-            lui qui vous a parlé de nous, vous avez <b>20 % la première année</b>, et il ne touche
-            aucune commission.</p>
-          <p style="margin-top: 10px;">Prix hors taxes, hors timbre fiscal. Licence de douze mois.
-            <b>À l'échéance, seule la création de nouvelles pièces s'arrête</b> : lire, imprimer,
-            exporter et sauvegarder restent possibles pour toujours.</p>
-        </div>
+      <div class="actions" style="justify-content: center;">
+        <a class="btn btn-vert" href="tarifs.html">Comparer les offres en détail</a>
       </div>
     </div>
   </section>
 
-  <!-- ================================================================ FAQ -->
-  <section class="section section-creme" id="questions">
+  <section class="bande-fin">
     <div class="conteneur">
-      <h2>Ce qu'on nous demande avant d'installer.</h2>
-      <div class="questions">
-        <details class="qq">
-          <summary>Je n'y connais rien en comptabilité.</summary>
-          <p class="rep">C'est exactement pour vous. Chaque champ a sa bulle d'explication, et l'aide
-            intégrée est écrite en français simple, sans jargon.</p>
-        </details>
-        <details class="qq">
-          <summary>Où sont mes données ?</summary>
-          <p class="rep">Dans un fichier sur votre ordinateur, dont le chemin est affiché dans
-            l'application. Vous pouvez le copier, le chiffrer, et en garder un miroir sur une clé ou
-            un dossier partagé.</p>
-        </details>
-        <details class="qq">
-          <summary>Et si je me trompe ?</summary>
-          <p class="rep">Une copie de l'état du matin est conservée trente jours, et la plupart des
-            gestes proposent « Annuler » juste après le clic.</p>
-        </details>
-        <details class="qq">
-          <summary>Ça marche sans internet ?</summary>
-          <p class="rep">Entièrement. La connexion ne sert qu'aux mises à jour et à l'envoi d'un
-            email, quand vous le demandez.</p>
-        </details>
-        <details class="qq">
-          <summary>Et si je change d'ordinateur ?</summary>
-          <p class="rep">Vous exportez vos données, vous installez l'application ailleurs, vous
-            importez. Votre numérotation, votre historique et vos réglages suivent.</p>
-        </details>
-        <details class="qq">
-          <summary>Mon comptable doit-il payer ?</summary>
-          <p class="rep">Non. Son application est gratuite, sans limite de dossiers, et elle lui sert
-            pour tous ses clients — pas seulement pour vous.</p>
-        </details>
-        <details class="qq">
-          <summary>Faites-vous l'e-facture TTN ?</summary>
-          <p class="rep">Pas aujourd'hui. SkanFact produit des PDF classiques et les journaux
-            destinés à votre comptable. Si la facture électronique devient obligatoire pour votre
-            entreprise, écrivez-nous.</p>
-        </details>
-        <details class="qq">
-          <summary>Peut-on être deux à travailler dessus ?</summary>
-          <p class="rep">Oui, sur un dossier partagé, chacun à son tour. Ce n'est pas de l'édition
-            simultanée : l'application prévient et fusionne au lieu d'écraser en silence.</p>
-        </details>
+      <h2>Essayez-le sur vos vraies factures.</h2>
+      <p class="chapeau">Trente jours, toutes les fonctions, sans carte bancaire. Si l’application ne vous convient pas, vous n’avez rien donné à personne.</p>
+      <div class="actions">
+        <a class="btn btn-safran" href="telecharger.html">Télécharger et essayer 30 jours</a>
+        <a class="btn btn-clair" href="contact.html">Poser une question</a>
       </div>
+      <p class="sous-actions">Mac et Windows · aucune carte bancaire · vos données restent chez vous</p>
     </div>
   </section>
 
-  <!-- ============================================================ CONTACT -->
-  <section class="section section-vert" id="contact">
-    <div class="conteneur">
-      <p class="oeil">Contact</p>
-      <h2>Parlons de votre entreprise.</h2>
-      <p class="chapeau">Une question, une démonstration, plusieurs postes à équiper : écrivez-nous,
-        nous répondons sous un jour ouvré.</p>
-
-      <div class="contact-duo">
-        <form class="formulaire" id="form-contact" novalidate>
-          <fieldset>
-            <legend>Vous êtes</legend>
-            <div class="qui">
-              <label><input type="radio" name="profil" value="une entreprise" checked> Une entreprise</label>
-              <label><input type="radio" name="profil" value="un cabinet comptable"> Un cabinet comptable</label>
-            </div>
-          </fieldset>
-          <div class="paire">
-            <div class="champ">
-              <label for="nom">Nom et prénom <span class="oblig" aria-hidden="true">*</span></label>
-              <input type="text" id="nom" name="nom" autocomplete="name" placeholder="Votre nom" required>
-            </div>
-            <div class="champ">
-              <label for="societe">Société</label>
-              <input type="text" id="societe" name="societe" autocomplete="organization" placeholder="Votre société">
-            </div>
-          </div>
-          <div class="paire">
-            <div class="champ">
-              <label for="email">Email <span class="oblig" aria-hidden="true">*</span></label>
-              <input type="email" id="email" name="email" autocomplete="email" placeholder="vous@votresociete.tn" required>
-            </div>
-            <div class="champ">
-              <label for="tel">Téléphone</label>
-              <input type="tel" id="tel" name="tel" autocomplete="tel" placeholder="+216 ...">
-            </div>
-          </div>
-          <div class="champ">
-            <label for="message">Votre message <span class="oblig" aria-hidden="true">*</span></label>
-            <textarea id="message" name="message" placeholder="Nous sommes trois, une trentaine de factures par mois, et un comptable qui réclame les pièces chaque trimestre…" required></textarea>
-          </div>
-          <button class="btn btn-safran" type="submit">Écrire à SkanFact</button>
-          <p class="aide-form" id="aide-form">Le bouton ouvre votre logiciel de messagerie avec le
-            message déjà rédigé. Vous préférez écrire directement ?
-            <a href="mailto:contact@skanfact.tn">contact@skanfact.tn</a></p>
-        </form>
-
-        <div class="infos">
-          <div class="bloc-info">
-            <div class="t">Email</div>
-            <b><a href="mailto:contact@skanfact.tn">contact@skanfact.tn</a></b>
-            <span>Questions, démonstration, licences</span>
-          </div>
-          <div class="bloc-info">
-            <div class="t">Téléphone</div>
-            <b>+216 XX XXX XXX</b>
-            <span>Du lundi au vendredi, 9 h – 17 h</span>
-          </div>
-          <div class="bloc-info">
-            <div class="t">Éditeur</div>
-            <b>SKANCYBER SECURITY SUARL</b>
-            <span>08 rue de l'Université, Manar 1, El Menzah, 2092 Tunis</span>
-            <span>Matricule fiscal 1998268D/A/M/000</span>
-          </div>
-          <div class="bloc-info">
-            <div class="t">Assistance</div>
-            <b>Comprise dans la licence</b>
-            <span>Par email, en français</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
 </main>
 
@@ -440,35 +272,34 @@
       <div>
         <a class="marque" href="index.html" style="margin-bottom: 14px;">
           <svg width="26" height="26" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-            <rect x="1" y="1" width="26" height="26" rx="9" fill="#0a4a43"></rect>
-            <path d="M8 10.5h12M8 14h12M8 17.5h7" stroke="#e8a33d" stroke-width="2.1" stroke-linecap="round"></path>
-          </svg>
+        <rect x="1" y="1" width="26" height="26" rx="9" fill="#0a4a43"></rect>
+        <path d="M8 10.5h12M8 14h12M8 17.5h7" stroke="#e8a33d" stroke-width="2.1" stroke-linecap="round"></path>
+      </svg>
           <span class="mot">SkanFact</span>
         </a>
-        <p style="color: var(--gris); font-size: 14px; max-width: 34ch;">Devis, factures et gestion
-          pour les petites entreprises tunisiennes. Édité en Tunisie par SKANCYBER SECURITY SUARL.</p>
+        <p class="pied-mot">Devis, factures et gestion pour les petites entreprises tunisiennes.
+          Édité en Tunisie par SKANCYBER SECURITY SUARL.</p>
       </div>
       <div class="col">
-        <h4>Le produit</h4>
-        <a href="#ce-que-ca-fait">Ce que ça fait</a>
-        <a href="#obligations">Vos obligations</a>
-        <a href="#tarifs">Tarifs</a>
+        <h4>Le logiciel</h4>
+        <a href="facturation.html">Devis et factures</a>
+        <a href="gestion.html">Achats, stock, trésorerie</a>
+        <a href="tunisie.html">Les règles tunisiennes</a>
         <a href="telecharger.html">Télécharger</a>
       </div>
       <div class="col">
         <h4>Vous aider</h4>
-        <a href="#questions">Questions fréquentes</a>
-        <a href="#comptable">Pour les comptables</a>
-        <a href="#contact">Nous écrire</a>
+        <a href="questions.html">Questions fréquentes</a>
+        <a href="comptables.html">Pour les comptables</a>
+        <a href="tarifs.html">Tarifs</a>
         <a href="https://github.com/saouthq/skanfact/releases" rel="noopener">Notes de version</a>
       </div>
       <div class="col">
         <h4>La société</h4>
+        <a href="contact.html">Nous écrire</a>
         <a href="mentions-legales.html">Mentions légales</a>
         <a href="confidentialite.html">Confidentialité</a>
-        <a href="mailto:contact@skanfact.tn">contact@skanfact.tn</a>
-        <p style="color: var(--gris-clair); font-size: 13px; margin-top: 14px; line-height: 1.5;">
-          SKANCYBER SECURITY SUARL<br>08 rue de l'Université, Manar 1<br>El Menzah, 2092 Tunis<br>
+        <p class="pied-adresse">SKANCYBER SECURITY SUARL<br>08 rue de l'Université, Manar 1<br>El Menzah, 2092 Tunis<br>
           MF 1998268D/A/M/000</p>
       </div>
     </div>

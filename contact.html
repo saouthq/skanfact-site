@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nous écrire — SkanFact</title>
+<meta name="description" content="Une question sur SkanFact, une démonstration, plusieurs postes à équiper : écrivez à contact@skanfact.tn. Réponse sous un jour ouvré, en français.">
+<meta name="theme-color" content="#0a4a43">
+<link rel="icon" href="img/icone.png" type="image/png">
+<link rel="apple-touch-icon" href="img/icone.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Nous écrire — SkanFact">
+<meta property="og:description" content="Une question sur SkanFact, une démonstration, plusieurs postes à équiper : écrivez à contact@skanfact.tn. Réponse sous un jour ouvré, en français.">
+<meta property="og:image" content="img/accueil.jpg">
+<meta property="og:locale" content="fr_TN">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Lexend:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<a class="saut-contenu" href="#contenu">Aller au contenu</a>
+
+<header class="entete" id="entete">
+  <div class="conteneur">
+    <a class="marque" href="index.html" aria-label="SkanFact, accueil">
+      <svg width="30" height="30" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="26" height="26" rx="9" fill="#0a4a43"></rect>
+        <path d="M8 10.5h12M8 14h12M8 17.5h7" stroke="#e8a33d" stroke-width="2.1" stroke-linecap="round"></path>
+      </svg>
+      <span class="mot">SkanFact</span>
+    </a>
+    <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-site">
+      <span></span>
+    </button>
+    <nav class="nav-site" id="nav-site" aria-label="Navigation principale">
+      <div class="sous" id="sous-fonc">
+        <button class="lien-menu" id="btn-fonc" aria-expanded="false" aria-controls="menu-fonc">
+          Fonctionnalités
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="m2.5 4.5 3.5 3.5 3.5-3.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </button>
+        <div class="panneau" id="menu-fonc">
+          <a href="facturation.html"><b>Devis et factures</b><span>Clients, relances, contrats récurrents</span></a>
+          <a href="gestion.html"><b>Achats, stock et trésorerie</b><span>Marges, immobilisations, paie</span></a>
+          <a href="tunisie.html"><b>Les règles tunisiennes</b><span>Timbre, TVA, retenue à la source</span></a>
+        </div>
+      </div>
+      <a href="comptables.html">Comptables</a>
+      <a href="tarifs.html">Tarifs</a>
+      <a href="contact.html">Contact</a>
+      <a class="btn btn-vert btn-petit" href="telecharger.html">Essayer 30 jours</a>
+    </nav>
+  </div>
+</header>
+
+<main id="contenu">
+
+  <section class="section section-vert" id="contact">
+    <div class="conteneur">
+      <p class="fil fil-clair"><a href="index.html">Accueil</a> <span aria-hidden="true">›</span> Contact</p>
+      <p class="oeil">Contact</p>
+      <h1 class="h1-page h1-clair">Parlons de votre entreprise.</h1>
+      <p class="chapeau">Une question, une démonstration, plusieurs postes à équiper : écrivez-nous,
+        nous répondons sous un jour ouvré.</p>
+
+      <div class="contact-duo">
+        <form class="formulaire" id="form-contact" novalidate>
+          <fieldset>
+            <legend>Vous êtes</legend>
+            <div class="qui">
+              <label><input type="radio" name="profil" value="une entreprise" checked> Une entreprise</label>
+              <label><input type="radio" name="profil" value="un cabinet comptable"> Un cabinet comptable</label>
+            </div>
+          </fieldset>
+          <div class="paire">
+            <div class="champ">
+              <label for="nom">Nom et prénom <span class="oblig" aria-hidden="true">*</span></label>
+              <input type="text" id="nom" name="nom" autocomplete="name" placeholder="Votre nom" required>
+            </div>
+            <div class="champ">
+              <label for="societe">Société</label>
+              <input type="text" id="societe" name="societe" autocomplete="organization" placeholder="Votre société">
+            </div>
+          </div>
+          <div class="paire">
+            <div class="champ">
+              <label for="email">Email <span class="oblig" aria-hidden="true">*</span></label>
+              <input type="email" id="email" name="email" autocomplete="email" placeholder="vous@votresociete.tn" required>
+            </div>
+            <div class="champ">
+              <label for="tel">Téléphone</label>
+              <input type="tel" id="tel" name="tel" autocomplete="tel" placeholder="+216 ...">
+            </div>
+          </div>
+          <div class="champ">
+            <label for="message">Votre message <span class="oblig" aria-hidden="true">*</span></label>
+            <textarea id="message" name="message" placeholder="Nous sommes trois, une trentaine de factures par mois, et un comptable qui réclame les pièces chaque trimestre…" required></textarea>
+          </div>
+          <button class="btn btn-safran" type="submit">Écrire à SkanFact</button>
+          <p class="aide-form" id="aide-form">Le bouton ouvre votre logiciel de messagerie avec le
+            message déjà rédigé. Vous préférez écrire directement ?
+            <a href="mailto:contact@skanfact.tn">contact@skanfact.tn</a></p>
+        </form>
+
+        <div class="infos">
+          <div class="bloc-info">
+            <div class="t">Email</div>
+            <b><a href="mailto:contact@skanfact.tn">contact@skanfact.tn</a></b>
+            <span>Questions, démonstration, licences</span>
+          </div>
+          <div class="bloc-info">
+            <div class="t">Téléphone</div>
+            <b>+216 XX XXX XXX</b>
+            <span>Du lundi au vendredi, 9 h – 17 h</span>
+          </div>
+          <div class="bloc-info">
+            <div class="t">Éditeur</div>
+            <b>SKANCYBER SECURITY SUARL</b>
+            <span>08 rue de l'Université, Manar 1, El Menzah, 2092 Tunis</span>
+            <span>Matricule fiscal 1998268D/A/M/000</span>
+          </div>
+          <div class="bloc-info">
+            <div class="t">Assistance</div>
+            <b>Comprise dans la licence</b>
+            <span>Par email, en français</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="conteneur">
+      <h2>Avant d'écrire, peut-être que la réponse est déjà là.</h2>
+      <div class="cartes-mini" style="margin-top: 34px;">
+        <a class="mini" href="questions.html"><b>Questions fréquentes</b><span>Les données, l'essai, la TVA, le changement d'ordinateur.</span><span class="fleche" aria-hidden="true">→</span></a>
+        <a class="mini" href="tarifs.html"><b>Les tarifs</b><span>Ce que contient chaque offre, et ce qui se passe à l'échéance.</span><span class="fleche" aria-hidden="true">→</span></a>
+        <a class="mini" href="telecharger.html"><b>Télécharger</b><span>Mac et Windows, trente jours d'essai, sans compte à créer.</span><span class="fleche" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+
+</main>
+
+<footer class="pied">
+  <div class="conteneur">
+    <div class="pied-grille">
+      <div>
+        <a class="marque" href="index.html" style="margin-bottom: 14px;">
+          <svg width="26" height="26" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="26" height="26" rx="9" fill="#0a4a43"></rect>
+        <path d="M8 10.5h12M8 14h12M8 17.5h7" stroke="#e8a33d" stroke-width="2.1" stroke-linecap="round"></path>
+      </svg>
+          <span class="mot">SkanFact</span>
+        </a>
+        <p class="pied-mot">Devis, factures et gestion pour les petites entreprises tunisiennes.
+          Édité en Tunisie par SKANCYBER SECURITY SUARL.</p>
+      </div>
+      <div class="col">
+        <h4>Le logiciel</h4>
+        <a href="facturation.html">Devis et factures</a>
+        <a href="gestion.html">Achats, stock, trésorerie</a>
+        <a href="tunisie.html">Les règles tunisiennes</a>
+        <a href="telecharger.html">Télécharger</a>
+      </div>
+      <div class="col">
+        <h4>Vous aider</h4>
+        <a href="questions.html">Questions fréquentes</a>
+        <a href="comptables.html">Pour les comptables</a>
+        <a href="tarifs.html">Tarifs</a>
+        <a href="https://github.com/saouthq/skanfact/releases" rel="noopener">Notes de version</a>
+      </div>
+      <div class="col">
+        <h4>La société</h4>
+        <a href="contact.html">Nous écrire</a>
+        <a href="mentions-legales.html">Mentions légales</a>
+        <a href="confidentialite.html">Confidentialité</a>
+        <p class="pied-adresse">SKANCYBER SECURITY SUARL<br>08 rue de l'Université, Manar 1<br>El Menzah, 2092 Tunis<br>
+          MF 1998268D/A/M/000</p>
+      </div>
+    </div>
+    <div class="bas">
+      <span>© 2026 SKANCYBER SECURITY SUARL — tous droits réservés</span>
+      <span>SkanFact <span data-version>7.29.0</span> · macOS et Windows</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/site.js" defer></script>
+</body>
+</html>

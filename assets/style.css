@@ -43,7 +43,9 @@ body {
   overflow-x: hidden;
 }
 
-img { max-width: 100%; display: block; }
+/* Sans `height: auto`, l'attribut height du HTML garde sa valeur pendant que la
+   largeur se réduit : l'image est étirée en hauteur, et rien ne le signale. */
+img { max-width: 100%; height: auto; display: block; }
 p { margin: 0; }
 h1, h2, h3, h4 { margin: 0; font-family: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif; font-weight: 800; letter-spacing: -.03em; line-height: 1.1; text-wrap: balance; }
 a { color: var(--vert); text-decoration: none; }
@@ -151,7 +153,7 @@ h1 .surligne { background: linear-gradient(transparent 58%, rgba(232, 163, 61, .
 
 .cadre-hero { position: relative; }
 .bulle {
-  position: absolute; left: -28px; bottom: -30px; max-width: 300px;
+  position: absolute; left: -34px; bottom: -130px; max-width: 290px;
   background: #fff; border: 1px solid var(--filet); border-radius: 18px; padding: 18px 20px;
   box-shadow: var(--ombre-douce);
 }
@@ -250,7 +252,7 @@ h1 .surligne { background: linear-gradient(transparent 58%, rgba(232, 163, 61, .
 }
 
 /* ------------------------------------------------------------------ faq */
-.questions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 42px; }
+.questions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 42px; align-items: start; }
 .qq { background: #fff; border: 1px solid var(--filet); border-radius: 18px; padding: 0; }
 .section-creme .qq { border-color: transparent; }
 .qq summary {
@@ -393,4 +395,166 @@ legend { font-size: 14px; color: #9fc3bd; padding: 0 0 10px; }
   .rassure { flex-direction: column; gap: 12px; }
   .qq summary { padding: 18px 20px; font-size: 16.5px; }
   .qq .rep { padding: 0 20px 20px; }
+}
+
+/* =============================================================================
+   Site multi-pages — ajouté avec le découpage en pages (septembre 2026).
+   Une section = une page ; chaque page a son titre, son fil et sa sortie.
+   ============================================================================= */
+
+/* -------------------------------------------------- le menu « Fonctionnalités »
+   Un sous-menu vit sous les fenêtres et au-dessus du contenu : couche 30. */
+.sous { position: relative; }
+.lien-menu {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: none; border: 0; padding: 0; cursor: pointer;
+  font: inherit; font-size: 15px; color: var(--gris);
+}
+.lien-menu:hover, .sous.ouvert .lien-menu { color: var(--vert); }
+.lien-menu svg { transition: transform .18s ease; }
+.sous.ouvert .lien-menu svg { transform: rotate(180deg); }
+.panneau {
+  display: none; position: absolute; z-index: 30; top: calc(100% + 14px); left: -18px;
+  width: 310px; background: #fff; border: 1px solid var(--filet); border-radius: 18px;
+  padding: 10px; box-shadow: var(--ombre);
+}
+.sous.ouvert .panneau { display: block; }
+.panneau a { display: block; padding: 12px 14px; border-radius: 12px; }
+.panneau a:hover { background: var(--creme); color: var(--vert); }
+.panneau a b { display: block; font-weight: 600; font-size: 15px; color: var(--encre); }
+.panneau a:hover b { color: var(--vert); }
+.panneau a span { display: block; color: var(--gris); font-size: 13.5px; margin-top: 2px; line-height: 1.45; }
+
+/* ------------------------------------------------------- l'en-tête d'une page */
+.fil { font-size: 14px; color: var(--gris-clair); margin-bottom: 18px; }
+.fil a { color: var(--gris); }
+.fil a:hover { color: var(--vert); }
+.fil span { margin: 0 6px; }
+.fil-clair { color: #7fa6a0; }
+.fil-clair a { color: #9fc3bd; }
+.fil-clair a:hover { color: #fff; }
+.h1-page { font-size: clamp(30px, 4.6vw, 47px); }
+.h1-clair { color: #fff; }
+.page-titre .actions { margin-top: 26px; }
+.page-titre .chapeau { max-width: 64ch; }
+
+/* ------------------------------------------------- la bande de faits, sous le héros */
+.bande { background: var(--vert); color: #dcebe8; padding-block: 26px; }
+.bande-grille { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+.bande-grille div { display: flex; flex-direction: column; gap: 2px; }
+.bande-grille b {
+  font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 21px;
+  color: var(--safran); letter-spacing: -.03em;
+}
+.bande-grille span { font-size: 14.5px; color: #9fc3bd; }
+
+/* --------------------------------------------- les quatre cartes de l'accueil
+   Une carte entière est cliquable : le titre seul serait une cible minuscule. */
+.cartes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 44px; }
+.carte {
+  position: relative; display: block; background: #fff; border: 1px solid var(--filet);
+  border-radius: var(--rayon); padding: 22px; color: var(--encre);
+  transition: border-color .18s ease, transform .18s ease, box-shadow .18s ease;
+}
+.carte:hover { border-color: var(--vert); transform: translateY(-2px); box-shadow: var(--ombre-douce); color: var(--encre); }
+.carte .vign { border-radius: 14px; overflow: hidden; background: var(--creme); border: 1px solid var(--filet); }
+.carte b {
+  display: block; margin-top: 20px; font-family: "Bricolage Grotesque", sans-serif;
+  font-weight: 600; font-size: 21px; letter-spacing: -.025em;
+}
+.carte p { color: var(--gris); font-size: 15px; margin-top: 8px; max-width: 46ch; }
+.carte .fleche { display: inline-block; margin-top: 14px; color: var(--vert); font-size: 18px; }
+.carte:hover .fleche { color: var(--safran-fonce); }
+
+/* -------------------------------------------------- les trois prix en résumé */
+.prix-resume { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin: 40px 0 30px; }
+.pr {
+  display: flex; flex-direction: column; gap: 4px; background: #fff; border: 1px solid var(--filet);
+  border-radius: var(--rayon); padding: 24px; color: var(--encre); text-align: center;
+  transition: border-color .18s ease, transform .18s ease;
+}
+.pr:hover { border-color: var(--vert); transform: translateY(-2px); color: var(--encre); }
+.pr .n { font-size: 15px; color: var(--gris); }
+.pr .v {
+  font-family: "Bricolage Grotesque", sans-serif; font-weight: 800;
+  font-size: clamp(28px, 3.4vw, 36px); letter-spacing: -.04em;
+}
+.pr .d { font-size: 14px; color: var(--gris); }
+.pr.phare { background: var(--vert); border-color: var(--vert); color: #fff; }
+.pr.phare:hover { color: #fff; }
+.pr.phare .n, .pr.phare .d { color: #9fc3bd; }
+.pr.phare .v { color: var(--safran); }
+
+/* ------------------------------------------- « continuer la visite », en bas de page */
+.suite { padding-block: clamp(44px, 6vw, 64px); border-top: 1px solid var(--filet); }
+.cartes-mini { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 26px; }
+.mini {
+  display: flex; flex-direction: column; gap: 6px; background: #fff; border: 1px solid var(--filet);
+  border-radius: 18px; padding: 22px; color: var(--encre);
+  transition: border-color .18s ease, transform .18s ease;
+}
+.mini:hover { border-color: var(--vert); transform: translateY(-2px); color: var(--encre); }
+.mini b { font-family: "Bricolage Grotesque", sans-serif; font-weight: 600; font-size: 18px; letter-spacing: -.02em; }
+.mini span { color: var(--gris); font-size: 14.5px; line-height: 1.5; }
+.mini .fleche { color: var(--vert); font-size: 17px; margin-top: 4px; }
+
+/* ----------------------------------------------------- le rappel de fin de page */
+.bande-fin { background: var(--vert); color: #dcebe8; padding-block: clamp(54px, 7vw, 78px); text-align: center; }
+.bande-fin h2 { color: #fff; }
+.bande-fin .chapeau { color: #9fc3bd; margin-inline: auto; }
+.bande-fin .actions { justify-content: center; }
+.bande-fin .sous-actions { color: #7fa6a0; }
+
+/* --------------------------------------------------------- le tableau des offres */
+.scroll-x { overflow-x: auto; margin-top: 38px; }
+.compare { width: 100%; border-collapse: collapse; min-width: 620px; background: #fff; border-radius: var(--rayon); overflow: hidden; }
+.compare th, .compare td { padding: 14px 18px; font-size: 15px; text-align: center; border-bottom: 1px solid var(--filet); }
+.compare thead th { font-family: "Bricolage Grotesque", sans-serif; font-weight: 600; font-size: 17px; background: var(--vert); color: #fff; }
+.compare tbody th { text-align: left; font-weight: 400; color: var(--encre); }
+.compare tbody tr:last-child th, .compare tbody tr:last-child td { border-bottom: none; }
+.compare .oui { color: var(--vert); font-weight: 500; }
+.compare .non { color: var(--gris-clair); }
+.sous-tableau { color: var(--gris); font-size: 14.5px; margin-top: 18px; }
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ------------------------------------------------------------ variantes de blocs */
+.trio-clair { margin-top: 38px; }
+.bloc-clair { background: var(--creme); border-radius: var(--rayon); padding: 28px; }
+.bloc-clair h3 { font-size: 19px; font-weight: 600; }
+.bloc-clair p { color: var(--gris); font-size: 15px; margin-top: 8px; }
+.modules-sombre .module { background: var(--vert2); border-color: rgba(255, 255, 255, .12); }
+.modules-sombre .module b { color: #fff; }
+.modules-sombre .module span { color: #9fc3bd; }
+.avis-large { max-width: 84ch; }
+.etapes { list-style: none; padding: 0; }
+.repere { background: var(--vert-clair); color: var(--vert); font-size: 12.5px; padding: 4px 12px; margin-left: auto; }
+.pied-mot { color: var(--gris); font-size: 14px; max-width: 34ch; }
+.pied-adresse { color: var(--gris-clair); font-size: 13px; margin-top: 14px; line-height: 1.5; }
+
+/* -------------------------------------------------- tailles d'écran, la suite */
+@media (max-width: 1080px) {
+  .cartes-mini { grid-template-columns: minmax(0, 1fr); }
+  .bande-grille { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 20px; }
+}
+
+@media (max-width: 900px) {
+  /* Dans le panneau du burger, le sous-menu est déplié : rien ne se cache. */
+  .sous { width: 100%; }
+  .lien-menu { display: none; }
+  .panneau {
+    display: block; position: static; width: auto; border: none; border-radius: 0;
+    padding: 0; box-shadow: none;
+  }
+  .panneau a { padding: 13px 0; border-radius: 0; border-bottom: 1px solid var(--filet); }
+  .panneau a:hover { background: none; }
+  .panneau a span { display: none; }
+  .panneau a b { font-size: 17px; font-weight: 400; }
+
+  .cartes, .prix-resume { grid-template-columns: minmax(0, 1fr); }
+  .carte p { max-width: none; }
+}
+
+@media (max-width: 620px) {
+  .bande-grille { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .bande-fin .actions .btn { width: 100%; }
 }
