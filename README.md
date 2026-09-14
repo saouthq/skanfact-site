@@ -21,6 +21,9 @@ guide-facture-tunisie.html    ce qu'une facture doit contenir
 guide-timbre-fiscal.html      le timbre fiscal, et le piège de la devise
 guide-tva-tunisie.html        les taux et la déclaration mensuelle
 guide-retenue-source.html     la retenue à la source et son attestation
+guide-facture-electronique.html  ce qu'est l'e-facture, et où en est son intégration
+guide-devis-proforma.html     devis, proforma, bon de commande, bon de livraison
+guide-relance-impaye.html     relancer une facture impayée
 robots.txt · sitemap.xml      ce qui guide les moteurs (à régénérer au changement de domaine)
 pour-votre-client.html  la page qu'un comptable envoie à son client
 404.html                page introuvable (chemins ABSOLUS, voir plus bas)
@@ -186,8 +189,12 @@ Le site expliquait bien le produit à quelqu'un qui connaissait déjà la marque
   sur chaque page intérieure, `FAQPage` sur `questions.html` — et sur elle seule, deux pages qui
   le portent se faisant concurrence. Le balisage FAQ est **extrait du HTML visible**, jamais
   réécrit à côté : une réponse enjolivée dans le balisage est une pénalité, pas une optimisation.
-- **Quatre guides** (`guide-*.html`) répondent aux questions informationnelles — mentions d'une
-  facture, timbre fiscal, TVA, retenue à la source.
+- **Sept guides** (`guide-*.html`) répondent aux questions informationnelles — mentions d'une
+  facture, timbre fiscal, TVA, retenue à la source, facture électronique, les quatre pièces qui
+  entourent la facture, et la relance d'un impayé. Chacun porte un balisage `Article` avec une
+  date **visible** : une date qui ne vit que dans le balisage est une date que personne ne peut
+  vérifier, ni un lecteur ni un moteur. L'auteur déclaré est la société, jamais une personne
+  inventée — c'est exactement ce qu'une vérification cherche.
 
 **La règle à ne pas casser : une page = une requête.** `tunisie.html` est une page PRODUIT (« SkanFact
 applique ces règles ») ; les guides sont INFORMATIONNELS (« voici comment la règle marche »). Deux
@@ -198,6 +205,21 @@ monter sur aucune des deux. Les deux se renvoient l'une à l'autre, dans les deu
 avec la même réserve qu'elle (`À VÉRIFIER avec ton comptable`, visible sur chaque guide). Aucun
 article de code invoqué, aucune échéance, aucune pénalité chiffrée — ce sont exactement les éléments
 qu'on ne peut pas sourcer, et se tromper dessus coûterait plus cher que tout le trafic gagné.
+
+## Le bouton fantôme — un défaut que le contraste ne voit pas
+
+Huit boutons `btn-vert` posés sur des blocs vert foncé : **fond identique à celui du conteneur**.
+Le texte était blanc, donc parfaitement lisible — le contrôle de contraste passait sans rien dire.
+Mais un bouton dont le fond se confond avec son bloc et qui n'a pas de bordure n'est plus un
+bouton : rien ne dit qu'on peut cliquer. C'est la règle « un bouton sans bordure ni couleur n'est
+pas un bouton », apprise sur l'application du cabinet, jamais portée au site.
+
+La règle : **sur un fond vert foncé, le bouton principal est safran et le second clair** — c'est
+déjà ce que fait `.bande-fin`. `btn-vert` et `btn-creux` sont faits pour un fond clair.
+
+L'audit mesure désormais, pour chaque `.btn`, l'écart entre son fond composé et celui de son
+conteneur, et le refuse sous 18 quand il n'a pas non plus de bordure visible. Prouvé en
+réintroduisant un `btn-vert` sur un bloc vert : le contrôle tombe.
 
 ## Le site et l'application dérivent — comment le vérifier
 

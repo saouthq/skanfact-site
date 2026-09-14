@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Facture électronique en Tunisie — où en est SkanFact</title>
+<meta name="description" content="Ce qu'est la facture électronique, ce qui change pour une petite entreprise tunisienne, et l'état d'avancement de son intégration dans SkanFact.">
+<meta name="theme-color" content="#0a4a43">
+<link rel="canonical" href="https://saouthq.github.io/skanfact-site/guide-facture-electronique.html">
+<link rel="icon" href="img/icone.png" type="image/png">
+<link rel="apple-touch-icon" href="img/icone.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Facture électronique en Tunisie — où en est SkanFact">
+<meta property="og:description" content="Ce qu'est la facture électronique, ce qui change pour une petite entreprise tunisienne, et l'état d'avancement de son intégration dans SkanFact.">
+<meta property="og:image" content="https://saouthq.github.io/skanfact-site/img/tva.jpg">
+<meta property="og:locale" content="fr_TN">
+<meta property="og:url" content="https://saouthq.github.io/skanfact-site/guide-facture-electronique.html">
+<meta property="og:site_name" content="SkanFact">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "BreadcrumbList",
+ "itemListElement": [
+  {
+   "@type": "ListItem",
+   "position": 1,
+   "name": "Accueil",
+   "item": "https://saouthq.github.io/skanfact-site/"
+  },
+  {
+   "@type": "ListItem",
+   "position": 2,
+   "name": "Guides",
+   "item": "https://saouthq.github.io/skanfact-site/guides.html"
+  },
+  {
+   "@type": "ListItem",
+   "position": 3,
+   "name": "La facture électronique",
+   "item": "https://saouthq.github.io/skanfact-site/guide-facture-electronique.html"
+  }
+ ]
+}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "Article",
+ "headline": "La facture électronique, et où en est SkanFact.",
+ "description": "Ce qu'est la facture électronique, ce qui change pour une petite entreprise tunisienne, et l'état d'avancement de son intégration dans SkanFact.",
+ "inLanguage": "fr",
+ "datePublished": "2026-09-14",
+ "dateModified": "2026-09-14",
+ "mainEntityOfPage": {
+  "@type": "WebPage",
+  "@id": "https://saouthq.github.io/skanfact-site/guide-facture-electronique.html"
+ },
+ "image": "https://saouthq.github.io/skanfact-site/img/tva.jpg",
+ "author": {
+  "@type": "Organization",
+  "name": "SKANCYBER SECURITY SUARL",
+  "url": "https://saouthq.github.io/skanfact-site/"
+ },
+ "publisher": {
+  "@type": "Organization",
+  "name": "SKANCYBER SECURITY SUARL",
+  "url": "https://saouthq.github.io/skanfact-site/"
+ }
+}
+</script>
+<link rel="stylesheet" href="assets/style.css">
+<link rel="preload" href="assets/polices/lexend-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/polices/bricolage-latin.woff2" as="font" type="font/woff2" crossorigin>
+</head>
+<body>
+
+<a class="saut-contenu" href="#contenu">Aller au contenu</a>
+
+<header class="entete" id="entete">
+  <div class="conteneur">
+    <a class="marque" href="index.html" aria-label="SkanFact, accueil">
+      <svg width="30" height="30" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="26" height="26" rx="9" fill="#0a4a43"></rect>
+        <path d="M8 10.5h12M8 14h12M8 17.5h7" stroke="#e8a33d" stroke-width="2.1" stroke-linecap="round"></path>
+      </svg>
+      <span class="mot">SkanFact</span>
+    </a>
+    <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-site">
+      <span></span>
+    </button>
+    <nav class="nav-site" id="nav-site" aria-label="Navigation principale">
+      <div class="sous" id="sous-fonc">
+        <button class="lien-menu" id="btn-fonc" aria-expanded="false" aria-controls="menu-fonc">
+          Le logiciel
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="m2.5 4.5 3.5 3.5 3.5-3.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </button>
+        <div class="panneau" id="menu-fonc">
+          <a href="visite.html"><b>Voir SkanFact en images</b><span>La visite guidée, sans rien installer</span></a>
+          <a href="facturation.html"><b>Devis et factures</b><span>Clients, relances, contrats récurrents</span></a>
+          <a href="gestion.html"><b>Achats, stock et trésorerie</b><span>Marges, immobilisations, paie</span></a>
+          <a href="tunisie.html"><b>Les règles tunisiennes</b><span>Timbre, TVA, retenue à la source</span></a>
+          <a href="excel.html"><b>SkanFact ou Excel ?</b><span>Ce qu'un classeur ne peut pas faire</span></a>
+          <a href="guide-facture-electronique.html"><b>La facture électronique</b><span>Où en est son intégration</span></a>
+          <a href="nouveautes.html"><b>Nouveautés</b><span>Ce qui a changé, version par version</span></a>
+        </div>
+      </div>
+      <a href="guides.html">Guides</a>
+      <a href="comptables.html">Comptables</a>
+      <a href="tarifs.html">Tarifs</a>
+      <a href="contact.html">Contact</a>
+      <a class="btn btn-vert btn-petit" href="telecharger.html">Essayer 30 jours</a>
+    </nav>
+  </div>
+</header>
+
+<main id="contenu">
+
+  <section class="page-titre">
+    <div class="conteneur">
+      <p class="fil"><a href="index.html">Accueil</a> <span aria-hidden="true">›</span>
+        <a href="guides.html">Guides</a> <span aria-hidden="true">›</span> La facture électronique</p>
+      <p class="oeil">Guide · et état d'avancement</p>
+      <h1 class="h1-page">La facture électronique, et où en est SkanFact.</h1>
+      <p class="chapeau">La Tunisie généralise progressivement la facture électronique pour les
+        entreprises assujetties à la TVA. C'est la question qu'on nous pose le plus souvent depuis
+        quelques mois — voici ce que ça veut dire concrètement, et où nous en sommes.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: clamp(26px, 3.5vw, 38px);">
+    <div class="conteneur">
+      <div class="chantier">
+        <div class="chantier-pastille" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="9.2" stroke="#e8a33d" stroke-width="1.8"></circle>
+            <path d="M12 7v5.4l3.4 2" stroke="#e8a33d" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </div>
+        <div>
+          <p class="chantier-titre">Intégration en cours, par étapes</p>
+          <p>La facture électronique est <b>en cours d'intégration dans SkanFact</b>, progressivement.
+            Nous ne publions pas de date : elle dépendrait du calendrier de l'administration autant
+            que du nôtre, et une date annoncée puis repoussée vaut moins que pas de date du tout.</p>
+          <p>Ce qui est certain : <b>elle arrivera par une mise à jour ordinaire</b>, comprise dans
+            votre licence comme toutes les autres, sans surcoût et sans ressaisie de vos pièces.</p>
+        </div>
+      </div>
+
+      <p class="guide-date">Mis à jour le <time datetime="2026-09-14">14 septembre 2026</time> · <a href="guides.html">Tous les guides</a></p>
+      <article class="guide">
+        <h2>Ce que c'est, en une phrase</h2>
+        <p>Une facture électronique n'est pas un PDF envoyé par email. C'est une facture au
+          <b>format structuré</b> — des données que la machine du destinataire lit sans les
+          retaper — échangée via une <b>plateforme autorisée</b>, qui en conserve la trace et
+          l'atteste. Le PDF continue d'exister pour l'œil humain ; ce qui change, c'est ce qui
+          circule dessous.</p>
+
+        <h2>Ce que ça change pour une petite entreprise</h2>
+        <ul class="guide-puces">
+          <li><b>La facture ne se scanne plus, elle se transmet.</b> Votre client la reçoit lisible
+            par son propre logiciel : plus de ressaisie, donc plus de fautes de frappe sur des
+            montants.</li>
+          <li><b>La donnée doit être propre en amont.</b> Un format structuré n'accepte pas
+            l'à-peu-près : matricule fiscal présent et bien formé, taux de TVA par ligne, numéro
+            continu, montants au millime. Ce sont exactement les mentions qu'une facture
+            devait déjà porter — mais cette fois, une pièce incomplète est <b>rejetée</b>, elle ne
+            passe plus.</li>
+          <li><b>Votre comptable reçoit mieux.</b> Ce qui lui arrivait en PDF à recopier lui arrive
+            en données.</li>
+        </ul>
+        <p>C'est la raison pour laquelle nous n'avons pas attendu pour construire les fondations :
+          une application qui laisse émettre des factures incomplètes aujourd'hui produira des
+          factures <b>rejetées</b> demain.</p>
+
+        <h2>Ce qui, dans SkanFact, sert déjà</h2>
+        <p>Ces briques existent aujourd'hui et ne sont pas des promesses :</p>
+        <ul class="guide-puces">
+          <li>le <b>matricule fiscal</b> exigé avant toute émission — une facture sans lui n'est pas
+            conforme, et l'application refuse de la produire ;</li>
+          <li>la <b>numérotation continue et verrouillée</b> : une pièce émise ne se modifie plus,
+            elle se corrige par avoir ;</li>
+          <li>la <b>TVA ventilée par taux</b>, ligne par ligne, et le timbre au millime ;</li>
+          <li>les <b>écritures comptables</b> et les journaux exportés en CSV, déjà structurés ;</li>
+          <li>la <b>clôture de période</b>, qui fige un mois déclaré.</li>
+        </ul>
+        <p>Une facture qui part aujourd'hui de SkanFact porte déjà les mentions que le format
+          structuré réclamera. Ce qui reste à construire, c'est le <b>transport</b> : produire le
+          fichier au format attendu et le remettre à la plateforme.</p>
+
+        <h2>Faut-il attendre pour s'équiper ?</h2>
+        <p>Non — et ce serait même le mauvais calcul. Le jour où l'obligation vous concerne, la
+          question ne sera pas « quel logiciel acheter » mais « mes données sont-elles en état de
+          partir ». Une entreprise qui facture proprement depuis un an bascule ; une entreprise qui
+          facture sur un classeur reprend tout.</p>
+
+        <div class="avis-legal avis-large">
+          <b>À vérifier avec votre comptable.</b> Le périmètre des entreprises concernées, le
+          calendrier et les obligations exactes relèvent de l'administration tunisienne et évoluent.
+          Cette page décrit le principe et l'état de notre travail — elle ne dit pas si, ni quand,
+          l'obligation vous concerne. Votre expert-comptable, lui, le sait.
+        </div>
+      </article>
+
+      <div class="guide-produit">
+        <div>
+          <p class="oeil">En attendant</p>
+          <p>SkanFact produit aujourd'hui des factures complètes, numérotées et verrouillées, et le
+            dossier mensuel qui part à votre comptable. C'est la meilleure préparation possible :
+            le jour venu, il n'y aura rien à reprendre.</p>
+          <div class="actions">
+            <a class="btn btn-safran" href="tunisie.html">Voir les règles tunisiennes dans SkanFact</a>
+            <a class="btn btn-clair" href="contact.html">Nous dire que ça vous concerne</a>
+          </div>
+        </div>
+      </div>
+      <p class="sous-tableau" style="max-width: 72ch;">Vous êtes concerné par l'obligation, ou votre
+        comptable vous en a parlé ? <a href="contact.html">Écrivez-nous</a> : ce sont ces messages
+        qui décident de l'ordre des prochaines versions, et nous vous préviendrons dès que l'étape
+        suivante sera livrée.</p>
+    </div>
+  </section>
+
+  <section class="section suite">
+    <div class="conteneur">
+      <p class="oeil">Continuer la visite</p>
+      <div class="cartes-mini">
+        <a class="mini" href="guide-facture-tunisie.html"><b>Que doit contenir une facture</b><span>Les huit blocs d’une facture complète — ceux que le format structuré réclamera.</span><span class="fleche" aria-hidden="true">→</span></a>
+        <a class="mini" href="guide-tva-tunisie.html"><b>La TVA et sa déclaration</b><span>Les quatre taux, le calcul du mois, et le crédit qui se reporte.</span><span class="fleche" aria-hidden="true">→</span></a>
+        <a class="mini" href="nouveautes.html"><b>Les nouveautés</b><span>Ce qui a changé, version par version. C’est là que l’étape suivante sera annoncée.</span><span class="fleche" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="bande-fin">
+    <div class="conteneur">
+      <h2>Préparez-vous en facturant proprement dès maintenant.</h2>
+      <p class="chapeau">Trente jours d’essai, toutes les fonctions. Le jour où l’obligation vous concerne, vous n’aurez rien à reprendre.</p>
+      <div class="actions">
+        <a class="btn btn-safran" href="telecharger.html">Télécharger et essayer 30 jours</a>
+        <a class="btn btn-clair" href="contact.html">Poser une question</a>
+      </div>
+      <p class="sous-actions">Mac et Windows · aucune carte bancaire · vos données restent chez vous</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="pied">
+  <div class="conteneur">
+    <div class="pied-grille">
+      <div>
+        <a class="marque" href="index.html" style="margin-bottom: 14px;">
+          <svg width="26" height="26" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="26" height="26" rx="9" fill="#0a4a43"></rect>
+        <path d="M8 10.5h12M8 14h12M8 17.5h7" stroke="#e8a33d" stroke-width="2.1" stroke-linecap="round"></path>
+      </svg>
+          <span class="mot">SkanFact</span>
+        </a>
+        <p class="pied-mot">Devis, factures et gestion pour les petites entreprises tunisiennes.
+          Édité en Tunisie par SKANCYBER SECURITY SUARL.</p>
+      </div>
+      <div class="col">
+        <h2 class="pied-titre">Le logiciel</h2>
+        <a href="visite.html">Visite guidée</a>
+        <a href="facturation.html">Devis et factures</a>
+        <a href="gestion.html">Achats, stock, trésorerie</a>
+        <a href="tunisie.html">Les règles tunisiennes</a>
+        <a href="telecharger.html">Télécharger</a>
+      </div>
+      <div class="col">
+        <h2 class="pied-titre">Vous aider</h2>
+        <a href="guides.html">Guides : facture, TVA, timbre</a>
+        <a href="excel.html">SkanFact ou Excel ?</a>
+        <a href="questions.html">Questions fréquentes</a>
+        <a href="comptables.html">Pour les comptables</a>
+        <a href="tarifs.html">Tarifs</a>
+        <a href="nouveautes.html">Nouveautés</a>
+      </div>
+      <div class="col">
+        <h2 class="pied-titre">La société</h2>
+        <a href="contact.html">Nous écrire</a>
+        <a href="mentions-legales.html">Mentions légales</a>
+        <a href="confidentialite.html">Confidentialité</a>
+        <p class="pied-adresse">SKANCYBER SECURITY SUARL<br>08 rue de l'Université, Manar 1<br>El Menzah, 2092 Tunis<br>
+          MF 1998268D/A/M/000</p>
+      </div>
+    </div>
+    <div class="bas">
+      <span>© 2026 SKANCYBER SECURITY SUARL — tous droits réservés</span>
+      <span>SkanFact <span data-version>8.0.0</span> · macOS et Windows</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/site.js" defer></script>
+</body>
+</html>

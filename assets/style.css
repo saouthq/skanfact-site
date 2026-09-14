@@ -876,3 +876,26 @@ legend { font-size: 14px; color: #9fc3bd; padding: 0 0 10px; }
 .carte-guide .fleche { color: var(--vert); font-size: 17px; margin-top: 4px; }
 
 @media (max-width: 760px) { .cartes-guides { grid-template-columns: minmax(0, 1fr); } }
+
+/* Le bandeau d'un chantier en cours. Il ne ressemble ni à une fonctionnalité livrée (vert)
+   ni à un avertissement (rouge) : c'est un état, et il doit se lire comme tel. */
+.chantier {
+  display: flex; gap: 18px; align-items: flex-start; max-width: 72ch;
+  background: var(--safran-clair); border: 1px solid rgba(232, 163, 61, .4);
+  border-radius: var(--rayon); padding: 24px 26px; margin-bottom: 40px;
+}
+.chantier-pastille { flex: none; width: 40px; height: 40px; border-radius: 50%; background: #fff;
+  display: flex; align-items: center; justify-content: center; }
+.chantier-titre {
+  font-family: "Bricolage Grotesque", sans-serif; font-weight: 600; font-size: 18px;
+  letter-spacing: -.02em; color: var(--encre); margin-bottom: 8px;
+}
+.chantier p:not(.chantier-titre) { color: var(--safran-fonce); font-size: 15.5px; line-height: 1.6; max-width: 72ch; }
+.chantier p:not(.chantier-titre) + p { margin-top: 10px; }
+.chantier b { color: #6b4409; font-weight: 600; }
+
+/* La date d'un guide. Elle est VISIBLE parce qu'une date qui ne vit que dans le balisage est
+   une date que personne ne peut vérifier — ni un lecteur, ni un moteur. */
+.guide-date { color: var(--gris-clair); font-size: 14px; margin-bottom: 22px; }
+.guide-date a { color: var(--gris); }
+.guide-date a:hover { color: var(--vert); }
