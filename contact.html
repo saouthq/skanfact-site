@@ -17,10 +17,9 @@
 <meta property="og:url" content="https://saouthq.github.io/skanfact-site/contact.html">
 <meta property="og:site_name" content="SkanFact">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Lexend:wght@300;400;500;600&display=swap">
 <link rel="stylesheet" href="assets/style.css">
+<link rel="preload" href="assets/polices/lexend-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/polices/bricolage-latin.woff2" as="font" type="font/woff2" crossorigin>
 </head>
 <body>
 
@@ -41,13 +40,15 @@
     <nav class="nav-site" id="nav-site" aria-label="Navigation principale">
       <div class="sous" id="sous-fonc">
         <button class="lien-menu" id="btn-fonc" aria-expanded="false" aria-controls="menu-fonc">
-          Fonctionnalités
+          Le logiciel
           <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="m2.5 4.5 3.5 3.5 3.5-3.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
         </button>
         <div class="panneau" id="menu-fonc">
+          <a href="visite.html"><b>Voir SkanFact en images</b><span>La visite guidée, sans rien installer</span></a>
           <a href="facturation.html"><b>Devis et factures</b><span>Clients, relances, contrats récurrents</span></a>
           <a href="gestion.html"><b>Achats, stock et trésorerie</b><span>Marges, immobilisations, paie</span></a>
           <a href="tunisie.html"><b>Les règles tunisiennes</b><span>Timbre, TVA, retenue à la source</span></a>
+          <a href="excel.html"><b>SkanFact ou Excel ?</b><span>Ce qu'un classeur ne peut pas faire</span></a>
         </div>
       </div>
       <a href="comptables.html">Comptables</a>
@@ -97,13 +98,18 @@
               <input type="tel" id="tel" name="tel" autocomplete="tel" placeholder="+216 ...">
             </div>
           </div>
+          <div class="piege" aria-hidden="true">
+            <label for="site-web">Ne remplissez pas ce champ</label>
+            <input type="text" id="site-web" name="piege" tabindex="-1" autocomplete="off">
+          </div>
           <div class="champ">
             <label for="message">Votre message <span class="oblig" aria-hidden="true">*</span></label>
             <textarea id="message" name="message" placeholder="Nous sommes trois, une trentaine de factures par mois, et un comptable qui réclame les pièces chaque trimestre…" required></textarea>
           </div>
-          <button class="btn btn-safran" type="submit">Écrire à SkanFact</button>
-          <p class="aide-form" id="aide-form">Le bouton ouvre votre logiciel de messagerie avec le
-            message déjà rédigé. Vous préférez écrire directement ?
+          <button class="btn btn-safran" type="submit">Envoyer</button>
+          <p class="dit-envoi" id="dit-envoi" role="status" hidden></p>
+          <p class="aide-form" id="aide-form">Votre message part directement, sans passer par un
+            service tiers. Vous préférez écrire vous-même ?
             <a href="mailto:contact@skanfact.tn">contact@skanfact.tn</a></p>
         </form>
 
@@ -114,9 +120,10 @@
             <span>Questions, démonstration, licences</span>
           </div>
           <div class="bloc-info">
-            <div class="t">Téléphone</div>
-            <b>+216 XX XXX XXX</b>
-            <span>Du lundi au vendredi, 9 h – 17 h</span>
+            <div class="t">Au téléphone</div>
+            <b>Sur rendez-vous</b>
+            <span>Demandez-le dans votre message avec un créneau : nous vous rappelons,
+              du lundi au vendredi, 9 h – 17 h.</span>
           </div>
           <div class="bloc-info">
             <div class="t">Éditeur</div>
@@ -164,6 +171,7 @@
       </div>
       <div class="col">
         <h2 class="pied-titre">Le logiciel</h2>
+        <a href="visite.html">Visite guidée</a>
         <a href="facturation.html">Devis et factures</a>
         <a href="gestion.html">Achats, stock, trésorerie</a>
         <a href="tunisie.html">Les règles tunisiennes</a>
@@ -171,6 +179,7 @@
       </div>
       <div class="col">
         <h2 class="pied-titre">Vous aider</h2>
+        <a href="excel.html">SkanFact ou Excel ?</a>
         <a href="questions.html">Questions fréquentes</a>
         <a href="comptables.html">Pour les comptables</a>
         <a href="tarifs.html">Tarifs</a>

@@ -13,6 +13,10 @@ navigateur et on voit le site — c'est la même philosophie que l'application.
 
 ```
 index.html              l'accueil : la promesse, les quatre portes, les prix
+visite.html             la visite guidée : sept écrans, du devis à la déclaration
+excel.html              « SkanFact ou Excel ? » — la page qu'on cherche quand on hésite
+pour-votre-client.html  la page qu'un comptable envoie à son client
+404.html                page introuvable (chemins ABSOLUS, voir plus bas)
 facturation.html        devis, factures, avoirs, relances, clients
 gestion.html            achats, stock, trésorerie, marges, paie, les 16 modules
 tunisie.html            timbre fiscal, TVA, retenue à la source, clôture
@@ -23,8 +27,9 @@ contact.html            le formulaire et les coordonnées
 telecharger.html        le téléchargement, Mac et Windows
 mentions-legales.html   mentions légales
 confidentialite.html    ce que le site et l'application font de vos données
-assets/style.css        toute la mise en forme
+assets/style.css        toute la mise en forme, polices comprises
 assets/site.js          menu, formulaire de contact, dernière version publiée
+assets/polices/         les deux polices, servies depuis ce site
 img/                    les captures de l'application, en deux tailles
 ```
 
@@ -38,6 +43,21 @@ question — une page unique ne peut se positionner que sur une seule recherche.
 **Aucune page ne se termine en cul-de-sac** : chacune finit par « Continuer la visite » (trois pages
 voisines) puis par un rappel de l'essai.
 
+Trois pages ont été ajoutées en septembre 2026, pour trois manques précis :
+
+- **`visite.html`** — le seul moyen de voir SkanFact était d'installer 220 Mo d'application non
+  signée, en passant outre un avertissement de sécurité. Beaucoup s'arrêtaient là. Sept écrans réels
+  dans l'ordre d'une affaire : le devis, la facture, la relance, la trésorerie, la TVA, le dossier du
+  comptable, le panneau du matin. Pas une liste de fonctions — il y en a déjà trois pages — mais
+  l'**enchaînement**, qui ne se voit nulle part ailleurs.
+- **`excel.html`** — le concurrent réel n'est pas un autre logiciel, c'est le classeur. La page dit
+  les sept endroits où ça casse, et **ce qu'Excel fait mieux** : un tableau qui donne toujours raison
+  à celui qui l'écrit ne se lit pas jusqu'au bout.
+- **`pour-votre-client.html`** — tout le reste du site s'adresse au comptable ; rien ne lui donnait
+  de quoi parler à **son** client. C'est pourtant toute la stratégie : le cabinet est le canal, pas
+  la cible. Page courte exprès — elle s'ouvre depuis un lien WhatsApp, sur un téléphone. La page
+  Comptables la propose avec un bouton « copier le lien ».
+
 ## Modifier un texte
 
 Ouvrez le fichier `.html` concerné, changez la phrase, enregistrez, et poussez sur `main` : le site
@@ -47,6 +67,13 @@ est mis à jour tout seul en une minute environ.
 menu ou changez l'adresse du pied, il faut le faire dans *toutes* les pages — c'est le prix à payer
 pour un site sans étape de construction. La page courante, elle, se marque toute seule
 (`assets/site.js` compare l'adresse aux liens du menu) : il n'y a rien à indiquer à la main.
+
+Pour vérifier qu'aucune page n'a divergé :
+
+```bash
+for f in *.html; do sed -n '/<header/,/<\/header>/p' "$f" | md5sum; done | sort -u | wc -l
+# doit afficher 1 (la 404 a son propre en-tête réduit : elle n'entre pas dans le compte)
+```
 
 ## Voir le site sur son ordinateur
 
@@ -86,6 +113,47 @@ Règle apprise : une balise `<img>` qui porte ses attributs `width` et `height` 
 `height: auto` en CSS. Sans quoi la largeur se réduit avec l'écran pendant que la hauteur reste
 celle de l'attribut, et toutes les captures sont étirées en hauteur — ça ne se voit sur aucune
 relecture du code, seulement en mesurant `getBoundingClientRect()` dans un vrai navigateur.
+
+## Les polices sont servies depuis ce site
+
+`assets/polices/` contient les quatre fichiers `woff2` (Bricolage Grotesque et Lexend, sous-ensembles
+latin et latin-ext), et les `@font-face` sont en tête de `assets/style.css`. Ce sont des polices
+**variables** : un seul fichier couvre toute la plage de graisses, d'où `font-weight: 600 800` plutôt
+qu'un bloc par graisse.
+
+Deux raisons de ne plus passer par Google, dans cet ordre : la feuille de Google était une requête
+**bloquante** vers un tiers avant le premier pixel de texte, et l'adresse IP de chaque visiteur
+partait chez lui sans qu'on le lui ait demandé — sur un site dont l'argument est « vos données
+restent chez vous ».
+
+188 Ko en tout, préchargés pour les deux fichiers `latin`. Depuis, l'audit mesure la page avec les
+**vraies** polices : tant que Google était bloqué dans l'environnement de test, tout était mesuré
+avec des polices de substitution, donc à des largeurs fausses.
+
+## La page 404
+
+`404.html` est servie par GitHub Pages pour **n'importe quelle** adresse manquante — et l'adresse
+affichée reste celle qui manquait. Ses chemins sont donc **absolus** (`/skanfact-site/assets/…`) :
+avec des chemins relatifs, `assets/style.css` serait cherché dans le dossier inexistant de l'adresse
+demandée, et la page arriverait sans style ni logo. **Ces chemins sont à reprendre le jour du
+domaine** (`/skanfact-site/` → `/`), en même temps que les `og:url` et les canoniques.
+
+## Le formulaire de contact
+
+Il poste sur le **relais Cloudflare déjà déployé** pour les mises à jour, qui a désormais une route
+`/contact`. Rien ne part chez un service tiers — ce serait démentir la promesse du site sur la page
+même où l'on demande de nous faire confiance.
+
+Une seule ligne à remplir dans `assets/site.js` :
+
+```js
+var RELAIS_CONTACT = '';     // ← l'adresse du relais, suivie de /contact
+```
+
+**Tant qu'elle est vide, le formulaire fonctionne quand même** : il repasse par le logiciel de
+messagerie du visiteur, et il le dit. Même chose si le relais répond mal ou met plus de douze
+secondes. On ne perd jamais un message parce qu'un service est en panne. Le reste — clés, variables,
+vérification — est dans `worker/README.md` du dépôt de l'application.
 
 ## Audit UI/UX de septembre 2026
 
@@ -132,8 +200,16 @@ que le contrôle tombe. Un contrôle qui reste vert avec le défaut ne prouve ri
   désigne une autre adresse que celle qu'on sert annule le bénéfice du domaine.
 - L'adresse **contact@skanfact.tn**, à créer avec le domaine.
 - Le **numéro de téléphone**, écrit `+216 XX XXX XXX` partout.
-- Un **vrai formulaire de contact** : aujourd'hui le bouton ouvre le logiciel de messagerie du
-  visiteur, ce qui ne marche pas pour qui consulte depuis un webmail sur téléphone.
+- **Brancher le formulaire** : déployer la route `/contact` du relais (voir `worker/README.md`) puis
+  remplir `RELAIS_CONTACT` dans `assets/site.js`. Tant que ce n'est pas fait, le formulaire retombe
+  sur le logiciel de messagerie du visiteur — ce qui ne marche pas depuis un webmail sur téléphone.
+- Un **compteur de visites** qui respecte la promesse du site : sans cookie et sans bandeau.
+  [GoatCounter](https://www.goatcounter.com) (gratuit) ou [Plausible](https://plausible.io). Une
+  seule ligne à poser avant `</head>` **des 14 pages**, une fois le compte créé :
+  `<script data-goatcounter="https://VOTRECODE.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>`.
+  Sans ça, on ne sait pas quelle page amène les téléchargements — donc on ne sait pas quoi améliorer.
+- **Un paiement en ligne** (Paymee, Konnect ou Flouci) : aujourd'hui l'achat passe par une facture et
+  un virement, ce qui est correct mais ajoute deux jours entre la décision et la licence.
 - Dans les mentions légales : le **numéro au registre national des entreprises** et le **capital
   social**, qui ne figurent pas sur la carte d'identification fiscale.
 

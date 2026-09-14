@@ -17,10 +17,9 @@
 <meta property="og:url" content="https://saouthq.github.io/skanfact-site/tarifs.html">
 <meta property="og:site_name" content="SkanFact">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Lexend:wght@300;400;500;600&display=swap">
 <link rel="stylesheet" href="assets/style.css">
+<link rel="preload" href="assets/polices/lexend-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/polices/bricolage-latin.woff2" as="font" type="font/woff2" crossorigin>
 </head>
 <body>
 
@@ -41,13 +40,15 @@
     <nav class="nav-site" id="nav-site" aria-label="Navigation principale">
       <div class="sous" id="sous-fonc">
         <button class="lien-menu" id="btn-fonc" aria-expanded="false" aria-controls="menu-fonc">
-          Fonctionnalités
+          Le logiciel
           <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="m2.5 4.5 3.5 3.5 3.5-3.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
         </button>
         <div class="panneau" id="menu-fonc">
+          <a href="visite.html"><b>Voir SkanFact en images</b><span>La visite guidée, sans rien installer</span></a>
           <a href="facturation.html"><b>Devis et factures</b><span>Clients, relances, contrats récurrents</span></a>
           <a href="gestion.html"><b>Achats, stock et trésorerie</b><span>Marges, immobilisations, paie</span></a>
           <a href="tunisie.html"><b>Les règles tunisiennes</b><span>Timbre, TVA, retenue à la source</span></a>
+          <a href="excel.html"><b>SkanFact ou Excel ?</b><span>Ce qu'un classeur ne peut pas faire</span></a>
         </div>
       </div>
       <a href="comptables.html">Comptables</a>
@@ -113,7 +114,7 @@
             <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3 8.3 3 3 6.5-6.6" stroke="#0a4a43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>Paie : bulletins, CNSS, IRPP, congés</li>
             <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3 8.3 3 3 6.5-6.6" stroke="#0a4a43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>Trois postes, dossier partagé</li>
           </ul>
-          <a class="btn btn-vert prendre" href="contact.html">Nous écrire</a>
+          <a class="btn btn-vert prendre" href="telecharger.html">Commencer l'essai</a>
         </div>
       </div>
 
@@ -163,6 +164,41 @@
     </div>
   </section>
 
+
+  <section class="section section-creme" id="acheter">
+    <div class="conteneur">
+      <p class="oeil">Passer à la licence</p>
+      <h2>Comment on achète, en quatre étapes.</h2>
+      <p class="chapeau">Il n'y a pas de formulaire de paiement à remplir, et c'est volontaire :
+        vous recevez une facture en bonne et due forme, timbre fiscal compris, comme pour n'importe
+        quel fournisseur — c'est elle que votre comptable attend.</p>
+      <ol class="etapes achat">
+        <li class="etape"><span class="n">1</span><b>Vous essayez</b>
+          <p>Trente jours, toutes les fonctions ouvertes. C'est là que vous voyez de quelle offre
+            vous avez besoin.</p></li>
+        <li class="etape"><span class="n">2</span><b>Vous nous écrivez</b>
+          <p>L'offre, le nombre de postes, et les coordonnées de votre société pour la facture.</p></li>
+        <li class="etape"><span class="n">3</span><b>Vous recevez la facture</b>
+          <p>Réglable par virement, chèque ou espèces. Nous convenons du mode ensemble.</p></li>
+        <li class="etape"><span class="n">4</span><b>Vous collez la clé</b>
+          <p>Elle arrive par email. Paramètres → Licence, et c'est fait — sans connexion, sur le
+            poste.</p></li>
+      </ol>
+      <div class="note-prix" style="margin-top: 34px;">
+        <div style="flex: 1; min-width: 260px;">
+          <p><b>Si c'est votre comptable qui vous a parlé de nous</b>, dites-le dans votre message :
+            vous avez <b>20 % la première année</b>. Il ne touche aucune commission — son
+            application est gratuite, et le restera.</p>
+          <p style="margin-top: 10px;">La licence court douze mois, <b>sans reconduction
+            automatique</b> : rien ne se prélève tout seul, nous vous écrivons avant l'échéance.</p>
+        </div>
+      </div>
+      <div class="actions" style="margin-top: 28px;">
+        <a class="btn btn-vert" href="telecharger.html">Commencer par l'essai</a>
+        <a class="btn btn-creux" href="contact.html">Demander une facture</a>
+      </div>
+    </div>
+  </section>
   <section class="section">
     <div class="conteneur">
       <h2>Ce que « à l'échéance » veut dire, précisément.</h2>
@@ -183,9 +219,9 @@
         </details>
         <details class="qq">
           <summary>Comment se paie la licence ?</summary>
-          <p class="rep">Écrivez-nous : nous convenons du mode de règlement et vous recevez une
-            facture en bonne et due forme, timbre fiscal compris. La clé de licence s'active sans
-            connexion, sur le poste.</p>
+          <p class="rep">En quatre étapes, détaillées juste au-dessus :
+            <a href="#acheter">comment on achète</a>. En deux mots : vous écrivez, vous recevez une
+            facture en bonne et due forme, et la clé s'active sans connexion sur le poste.</p>
         </details>
         <details class="qq">
           <summary>Et si j'ai plus de trois postes ?</summary>
@@ -238,6 +274,7 @@
       </div>
       <div class="col">
         <h2 class="pied-titre">Le logiciel</h2>
+        <a href="visite.html">Visite guidée</a>
         <a href="facturation.html">Devis et factures</a>
         <a href="gestion.html">Achats, stock, trésorerie</a>
         <a href="tunisie.html">Les règles tunisiennes</a>
@@ -245,6 +282,7 @@
       </div>
       <div class="col">
         <h2 class="pied-titre">Vous aider</h2>
+        <a href="excel.html">SkanFact ou Excel ?</a>
         <a href="questions.html">Questions fréquentes</a>
         <a href="comptables.html">Pour les comptables</a>
         <a href="tarifs.html">Tarifs</a>

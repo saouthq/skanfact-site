@@ -4,6 +4,39 @@
    Pas de framework, pas de build : un navigateur suffit à lire ce fichier.
    ============================================================================= */
 
+/* ------------------------------------------------------------------ polices
+   Servies depuis ce site, plus depuis Google. Deux raisons, dans cet ordre :
+   la feuille de Google était une requête BLOQUANTE vers un tiers avant le
+   premier pixel de texte, et l'adresse IP de chaque visiteur partait chez lui
+   sans qu'on le lui ait demandé — sur un site dont l'argument est « vos données
+   restent chez vous ».
+   Ce sont des polices variables : un seul fichier couvre toute la plage de
+   graisses, d'où `font-weight: 600 800` plutôt qu'un bloc par graisse. */
+@font-face {
+  font-family: "Bricolage Grotesque"; font-style: normal; font-weight: 600 800;
+  font-stretch: 100%; font-display: swap;
+  src: url(polices/bricolage-latin.woff2) format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Bricolage Grotesque"; font-style: normal; font-weight: 600 800;
+  font-stretch: 100%; font-display: swap;
+  src: url(polices/bricolage-latin-ext.woff2) format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Lexend"; font-style: normal; font-weight: 300 600;
+  font-display: swap;
+  src: url(polices/lexend-latin.woff2) format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Lexend"; font-style: normal; font-weight: 300 600;
+  font-display: swap;
+  src: url(polices/lexend-latin-ext.woff2) format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
 :root {
   --blanc: #ffffff;
   --creme: #f4f7f5;
@@ -139,6 +172,10 @@ h2 { font-size: clamp(28px, 4.2vw, 42px); }
 .section-vert h2 { color: #fff; }
 .chapeau { font-size: clamp(16px, 1.6vw, 18px); color: var(--gris); margin-top: 16px; max-width: 62ch; }
 .section-vert .chapeau { color: #9fc3bd; }
+/* `.sous-actions` est écrite pour le fond clair (`--gris`). Posée sur le vert foncé, elle
+   tombe à 1,89 — illisible. La bande de fin avait déjà sa règle ; la section verte, non,
+   et ça ne s'est vu que le jour où une page a mis les deux ensemble. */
+.section-vert .sous-actions { color: #9fc3bd; }
 
 .duo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: clamp(32px, 5vw, 62px); align-items: center; }
 
@@ -159,7 +196,7 @@ h1 { font-size: clamp(34px, 5.4vw, 58px); line-height: 1.04; }
 h1 .surligne { background: linear-gradient(transparent 58%, rgba(232, 163, 61, .5) 58%); padding: 0 3px; }
 .hero .chapeau { font-size: clamp(16.5px, 1.8vw, 19px); max-width: 46ch; }
 .actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 30px; }
-.sous-actions { color: var(--gris); font-size: 14px; margin-top: 16px; }
+.sous-actions { color: var(--gris); font-size: 14px; margin-top: 16px; max-width: 72ch; }
 
 .cadre-hero { position: relative; }
 .bulle {
@@ -301,6 +338,13 @@ legend { font-size: 14px; color: #9fc3bd; padding: 0 0 10px; }
 /* Le refus se LIT, il ne se devine pas à la couleur d'une bordure : un daltonien,
    et un lecteur d'écran, n'ont que cette phrase. */
 .dit-faute { color: var(--safran); font-size: 14px; margin-top: 7px; }
+/* Le piège à robots. Il n'est pas `display: none` : certains robots ignorent les champs
+   ainsi masqués, justement parce que c'est le piège le plus connu. Il est hors de l'écran,
+   hors du parcours au clavier (`tabindex=-1`) et hors du parcours vocal (`aria-hidden`). */
+.piege { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.dit-envoi { margin-top: 14px; font-size: 15px; border-radius: 12px; padding: 12px 16px; }
+.dit-envoi.ok { background: rgba(255, 255, 255, .12); color: #fff; }
+.dit-envoi.rate { background: rgba(232, 163, 61, .16); color: #fbe3bd; }
 .aide-form a { color: #fff; text-decoration: underline; }
 
 .infos .bloc-info { border-bottom: 1px solid rgba(255, 255, 255, .12); padding: 20px 0; }
@@ -315,6 +359,7 @@ legend { font-size: 14px; color: #9fc3bd; padding: 0 0 10px; }
 .pied-grille { display: grid; grid-template-columns: 1.6fr repeat(3, minmax(0, 1fr)); gap: 40px; }
 .pied .pied-titre { font-family: "Lexend", sans-serif; font-size: 14px; font-weight: 600; color: var(--encre); margin: 0 0 14px; letter-spacing: 0; }
 .pied .col a { display: block; color: var(--gris); font-size: 14.5px; margin-bottom: 9px; }
+.pied .bas a { display: inline-block; padding-block: 8px; }
 .pied .bas {
   border-top: 1px solid var(--filet); margin-top: 40px; padding-top: 22px;
   display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
@@ -399,7 +444,8 @@ legend { font-size: 14px; color: #9fc3bd; padding: 0 0 10px; }
   .paire { grid-template-columns: minmax(0, 1fr); }
   .note-prix { padding: 22px; }
   .pied-grille { grid-template-columns: minmax(0, 1fr); gap: 28px; }
-  .pied .bas { flex-direction: column; gap: 8px; }
+  .pied .bas a { display: inline-block; padding-block: 8px; }
+.pied .bas { flex-direction: column; gap: 8px; }
   .actions .btn { width: 100%; }
   .rassure { flex-direction: column; gap: 12px; }
   .qq summary { padding: 18px 20px; font-size: 16.5px; }
@@ -619,3 +665,119 @@ legend { font-size: 14px; color: #9fc3bd; padding: 0 0 10px; }
    584 px d'un côté, 486 px de l'autre. C'est la colonne de l'IMAGE qui est large,
    quel que soit le côté où on l'a posée. */
 .duo:has(> .capture:first-child) { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); }
+
+/* =============================================================================
+   La visite guidée — ajoutée en septembre 2026.
+   Le seul moyen de voir SkanFact était d'installer 220 Mo d'application non signée,
+   en passant outre un avertissement de sécurité. Beaucoup s'arrêtaient là.
+   ============================================================================= */
+
+/* Le plan des sept étapes, en tête de page : on sait tout de suite où l'on va,
+   et on peut sauter à ce qui nous intéresse. */
+.plan-visite { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+.plan-visite a {
+  display: inline-flex; align-items: center; gap: 9px; background: var(--creme);
+  border: 1px solid var(--filet); border-radius: 100px; padding: 9px 17px 9px 9px;
+  font-size: 14.5px; color: var(--encre); transition: border-color .18s ease, background .18s ease;
+}
+.plan-visite a:hover { border-color: var(--vert); background: #fff; color: var(--vert); }
+.plan-visite .p {
+  width: 24px; height: 24px; border-radius: 50%; background: var(--vert); color: #fff; flex: none;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: "Bricolage Grotesque", sans-serif; font-weight: 600; font-size: 13px;
+}
+.plan-visite a:hover .p { background: var(--safran); color: #40280a; }
+
+.num-etape {
+  display: inline-flex; align-items: center; gap: 10px; margin-bottom: 16px;
+  font-size: 14px; color: var(--gris);
+}
+.num-etape span {
+  width: 34px; height: 34px; border-radius: 50%; background: var(--vert); color: #fff;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 17px;
+}
+.detail-etape { color: var(--gris); font-size: 15.5px; margin-top: 18px; max-width: 58ch; }
+.detail-etape b { color: var(--encre); font-weight: 600; }
+
+/* Une étape sur deux met la capture à gauche : la page respire, et l'œil ne s'endort pas
+   sur sept blocs identiques. */
+.pas-visite:nth-child(odd) .duo { direction: rtl; }
+.pas-visite:nth-child(odd) .duo > * { direction: ltr; }
+
+.rappel-visite {
+  background: var(--vert); color: #dcebe8; border-radius: var(--rayon);
+  padding: clamp(30px, 4vw, 48px); text-align: center;
+}
+.rappel-visite h2 { color: #fff; }
+.rappel-visite .chapeau { color: #9fc3bd; margin-inline: auto; }
+.rappel-visite .actions { justify-content: center; }
+
+@media (max-width: 900px) {
+  /* Renverser les colonnes n'a plus de sens quand il n'y en a qu'une, et `direction: rtl`
+     ferait remonter l'image au-dessus de son propre titre. */
+  .pas-visite:nth-child(odd) .duo { direction: ltr; }
+  .plan-visite a { font-size: 14px; }
+}
+
+/* =============================================================================
+   « SkanFact ou Excel ? » — la page qu'on cherche quand on hésite.
+   Le concurrent réel n'est pas un autre logiciel, c'est le classeur.
+   ============================================================================= */
+.casse { display: flex; flex-direction: column; gap: 18px; margin-top: 42px; }
+.cas { border: 1px solid var(--filet); border-radius: var(--rayon); padding: 26px 28px; background: #fff; }
+.cas h3 {
+  display: flex; align-items: center; gap: 13px; font-size: 20px; font-weight: 600;
+  font-family: "Bricolage Grotesque", sans-serif; letter-spacing: -.02em;
+}
+.cas-n {
+  width: 30px; height: 30px; border-radius: 50%; background: var(--vert-clair); color: var(--vert);
+  flex: none; display: inline-flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 15px;
+}
+.cas-duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 18px; }
+.cote { border-radius: 14px; padding: 18px 20px; }
+/* Deux colonnes de même poids visuel : ce n'est pas un procès du classeur, c'est une
+   comparaison. Un côté en rouge vif et l'autre en vert vif ne se lirait pas. */
+.cote .qui { font-size: 13.5px; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 8px; }
+.cote p:not(.qui) { font-size: 15px; line-height: 1.6; }
+.cote.excel { background: var(--creme); }
+.cote.excel .qui { color: var(--gris-clair); }
+.cote.excel p:not(.qui) { color: var(--gris); }
+.cote.skan { background: var(--vert-clair); }
+.cote.skan .qui { color: var(--vert); }
+.cote.skan p:not(.qui) { color: var(--encre); }
+.cote.skan b { font-weight: 600; }
+/* Une case qui n'est ni oui ni non — « compris dans Office », « presque ». Un tableau
+   qui force tout en oui/non ment sur les deux lignes où la réponse est nuancée. */
+.compare .nuance { color: var(--gris); font-size: 14px; }
+
+@media (max-width: 760px) {
+  .cas-duo { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .cas { padding: 22px; }
+}
+
+/* Les quatre étapes de l'achat : mêmes repères que « le premier jour » de l'accueil,
+   mais quatre colonnes au lieu de cinq. */
+.etapes.achat { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 1080px) { .etapes.achat { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 620px)  { .etapes.achat { grid-template-columns: minmax(0, 1fr); } }
+
+/* Le bandeau de parrainage, sur la page qu'un comptable remet à son client. */
+.offre-parrain {
+  background: var(--safran-clair); border: 1px solid rgba(232, 163, 61, .35);
+  border-radius: var(--rayon); padding: clamp(28px, 4vw, 44px);
+}
+.offre-parrain h2 { margin-top: 4px; }
+.offre-parrain .chapeau { max-width: 68ch; }
+
+/* « À remettre à vos clients » : le cabinet est le canal, pas la cible. */
+.kit { background: #fff; border: 1px solid var(--filet); border-radius: var(--rayon); padding: clamp(28px, 4vw, 44px); }
+.kit .chapeau + .chapeau { margin-top: 12px; }
+
+/* La porte vers la visite guidée, sous la capture du héros. */
+.sous-capture {
+  display: inline-flex; align-items: center; gap: 8px; margin-top: 16px;
+  font-size: 15px; color: var(--vert); font-weight: 500;
+}
+.sous-capture:hover { color: var(--safran-fonce); }

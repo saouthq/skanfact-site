@@ -9,6 +9,13 @@
   var DEPOT = 'saouthq/skanfact';
   var RELEASES = 'https://github.com/' + DEPOT + '/releases';
 
+  /* L'adresse du relais qui remet les messages du formulaire — le MÊME worker Cloudflare que
+     celui des mises à jour, avec une route `/contact` en plus. Tant que cette ligne est vide,
+     ou si le relais ne répond pas, le formulaire repasse par le logiciel de messagerie du
+     visiteur : on ne perd jamais un message parce qu'un service est en panne.
+     Une seule ligne à remplir : voir worker/README.md dans le dépôt de l'application. */
+  var RELAIS_CONTACT = '';
+
   /* ------------------------------------------------- la page où l'on se trouve
      Marquée ici plutôt qu'à la main dans dix fichiers : une seule vérité, et
      aucune page ne peut oublier de se signaler. */
@@ -136,21 +143,72 @@
         phrase = 'Cette adresse ne permettra pas de vous répondre — vérifiez-la.';
       }
       if (fautif) { marquer(fautif, phrase); return; }
+
       var v = function (id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; };
       var profil = (form.querySelector('input[name="profil"]:checked') || {}).value || 'une entreprise';
+      var donnees = {
+        profil: profil, nom: v('nom'), societe: v('societe'), email: v('email'),
+        tel: v('tel'), message: v('message'), piege: v('site-web')
+      };
       var corps = [
-        'Je suis ' + profil + '.',
-        '',
-        'Nom : ' + v('nom'),
-        'Société : ' + (v('societe') || '—'),
-        'Email : ' + v('email'),
-        'Téléphone : ' + (v('tel') || '—'),
-        '',
-        v('message')
+        'Je suis ' + profil + '.', '',
+        'Nom : ' + donnees.nom,
+        'Société : ' + (donnees.societe || '—'),
+        'Email : ' + donnees.email,
+        'Téléphone : ' + (donnees.tel || '—'), '',
+        donnees.message
       ].join('\n');
-      window.location.href = 'mailto:contact@skanfact.tn'
-        + '?subject=' + encodeURIComponent('SkanFact — demande de ' + v('nom'))
-        + '&body=' + encodeURIComponent(corps);
+
+      var bouton = form.querySelector('button[type=submit]');
+      var dit = document.getElementById('dit-envoi');
+      var annoncer = function (classe, texte) {
+        if (!dit) return;
+        dit.className = 'dit-envoi ' + classe;
+        dit.textContent = texte;
+        dit.hidden = false;
+      };
+      /* Le repli : on ouvre le logiciel de messagerie, et on le DIT. Ouvrir une fenêtre
+         que le visiteur n'attend pas, sans un mot, se lit comme un bug. */
+      var parMessagerie = function (pourquoi) {
+        annoncer('rate', pourquoi + ' Votre logiciel de messagerie s’ouvre avec le message déjà '
+          + 'rédigé. S’il ne s’ouvre pas, écrivez à contact@skanfact.tn.');
+        window.location.href = 'mailto:contact@skanfact.tn'
+          + '?subject=' + encodeURIComponent('SkanFact — demande de ' + donnees.nom)
+          + '&body=' + encodeURIComponent(corps);
+      };
+
+      if (!RELAIS_CONTACT) { parMessagerie('Le formulaire n’est pas encore branché.'); return; }
+
+      if (bouton) { bouton.disabled = true; bouton.textContent = 'Envoi…'; }
+      var rendreLeBouton = function () {
+        if (bouton) { bouton.disabled = false; bouton.textContent = 'Envoyer'; }
+      };
+      /* Un envoi sans limite de temps laisse quelqu'un devant « Envoi… » pour toujours. */
+      var minuteur = setTimeout(function () { rendreLeBouton(); parMessagerie('L’envoi est trop lent.'); }, 12000);
+
+      fetch(RELAIS_CONTACT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(donnees)
+      }).then(function (r) {
+        return r.json().catch(function () { return { ok: r.ok }; })
+          .then(function (j) { return { code: r.status, j: j }; });
+      }).then(function (res) {
+        clearTimeout(minuteur);
+        rendreLeBouton();
+        if (res.j && res.j.ok) {
+          form.reset();
+          annoncer('ok', 'Message envoyé. Nous répondons sous un jour ouvré, à ' + donnees.email + '.');
+          return;
+        }
+        // 400 : c'est nous qui avons mal rempli. On le dit, on n'ouvre pas la messagerie.
+        if (res.code === 400 && res.j && res.j.erreur) { annoncer('rate', res.j.erreur); return; }
+        parMessagerie(res.j && res.j.configurer ? 'Le formulaire n’est pas encore branché.' : 'L’envoi a échoué.');
+      }).catch(function () {
+        clearTimeout(minuteur);
+        rendreLeBouton();
+        parMessagerie('L’envoi a échoué.');
+      });
     });
   }
 
@@ -217,6 +275,36 @@
           + '<a href="' + RELEASES + '" rel="noopener">Ouvrir la page des versions</a>';
       }
     });
+
+  /* ------------------------------------ le lien à remettre à un client (page Comptables)
+     `navigator.clipboard` n'existe pas partout — un site servi en http, un vieux navigateur.
+     On retombe alors sur la sélection du texte, qui marche depuis toujours. */
+  var copier = document.getElementById('copier-lien');
+  if (copier) {
+    var ditCopie = document.getElementById('dit-copie');
+    var motInitial = ditCopie ? ditCopie.textContent : '';
+    copier.addEventListener('click', function () {
+      var lien = copier.getAttribute('data-lien');
+      var reussi = function () {
+        copier.textContent = 'Lien copié';
+        if (ditCopie) ditCopie.textContent = lien;
+        setTimeout(function () {
+          copier.textContent = 'Copier le lien';
+          if (ditCopie) ditCopie.textContent = motInitial;
+        }, 4000);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(lien).then(reussi, function () {
+          if (ditCopie) ditCopie.textContent = lien;
+        });
+      } else if (ditCopie) {
+        // On l'affiche et on le sélectionne : il ne reste qu'à faire Cmd+C.
+        ditCopie.textContent = lien;
+        var r = document.createRange(); r.selectNodeContents(ditCopie);
+        var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+      }
+    });
+  }
 
   /* --------------------------------------- mettre en avant le bon système
      On ne cache jamais l'autre : quelqu'un télécharge souvent pour un collègue. */
