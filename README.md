@@ -236,14 +236,25 @@ que le contrôle tombe. Un contrôle qui reste vert avec le défaut ne prouve ri
   `CNAME` posé trop tôt fait cesser de servir `saouthq.github.io` alors que le domaine ne répond pas
   encore :
 
-  1. chez OVH, faire pointer le domaine vers GitHub Pages (4 enregistrements `A` + un `CNAME` `www`) ;
-  2. `echo skanfact.tn > CNAME` à la racine du dépôt ;
-  3. remplacer l'adresse dans les `og:url`, `og:image` et `link rel=canonical` des pages :
-     `sed -i 's|https://saouthq.github.io/skanfact-site/|https://skanfact.tn/|g' *.html`
-  4. reprendre les chemins **absolus** de `404.html` : `sed -i 's|/skanfact-site/|/|g' 404.html` ;
-  5. et le lien à remettre aux clients, dans `comptables.html` (`data-lien`) ;
-  6. **alors seulement**, ajouter `robots.txt` et `sitemap.xml` : ils doivent porter l'adresse
-     définitive, et c'est maintenant une question de jours.
+  1. chez OVH, faire pointer le domaine vers GitHub Pages — les adresses exactes sont sur
+     [la page de GitHub](https://docs.github.com/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site),
+     qui fait foi ; **ne toucher ni aux `MX` ni au `TXT` SPF**, sinon `contact@skanfact.tn`
+     (Zimbra) cesse de recevoir, et ça ne se voit pas tout de suite ;
+  2. vérifier que le domaine répond **avant** de continuer (`dig skanfact.tn +short`, ou simplement
+     l'ouvrir dans un navigateur) ;
+  3. puis, dans le dépôt : `./outils-bascule-domaine.sh . skanfact.tn`
+
+  Le script pose le fichier `CNAME`, réécrit les `og:url`, `og:image` et `link rel=canonical` des
+  pages, reprend les chemins **absolus** de `404.html`, le lien à remettre aux clients dans
+  `comptables.html`, et écrit `robots.txt` et `sitemap.xml` avec l'adresse définitive (les pages
+  en `noindex` en sont exclues — les annoncer tout en demandant de ne pas les indexer serait
+  contradictoire). Il a été vérifié sur une copie : 16 pages servies, 13 adresses au sitemap,
+  aucune trace de l'ancienne adresse, audit à zéro constat.
+
+  **L'ordre compte.** Le fichier `CNAME` fait cesser de servir `saouthq.github.io`, qui redirige
+  alors vers le domaine : posé avant que le DNS réponde, il met le site hors ligne. Enfin, cocher
+  « Enforce HTTPS » dans les réglages Pages du dépôt une fois le certificat émis (quelques minutes
+  à quelques heures).
 
   GitHub redirige ensuite `saouthq.github.io/skanfact-site/` vers le domaine : ce qui aura été
   indexé d'ici là n'est pas perdu.
