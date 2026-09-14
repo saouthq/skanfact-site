@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ce que SkanFact ne fait pas</title>
+<meta name="description" content="Les limites de SkanFact, écrites franchement : pas de dépôt auprès de l'administration, pas d'import Excel, pas de synchronisation bancaire, pas de version mobile.">
+<meta name="theme-color" content="#0a4a43">
+<link rel="canonical" href="https://saouthq.github.io/skanfact-site/limites.html">
+<link rel="icon" href="img/icone.png" type="image/png">
+<link rel="apple-touch-icon" href="img/icone.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ce que SkanFact ne fait pas">
+<meta property="og:description" content="Les limites de SkanFact, écrites franchement : pas de dépôt auprès de l'administration, pas d'import Excel, pas de synchronisation bancaire, pas de version mobile.">
+<meta property="og:image" content="https://saouthq.github.io/skanfact-site/img/accueil.jpg">
+<meta property="og:locale" content="fr_TN">
+<meta property="og:url" content="https://saouthq.github.io/skanfact-site/limites.html">
+<meta property="og:site_name" content="SkanFact">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "BreadcrumbList",
+ "itemListElement": [
+  {
+   "@type": "ListItem",
+   "position": 1,
+   "name": "Accueil",
+   "item": "https://saouthq.github.io/skanfact-site/"
+  },
+  {
+   "@type": "ListItem",
+   "position": 2,
+   "name": "Ce que SkanFact ne fait pas",
+   "item": "https://saouthq.github.io/skanfact-site/limites.html"
+  }
+ ]
+}
+</script>
+<link rel="stylesheet" href="assets/style.css">
+<link rel="preload" href="assets/polices/lexend-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/polices/bricolage-latin.woff2" as="font" type="font/woff2" crossorigin>
+</head>
+<body>
+
+<a class="saut-contenu" href="#contenu">Aller au contenu</a>
+
+<header class="entete" id="entete">
+  <div class="conteneur">
+    <a class="marque" href="index.html" aria-label="SkanFact, accueil">
+      <svg width="30" height="30" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="26" height="26" rx="9" fill="#0a4a43"></rect>
+        <path d="M8 10.5h12M8 14h12M8 17.5h7" stroke="#e8a33d" stroke-width="2.1" stroke-linecap="round"></path>
+      </svg>
+      <span class="mot">SkanFact</span>
+    </a>
+    <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-site">
+      <span></span>
+    </button>
+    <nav class="nav-site" id="nav-site" aria-label="Navigation principale">
+      <div class="sous" id="sous-fonc">
+        <button class="lien-menu" id="btn-fonc" aria-expanded="false" aria-controls="menu-fonc">
+          Le logiciel
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="m2.5 4.5 3.5 3.5 3.5-3.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </button>
+        <div class="panneau" id="menu-fonc">
+          <a href="visite.html"><b>Voir SkanFact en images</b><span>La visite guidée, sans rien installer</span></a>
+          <a href="facturation.html"><b>Devis et factures</b><span>Clients, relances, contrats récurrents</span></a>
+          <a href="gestion.html"><b>Achats, stock et trésorerie</b><span>Marges, immobilisations, paie</span></a>
+          <a href="tunisie.html"><b>Les règles tunisiennes</b><span>Timbre, TVA, retenue à la source</span></a>
+          <a href="vos-donnees.html"><b>Vos données</b><span>Où elles vivent, ce qui sort du poste</span></a>
+          <a href="vos-donnees.html"><b>Vos données</b><span>Où elles vivent, ce qui sort du poste</span></a>
+          <a href="excel.html"><b>SkanFact ou Excel ?</b><span>Ce qu'un classeur ne peut pas faire</span></a>
+          <a href="limites.html"><b>Ce que SkanFact ne fait pas</b><span>Les limites, avant l’achat</span></a>
+          <a href="guide-facture-electronique.html"><b>La facture électronique</b><span>Où en est son intégration</span></a>
+          <a href="nouveautes.html"><b>Nouveautés</b><span>Ce qui a changé, version par version</span></a>
+        </div>
+      </div>
+      <a href="guides.html">Guides</a>
+      <a href="comptables.html">Comptables</a>
+      <a href="tarifs.html">Tarifs</a>
+      <a href="contact.html">Contact</a>
+      <a class="btn btn-vert btn-petit" href="telecharger.html">Essayer 30 jours</a>
+    </nav>
+  </div>
+</header>
+
+<main id="contenu">
+
+  <section class="section section-vert">
+    <div class="conteneur">
+      <p class="fil fil-clair"><a href="index.html">Accueil</a> <span aria-hidden="true">›</span> Ce que SkanFact ne fait pas</p>
+      <p class="oeil">Les limites</p>
+      <h1 class="h1-page h1-clair">Ce que SkanFact ne fait pas.</h1>
+      <p class="chapeau">Un logiciel qui prétend tout faire déçoit la première
+        semaine. Voici ce que celui-ci ne fait pas — écrit avant que vous payiez, pas
+        découvert après.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="conteneur">
+      <div class="guide">
+        <h2>Il ne dépose rien à votre place</h2>
+        <p>SkanFact calcule votre TVA du mois, prépare votre déclaration CNSS et vous
+          rappelle les échéances. Il ne se connecte à <b>aucune administration</b> et
+          n’envoie rien nulle part. Le bouton «&nbsp;Marquer déposée&nbsp;» est
+          un pense-bête, pas un accusé de réception.</p>
+        <p>C’est volontaire. Une application qui déposerait à votre place se
+          tromperait un jour sans que vous le sachiez, et c’est vous qui seriez en faute.</p>
+
+        <h2>Il ne dit pas si vous avez le droit</h2>
+        <p>Les taux — TVA, retenue à la source, CNSS, IRPP, durées
+          d’amortissement — sont des <b>réglages</b>, jamais des vérités
+          écrites dans le programme. Ceux que nous proposons suivent l’usage et sont à
+          valider avec votre comptable. Une loi de finances passe&nbsp;; un logiciel qui aurait cuit ses
+          taux dans son code deviendrait faux en silence.</p>
+        <p>SkanFact ne remplace pas un comptable. Il lui donne un dossier propre.</p>
+
+        <h2>Il ne facture pas encore par voie électronique</h2>
+        <p>L’intégration de la facture électronique est <b>en cours,
+          progressivement</b>. Aujourd’hui, SkanFact produit une facture PDF conforme aux mentions
+          attendues, pas un fichier structuré transmis à une plateforme.
+          <a href="guide-facture-electronique.html">Où en est ce chantier</a>.</p>
+
+        <h2>Il ne reprend pas vos anciennes données</h2>
+        <p>Il n’y a <b>pas d’import</b> depuis un classeur Excel ou un autre logiciel :
+          vos clients et votre catalogue se saisissent une fois, à la main. Pour une trentaine de
+          clients c’est une soirée&nbsp;; pour trois cents, dites-le-nous avant d’acheter
+          plutôt que de le découvrir le premier soir.</p>
+        <p>Vos pièces déjà émises n’ont pas à être
+          ressaisies&nbsp;: elles restent où elles sont, et SkanFact commence à la
+          numérotation que vous lui donnez.</p>
+
+        <h2>Il ne se connecte pas à votre banque</h2>
+        <p>Aucune synchronisation bancaire, aucun rapprochement automatique. Les encaissements se
+          saisissent quand ils arrivent, et le pointage se fait à la main, relevé sous les
+          yeux. En revanche, la trésorerie se projette à partir de ce qui est
+          réellement engagé.</p>
+
+        <h2>Il n’envoie pas vos emails tout seul</h2>
+        <p>«&nbsp;Envoyer au client&nbsp;» prépare le message et joint le PDF, puis
+          ouvre <b>votre</b> logiciel de messagerie. Rien ne part sans que vous cliquiez, et le message
+          reste dans vos envois à vous. Il n’y a pas de relance automatique qui partirait
+          la nuit&nbsp;: SkanFact vous dit qui relancer, vous décidez.</p>
+        <p>Et il n’envoie pas de lien de paiement à vos clients&nbsp;: ils ne peuvent pas
+          régler votre facture en ligne depuis le document.</p>
+
+        <h2>Il ne travaille pas à plusieurs en même temps</h2>
+        <p>Deux personnes peuvent partager un dossier — par iCloud, OneDrive, un disque
+          réseau ou une clé USB — mais <b>chacune à son tour</b>. Ce n’est
+          pas un logiciel multi-utilisateurs&nbsp;: il n’y a pas de serveur, pas de comptes, pas
+          d’édition simultanée.</p>
+        <p>SkanFact détecte et fusionne ce que chacun a écrit, et le dit quand deux
+          versions se contredisent. Le seul cas qu’aucune technique ne règle est deux
+          factures émises hors ligne sous le même numéro&nbsp;: la parade est
+          d’organisation — une seule personne émet.</p>
+
+        <h2>Il n’existe ni sur téléphone, ni dans un navigateur</h2>
+        <p>SkanFact s’installe sur un ordinateur, <b>Mac ou Windows</b>. Il n’y a pas
+          d’application mobile, pas de version web, et pas de version Linux. Vous ne facturez pas
+          depuis le chantier.</p>
+        <p>C’est le revers exact de son principal avantage&nbsp;: rien ne part sur un serveur,
+          parce qu’il n’y a pas de serveur.</p>
+
+        <h2>Il ne lit pas vos factures d’achat tout seul</h2>
+        <p>La lecture d’une photo de facture existe, mais elle est <b>éteinte par
+          défaut</b> et le restera&nbsp;: elle suppose une clé d’API que vous payez
+          à part, et l’envoi de l’image hors de votre ordinateur. Sans cette clé,
+          la photo se joint comme justificatif et la saisie se fait à la main, hors ligne.</p>
+        <p>Même activée, elle ne remplit jamais une fiche toute seule&nbsp;: elle propose,
+          signale ce qu’elle n’est pas sûre d’avoir lu, et attend votre validation.</p>
+
+        <h2>Les applications ne sont pas encore signées</h2>
+        <p>Au premier lancement, macOS et Windows affichent un avertissement. Il ne vient pas d’un
+          problème dans l’application mais de l’absence d’un certificat
+          d’éditeur, qui squi se achètersquo;achqui se achèteegrave;te auprès d’Apple et de Microsoft. La
+          procédure à suivre est écrite sur la
+          <a href="telecharger.html">page de téléchargement</a>. La signature est
+          prévue.</p>
+      </div>
+
+      <div class="chantier" style="margin-top: 42px;">
+        <p class="chantier-titre"><span class="chantier-pastille" aria-hidden="true"></span>Cette page est
+          tenue à jour</p>
+        <p>Quand l’une de ces limites tombe, elle disparaît d’ici et apparaît dans
+          les <a href="nouveautes.html">nouveautés</a>. S’il vous en manque une, ou si vous
+          en trouvez une que nous n’avons pas écrite,
+          <a href="contact.html">dites-le-nous</a>&nbsp;: la liste ne vaut que si elle est
+          complète.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-creme">
+    <div class="conteneur">
+      <h2>Et ce qu’il fait, lui</h2>
+      <div class="cartes-mini" style="margin-top: 30px;">
+        <a class="mini" href="visite.html"><b>La visite guidée</b><span>Le logiciel en images, sans rien installer.</span><span class="fleche" aria-hidden="true">→</span></a>
+        <a class="mini" href="vos-donnees.html"><b>Vos données</b><span>Où elles vivent, ce qui sort, ce qui vous reste.</span><span class="fleche" aria-hidden="true">→</span></a>
+        <a class="mini" href="telecharger.html"><b>Essayer trente jours</b><span>Le seul moyen sérieux de savoir si ça vous va.</span><span class="fleche" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+</main>
+<footer class="pied">
+  <div class="conteneur">
+    <div class="pied-grille">
+      <div>
+        <a class="marque" href="index.html" style="margin-bottom: 14px;">
+          <svg width="26" height="26" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="26" height="26" rx="9" fill="#0a4a43"></rect>
+        <path d="M8 10.5h12M8 14h12M8 17.5h7" stroke="#e8a33d" stroke-width="2.1" stroke-linecap="round"></path>
+      </svg>
+          <span class="mot">SkanFact</span>
+        </a>
+        <p class="pied-mot">Devis, factures et gestion pour les petites entreprises tunisiennes.
+          Édité en Tunisie par SKANCYBER SECURITY SUARL.</p>
+      </div>
+      <div class="col">
+        <h2 class="pied-titre">Le logiciel</h2>
+        <a href="visite.html">Visite guidée</a>
+        <a href="facturation.html">Devis et factures</a>
+        <a href="gestion.html">Achats, stock, trésorerie</a>
+        <a href="tunisie.html">Les règles tunisiennes</a>
+        <a href="vos-donnees.html">Vos données</a>
+        <a href="vos-donnees.html">Vos données</a>
+        <a href="telecharger.html">Télécharger</a>
+      </div>
+      <div class="col">
+        <h2 class="pied-titre">Vous aider</h2>
+        <a href="guides.html">Guides : facture, TVA, timbre</a>
+        <a href="excel.html">SkanFact ou Excel ?</a>
+        <a href="limites.html">Ce que SkanFact ne fait pas</a>
+        <a href="limites.html">Ce que SkanFact ne fait pas</a>
+        <a href="questions.html">Questions fréquentes</a>
+        <a href="comptables.html">Pour les comptables</a>
+        <a href="tarifs.html">Tarifs</a>
+        <a href="acheter.html">Acheter une clé</a>
+        <a href="acheter.html">Acheter une clé</a>
+        <a href="nouveautes.html">Nouveautés</a>
+      </div>
+      <div class="col">
+        <h2 class="pied-titre">La société</h2>
+        <a href="contact.html">Nous écrire</a>
+        <a href="mentions-legales.html">Mentions légales</a>
+        <a href="confidentialite.html">Confidentialité</a>
+        <p class="pied-adresse">SKANCYBER SECURITY SUARL<br>08 rue de l'Université, Manar 1<br>El Menzah, 2092 Tunis<br>
+          MF 1998268D/A/M/000</p>
+      </div>
+    </div>
+    <div class="bas">
+      <span>© 2026 SKANCYBER SECURITY SUARL — tous droits réservés</span>
+      <span>SkanFact <span data-version>8.0.0</span> · macOS et Windows</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/site.js" defer></script>
+</body>
+</html>

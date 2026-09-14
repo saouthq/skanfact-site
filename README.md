@@ -114,6 +114,39 @@ Windows, et les deux équivalents pour SkanFact Cabinet).
 échoue — pas de connexion, quota atteint — les boutons renvoient vers la page des versions et la
 page reste utilisable : c'est volontaire.
 
+## L'audit du site
+
+```bash
+node outils/audit.mjs        # 27 pages × 4 largeurs, dans un vrai Chromium
+```
+
+Il sert le site sous le préfixe réel (`/skanfact-site/`, pour que les chemins absolus de la 404
+soient examinés dans les conditions où ils vivent), ouvre chaque page à quatre largeurs et
+**mesure** : contraste texte/fond, boutons dont le fond se confond avec celui de leur bloc,
+débordements, titres et descriptions, adresses canoniques, `og:image` en chemin relatif, images
+sans texte de remplacement, balisage JSON-LD, liens morts, erreurs JavaScript. Il se termine sur
+un code d'erreur s'il reste un constat grave.
+
+**Pourquoi il est dans ce dépôt** : il a vécu trois sessions dans un dossier de travail
+temporaire, effacé à chaque fois — donc réécrit de mémoire à chaque fois, et chaque réécriture
+reperdait ce que la précédente avait appris. Un contrôle qu'on doit réécrire pour s'en servir
+n'est pas un contrôle. (Même raison que `test/e2e/harnais.js` dans le dépôt de l'application.)
+
+Deux pièges qu'il a fallu lui apprendre, et qu'il ne faut pas lui retirer :
+
+- **Les fonds semi-transparents se COMPOSENT.** `.btn-clair` est un blanc à 14 % posé sur le vert
+  foncé. Pris tel quel, il se compare à du blanc pur : contraste 1,00, et **cent constats qui
+  n'existent pas**. On empile les couches jusqu'au premier fond opaque, comme le fait le
+  navigateur. Un dégradé ou une image de fond : on ne peut pas dire honnêtement quelle couleur
+  est sous le texte, donc on se tait plutôt que d'inventer un chiffre.
+- **Une erreur de chargement n'est pas une erreur de la page.** Le mandataire de l'environnement
+  de développement bloque `api.github.com` ; la page le prévoit et retombe sur un lien. Signaler
+  ce blocage à chaque passage noierait les vraies erreurs JavaScript.
+
+Et il se prouve comme le reste : en **remettant** un défaut (remettre `var(--safran)` sur
+`.lc .num` fait remonter 24 constats). Un contrôle qui ne peut pas échouer est pire que pas de
+contrôle.
+
 ## Les captures d'écran
 
 Elles sont produites par le dépôt de l'application :
@@ -132,6 +165,33 @@ Règle apprise : une balise `<img>` qui porte ses attributs `width` et `height` 
 `height: auto` en CSS. Sans quoi la largeur se réduit avec l'écran pendant que la hauteur reste
 celle de l'attribut, et toutes les captures sont étirées en hauteur — ça ne se voit sur aucune
 relecture du code, seulement en mesurant `getBoundingClientRect()` dans un vrai navigateur.
+
+## La séquence « du devis à la facture »
+
+Dix images du **vrai parcours**, prises en pilotant l'application pour de bon :
+
+```bash
+xvfb-run -a node test/e2e/sequence-site.js   # dans saouthq/skanfact
+```
+
+Elles vivent dans `img/seq-01.jpg` … `seq-10.jpg`, et sont posées sur l'accueil et sur la visite
+guidée. **Sans JavaScript, le balisage est une liste de dix figures légendées** — une visite
+guidée parfaitement lisible, simplement plus longue ; le script la replie en lecteur. C'est ce
+qui garantit aussi que chaque image a un texte de remplacement utile : il est écrit pour être lu
+seul.
+
+Pourquoi des images et pas une vidéo : à ce compte-là (dix états d'un écran), une vidéo pèse plus
+lourd, ne se lit pas au clavier, et n'a pas de légende. Ici chaque vue porte sa phrase, et une
+seule des dix descend du serveur au chargement de la page.
+
+Deux règles que le parcours a apprises, et qui sont écrites dans son code :
+
+- **Filmer à 1440 px, pas à 1280.** Avec la colonne d'aperçu ouverte, les colonnes QTÉ et P.U. de
+  l'éditeur tombent à une trentaine de pixels et **tronquent** leur contenu : « 12 » s'affiche
+  « 1 ». Une image qui montre une quantité fausse à côté d'un total juste ne se rattrape par
+  aucune légende. Constaté sur l'image, pas déduit.
+- **Le numéro de version est masqué.** Il se graverait dans des images qui vivront des mois, et
+  annoncerait une version périmée à côté de la page Téléchargement, qui, elle, est à jour.
 
 ## Les polices sont servies depuis ce site
 
@@ -163,6 +223,13 @@ Il poste sur le **relais Cloudflare déjà déployé** pour les mises à jour, q
 `/contact`. Rien ne part chez un service tiers — ce serait démentir la promesse du site sur la page
 même où l'on demande de nous faire confiance.
 
+Le site a **deux** formulaires — nous écrire (`contact.html`) et demander une clé d'activation
+(`acheter.html`) — et ils passent par le **même** gestionnaire : un second, recopié, serait la
+garantie que l'un des deux perde un correctif. Il ne connaît d'eux que ce que leur balisage
+déclare : `data-envoi` (le genre de message), `data-sujet` (l'objet du message de secours), et
+`required` sur les champs exigés. Les intitulés affichés partent avec le message, si bien qu'un
+champ ajouté demain arrive tout seul dans l'email **sans redéployer le relais**.
+
 Une seule ligne à remplir dans `assets/site.js` :
 
 ```js
@@ -173,6 +240,29 @@ var RELAIS_CONTACT = '';     // ← l'adresse du relais, suivie de /contact
 messagerie du visiteur, et il le dit. Même chose si le relais répond mal ou met plus de douze
 secondes. On ne perd jamais un message parce qu'un service est en panne. Le reste — clés, variables,
 vérification — est dans `worker/README.md` du dépôt de l'application.
+
+## La mesure d'audience
+
+Une seule ligne à remplir dans `assets/site.js` :
+
+```js
+var MESURE = '';             // ← le nom du compte GoatCounter
+```
+
+[GoatCounter](https://www.goatcounter.com) est gratuit pour un site comme celui-ci, ne dépose
+aucun cookie, ne conserve pas les adresses IP et n'attribue aucun identifiant : il compte des
+pages vues. Créer le compte prend deux minutes ; le nom choisi est ce qui se colle ci-dessus.
+
+**Tant que la ligne est vide, aucune requête n'est faite** vers qui que ce soit — un site ne doit
+pas se mettre à appeler quelqu'un d'autre parce qu'on a oublié de finir un réglage. Et « Do Not
+Track » est respecté : le compteur n'est alors pas chargé du tout.
+
+**Le piège, et il est important** : la page Confidentialité promet « aucun outil de mesure
+d'audience ». Un réglage qui rend une phrase de confidentialité fausse est un défaut, pas une
+imprécision. Les deux paragraphes concernés portent donc `data-mesure="non"` et
+`data-mesure="oui"`, et **c'est le même code qui décide** lequel s'affiche et si le compteur
+tourne. Ils ne peuvent donc pas se contredire — y compris sans JavaScript, où il n'y a pas de
+compteur et où c'est la version « aucun » qui s'affiche.
 
 ## Le référencement — ce qui a été fait, et la règle
 
@@ -323,12 +413,12 @@ que le contrôle tombe. Un contrôle qui reste vert avec le défaut ne prouve ri
   `sitemap.xml`. Sans ça, l'indexation prend des semaines au lieu de jours, et surtout on ne voit
   **jamais** sur quelles requêtes le site sort ni à quelle position — c'est-à-dire qu'on travaille
   le référencement à l'aveugle. À faire une fois le domaine branché, avec l'adresse définitive.
-- Un **compteur de visites** qui respecte la promesse du site : sans cookie et sans bandeau.
-  [GoatCounter](https://www.goatcounter.com) (gratuit) ou [Plausible](https://plausible.io). Une
-  seule ligne à poser avant `</head>` **des 14 pages**, une fois le compte créé :
-  `<script data-goatcounter="https://VOTRECODE.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>`.
-  Sans ça, on ne sait pas quelle page amène les téléchargements — donc on ne sait pas quoi améliorer.
-- **Un paiement en ligne** (Paymee, Konnect ou Flouci) : aujourd'hui l'achat passe par une facture et
+- **Créer le compte GoatCounter** (gratuit, deux minutes) et coller son nom dans `var MESURE`
+  de `assets/site.js` — voir « La mesure d'audience » plus haut. Le mécanisme est posé et la page
+  Confidentialité s'accorde toute seule ; il ne manque que le compte. Sans ça, on ne sait pas
+  quelle page amène les téléchargements, donc on ne sait pas quoi améliorer.
+- **Un paiement en ligne** (Konnect est celui envisagé, ou Paymee ou Flouci) : aujourd'hui l'achat passe par la
+  page `acheter.html`, une facture et
   un virement, ce qui est correct mais ajoute deux jours entre la décision et la licence.
 - Dans les mentions légales : le **numéro au registre national des entreprises** et le **capital
   social**, qui ne figurent pas sur la carte d'identification fiscale.

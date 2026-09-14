@@ -16,6 +16,15 @@
      Une seule ligne à remplir : voir worker/README.md dans le dépôt de l'application. */
   var RELAIS_CONTACT = '';
 
+  /* La mesure d'audience. Une seule ligne à remplir : le nom du compte GoatCounter (gratuit,
+     sans cookie, sans traceur, sans donnée personnelle). Tant qu'elle est vide, AUCUNE requête
+     n'est faite vers un service tiers — un site ne doit pas se mettre à appeler quelqu'un
+     d'autre parce qu'on a oublié de finir un réglage.
+     La page Confidentialité annonce ce compteur EXACTEMENT quand il tourne : les deux
+     paragraphes `data-mesure` s'échangent ci-dessous. Une phrase de confidentialité qu'un
+     réglage peut rendre fausse est un défaut, pas une imprécision. */
+  var MESURE = '';
+
   /* ------------------------------------------------- la page où l'on se trouve
      Marquée ici plutôt qu'à la main dans dix fichiers : une seule vérité, et
      aucune page ne peut oublier de se signaler. */
@@ -93,8 +102,20 @@
      Pas de serveur : le bouton prépare un email. C'est honnête et ça marche
      partout — l'adresse est aussi écrite en clair juste à côté, pour qui n'a pas
      de logiciel de messagerie configuré. */
-  var form = document.getElementById('form-contact');
-  if (form) {
+  /* ------------------------------------------------- les formulaires
+     Il y en a DEUX — nous écrire, et demander une clé — et ils n'ont pas les mêmes champs. Un
+     second gestionnaire recopié serait la garantie que l'un des deux perde un correctif : ils
+     passent donc par le même code, qui ne connaît d'eux que ce que leur balisage déclare.
+       `data-envoi` : le genre de message (« contact », « commande »), transmis au relais ;
+       `data-sujet` : l'objet du message de secours ;
+       `required`   : ce qui est exigé — l'attribut sert enfin à quelque chose, alors qu'un
+                      formulaire soumis par bouton ne déclenche aucune validation du navigateur.
+     Les intitulés partent avec le message : le relais n'a pas à connaître les champs de chaque
+     formulaire, et un champ ajouté demain arrive tout seul dans l'email. */
+  Array.prototype.forEach.call(document.querySelectorAll('form[data-envoi]'), function (form) {
+    var genre = form.getAttribute('data-envoi');
+    var sujet = form.getAttribute('data-sujet') || 'SkanFact';
+
     /* Une marque de faute qui ne s'efface pas devient un mensonge : le champ rempli
        restait orange. Elle part dès que le champ redevient acceptable. */
     var laver = function (champ) {
@@ -120,47 +141,62 @@
       champ.scrollIntoView({ block: 'center', behavior: 'smooth' });
       champ.focus();
     };
-    ['nom', 'email', 'message', 'societe', 'tel'].forEach(function (id) {
-      var champ = document.getElementById(id);
-      if (champ) champ.addEventListener('input', function () { laver(champ); });
-    });
+
+    var champs = Array.prototype.slice.call(form.querySelectorAll('input[name], textarea[name]'))
+      .filter(function (c) { return c.type !== 'radio' && c.type !== 'hidden' && c.name !== 'piege'; });
+    champs.forEach(function (c) { c.addEventListener('input', function () { laver(c); }); });
+
+    /* L'intitulé d'un champ, pour l'email : son `<label>`, débarrassé de l'étoile. */
+    var intitule = function (c) {
+      var l = form.querySelector('label[for="' + c.id + '"]') || c.closest('label');
+      var t = l ? l.textContent : c.name;
+      return t.replace(/\s*\*\s*$/, '').trim();
+    };
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      var courriel = document.getElementById('email');
       var fautif = null, phrase = '';
-      ['nom', 'email', 'message'].forEach(function (id) {
-        var champ = document.getElementById(id);
-        if (champ && !champ.value.trim() && !fautif) {
-          fautif = champ;
+      champs.forEach(function (c) {
+        if (!fautif && c.required && !c.value.trim()) {
+          fautif = c;
           phrase = 'Ce champ est nécessaire pour vous répondre.';
         }
       });
       /* Une adresse mal tapée ne casse rien ici — mais la réponse n'arrive jamais,
          et personne ne sait pourquoi. Autant le dire pendant qu'on est sur la page. */
+      var courriel = form.querySelector('input[type=email]');
       if (!fautif && courriel && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(courriel.value.trim())) {
         fautif = courriel;
         phrase = 'Cette adresse ne permettra pas de vous répondre — vérifiez-la.';
       }
       if (fautif) { marquer(fautif, phrase); return; }
 
-      var v = function (id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; };
-      var profil = (form.querySelector('input[name="profil"]:checked') || {}).value || 'une entreprise';
+      /* Le corps du message est assemblé ICI, avec les intitulés que la page affiche : le relais
+         n'a donc pas à connaître les champs de chaque formulaire, et un champ ajouté demain
+         arrive tout seul dans l'email sans qu'on redéploie quoi que ce soit. */
+      var lignes = [];
+      Array.prototype.forEach.call(form.querySelectorAll('fieldset'), function (fs) {
+        var coche = fs.querySelector('input[type=radio]:checked');
+        var lg = fs.querySelector('legend');
+        // Un bouton radio porte son intitulé sur la LÉGENDE du groupe, pas sur le champ.
+        if (coche && lg) lignes.push(lg.textContent.replace(/\s*\*\s*$/, '').trim() + ' : ' + coche.value);
+      });
+      var valeurs = {};
+      champs.forEach(function (c) {
+        valeurs[c.name] = c.value.trim();
+        lignes.push(intitule(c) + ' : ' + (c.value.trim() || '—'));
+      });
+      var piege = form.querySelector('[name=piege]');
+      var corps = lignes.join('\n');
+      var nom = valeurs.nom || valeurs.raison || '';
       var donnees = {
-        profil: profil, nom: v('nom'), societe: v('societe'), email: v('email'),
-        tel: v('tel'), message: v('message'), piege: v('site-web')
+        genre: genre, nom: nom, email: valeurs.email || '',
+        corps: corps, piege: piege ? piege.value.trim() : ''
       };
-      var corps = [
-        'Je suis ' + profil + '.', '',
-        'Nom : ' + donnees.nom,
-        'Société : ' + (donnees.societe || '—'),
-        'Email : ' + donnees.email,
-        'Téléphone : ' + (donnees.tel || '—'), '',
-        donnees.message
-      ].join('\n');
 
       var bouton = form.querySelector('button[type=submit]');
-      var dit = document.getElementById('dit-envoi');
+      var libelle = bouton ? bouton.textContent : '';
+      var dit = form.querySelector('.dit-envoi');
       var annoncer = function (classe, texte) {
         if (!dit) return;
         dit.className = 'dit-envoi ' + classe;
@@ -170,21 +206,21 @@
       /* Le repli : on ouvre le logiciel de messagerie, et on le DIT. Ouvrir une fenêtre
          que le visiteur n'attend pas, sans un mot, se lit comme un bug. */
       var parMessagerie = function (pourquoi) {
-        annoncer('rate', pourquoi + ' Votre logiciel de messagerie s’ouvre avec le message déjà '
-          + 'rédigé. S’il ne s’ouvre pas, écrivez à contact@skanfact.tn.');
+        annoncer('rate', pourquoi + ' Votre logiciel de messagerie s\u2019ouvre avec le message déjà '
+          + 'rédigé. S\u2019il ne s\u2019ouvre pas, écrivez à contact@skanfact.tn.');
         window.location.href = 'mailto:contact@skanfact.tn'
-          + '?subject=' + encodeURIComponent('SkanFact — demande de ' + donnees.nom)
+          + '?subject=' + encodeURIComponent(sujet + (nom ? ' — ' + nom : ''))
           + '&body=' + encodeURIComponent(corps);
       };
 
-      if (!RELAIS_CONTACT) { parMessagerie('Le formulaire n’est pas encore branché.'); return; }
+      if (!RELAIS_CONTACT) { parMessagerie('Le formulaire n\u2019est pas encore branché.'); return; }
 
       if (bouton) { bouton.disabled = true; bouton.textContent = 'Envoi…'; }
       var rendreLeBouton = function () {
-        if (bouton) { bouton.disabled = false; bouton.textContent = 'Envoyer'; }
+        if (bouton) { bouton.disabled = false; bouton.textContent = libelle; }
       };
       /* Un envoi sans limite de temps laisse quelqu'un devant « Envoi… » pour toujours. */
-      var minuteur = setTimeout(function () { rendreLeBouton(); parMessagerie('L’envoi est trop lent.'); }, 12000);
+      var minuteur = setTimeout(function () { rendreLeBouton(); parMessagerie('L\u2019envoi est trop lent.'); }, 12000);
 
       fetch(RELAIS_CONTACT, {
         method: 'POST',
@@ -198,19 +234,136 @@
         rendreLeBouton();
         if (res.j && res.j.ok) {
           form.reset();
-          annoncer('ok', 'Message envoyé. Nous répondons sous un jour ouvré, à ' + donnees.email + '.');
+          annoncer('ok', genre === 'commande'
+            ? 'Demande envoyée. Votre facture part sous un jour ouvré, à ' + donnees.email + '.'
+            : 'Message envoyé. Nous répondons sous un jour ouvré, à ' + donnees.email + '.');
           return;
         }
         // 400 : c'est nous qui avons mal rempli. On le dit, on n'ouvre pas la messagerie.
         if (res.code === 400 && res.j && res.j.erreur) { annoncer('rate', res.j.erreur); return; }
-        parMessagerie(res.j && res.j.configurer ? 'Le formulaire n’est pas encore branché.' : 'L’envoi a échoué.');
+        parMessagerie(res.j && res.j.configurer ? 'Le formulaire n\u2019est pas encore branché.' : 'L\u2019envoi a échoué.');
       }).catch(function () {
         clearTimeout(minuteur);
         rendreLeBouton();
-        parMessagerie('L’envoi a échoué.');
+        parMessagerie('L\u2019envoi a échoué.');
       });
     });
+  });
+
+  /* ------------------------------------------------- la séquence du logiciel
+     Sans ce fichier, le balisage est une LISTE de dix figures légendées : une visite guidée
+     parfaitement lisible, simplement plus longue. Le script la replie en lecteur. C'est la règle
+     du site — la page doit se tenir sans JavaScript — et c'est aussi ce qui garantit que les
+     images ont un texte de remplacement utile : elles sont écrites pour être lues seules.
+
+     Pourquoi des images et pas une vidéo : à ce compte-là (dix états d'un écran), une vidéo pèse
+     plus lourd, ne se lit pas au clavier, et n'a pas de légende. Ici chaque vue porte sa phrase. */
+  var film = document.getElementById('film');
+  if (film && film.children.length > 1) {
+    var vues = Array.prototype.slice.call(film.children);
+    var n = vues.length, i = 0, minuteur = null;
+    var sobre = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    film.classList.add('film-lecteur');
+    var barre = document.createElement('div');
+    barre.className = 'film-barre';
+    var points = vues.map(function (v, k) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'film-point';
+      /* Un point numéroté sans libellé ne dit rien à qui ne voit pas l'image : le titre de la
+         vue est déjà écrit dans sa légende, on le reprend. */
+      var titre = v.querySelector('figcaption b');
+      b.setAttribute('aria-label', 'Écran ' + (k + 1) + ' sur ' + n + (titre ? ' : ' + titre.textContent : ''));
+      b.addEventListener('click', function () { arreter(); montrer(k); });
+      barre.appendChild(b);
+      return b;
+    });
+
+    var bouton = document.createElement('button');
+    bouton.type = 'button';
+    bouton.className = 'btn btn-petit btn-creux film-jouer';
+    var precedent = document.createElement('button');
+    precedent.type = 'button';
+    precedent.className = 'film-fleche';
+    precedent.setAttribute('aria-label', 'Écran précédent');
+    precedent.innerHTML = '&#8249;';
+    var suivant = document.createElement('button');
+    suivant.type = 'button';
+    suivant.className = 'film-fleche';
+    suivant.setAttribute('aria-label', 'Écran suivant');
+    suivant.innerHTML = '&#8250;';
+
+    var cadre = document.createElement('div');
+    cadre.className = 'film-cmd';
+    cadre.appendChild(precedent);
+    cadre.appendChild(barre);
+    cadre.appendChild(suivant);
+    cadre.appendChild(bouton);
+    film.parentNode.insertBefore(cadre, film.nextSibling);
+
+    function montrer(k) {
+      i = (k + n) % n;
+      vues.forEach(function (v, j) {
+        v.classList.toggle('vue-ici', j === i);
+        /* `hidden` et pas seulement une classe : une vue masquée ne doit pas être lue par un
+           lecteur d'écran, ni attraper la tabulation. */
+        v.hidden = j !== i;
+      });
+      points.forEach(function (b, j) { b.classList.toggle('ici', j === i); b.setAttribute('aria-current', j === i ? 'true' : 'false'); });
+      /* Les images suivantes ne sont demandées qu'une fois qu'on approche : au chargement de la
+         page, une seule des dix descend du serveur. */
+      var proche = vues[(i + 1) % n].querySelector('img');
+      if (proche && proche.loading === 'lazy') proche.loading = 'eager';
+    }
+    function jouer() {
+      minuteur = setInterval(function () { montrer(i + 1); }, 2800);
+      bouton.textContent = 'Pause';
+      bouton.setAttribute('aria-pressed', 'true');
+    }
+    function arreter() {
+      if (minuteur) { clearInterval(minuteur); minuteur = null; }
+      bouton.textContent = 'Lire';
+      bouton.setAttribute('aria-pressed', 'false');
+    }
+    bouton.addEventListener('click', function () { if (minuteur) arreter(); else jouer(); });
+    precedent.addEventListener('click', function () { arreter(); montrer(i - 1); });
+    suivant.addEventListener('click', function () { arreter(); montrer(i + 1); });
+    /* Cliquer l'image avance : c'est le geste qu'on fait sans y penser. */
+    film.addEventListener('click', function () { arreter(); montrer(i + 1); });
+
+    montrer(0);
+    arreter();
+    /* On ne démarre pas une animation hors de l'écran — ni chez quelqu'un qui a demandé à son
+       système de limiter les animations. Le lecteur reste alors entièrement utilisable à la main. */
+    if (!sobre && window.IntersectionObserver) {
+      new IntersectionObserver(function (entrees) {
+        entrees.forEach(function (e) {
+          if (e.isIntersecting && !minuteur && !film.dataset.touche) jouer();
+          else if (!e.isIntersecting && minuteur) arreter();
+        });
+      }, { threshold: 0.4 }).observe(film);
+      cadre.addEventListener('click', function () { film.dataset.touche = '1'; });
+    }
   }
+
+  /* ------------------------------------------------- la mesure d'audience
+     GoatCounter ne dépose rien sur le poste du visiteur et ne reçoit ni adresse IP conservée,
+     ni identifiant : il compte des pages vues. On respecte en plus « Do Not Track », que le
+     service honore déjà — mais qui coûte deux lignes à honorer nous-mêmes, et qui prouve
+     l'intention. */
+  (function () {
+    var compte = !!MESURE && navigator.doNotTrack !== '1' && window.doNotTrack !== '1';
+    Array.prototype.forEach.call(document.querySelectorAll('[data-mesure]'), function (el) {
+      el.hidden = (el.getAttribute('data-mesure') === 'oui') !== compte;
+    });
+    if (!compte) return;
+    var g = document.createElement('script');
+    g.async = true;
+    g.setAttribute('data-goatcounter', 'https://' + MESURE + '.goatcounter.com/count');
+    g.src = 'https://gc.zgo.at/count.js';
+    document.head.appendChild(g);
+  }());
 
   /* ------------------------------------------------- la dernière version publiée
      Le dépôt est public : l'API GitHub répond sans jeton. Si elle ne répond pas

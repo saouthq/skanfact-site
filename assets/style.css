@@ -254,7 +254,7 @@ h1 .surligne { background: linear-gradient(transparent 58%, rgba(232, 163, 61, .
 /* ------------------------------------------------------------------ comptable */
 .liste-cab { margin-top: 26px; display: flex; flex-direction: column; gap: 14px; }
 .lc { display: flex; gap: 14px; background: #fff; border-radius: 16px; padding: 18px 20px; align-items: flex-start; }
-.lc .num { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 18px; color: var(--safran); flex: none; width: 26px; }
+.lc .num { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 18px; color: var(--safran-fonce); flex: none; width: 26px; }
 .lc b { font-weight: 600; font-size: 16px; display: block; }
 .lc span { color: var(--gris); font-size: 15px; }
 
@@ -316,7 +316,7 @@ h1 .surligne { background: linear-gradient(transparent 58%, rgba(232, 163, 61, .
 .contact-duo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 400px); gap: clamp(32px, 5vw, 60px); margin-top: 42px; }
 .formulaire { background: rgba(255, 255, 255, .06); border-radius: 24px; padding: clamp(24px, 3vw, 32px); }
 fieldset { border: 0; margin: 0 0 22px; padding: 0; }
-legend { font-size: 14px; color: #9fc3bd; padding: 0 0 10px; }
+legend { font-size: 14px; color: #a8ccc6; padding: 0 0 10px; }
 .qui { display: flex; gap: 12px; flex-wrap: wrap; }
 .qui label {
   flex: 1; min-width: 180px; border: 1.5px solid rgba(255, 255, 255, .18); border-radius: 100px;
@@ -325,7 +325,7 @@ legend { font-size: 14px; color: #9fc3bd; padding: 0 0 10px; }
 .qui input { accent-color: var(--safran); width: 17px; height: 17px; }
 .qui label:has(input:checked) { border-color: var(--safran); background: rgba(232, 163, 61, .14); color: #fff; }
 .champ { margin-bottom: 18px; }
-.champ label { display: block; font-size: 14px; color: #9fc3bd; margin-bottom: 8px; }
+.champ label { display: block; font-size: 14px; color: #a8ccc6; margin-bottom: 8px; }
 .champ input, .champ textarea {
   width: 100%; background: rgba(255, 255, 255, .07); border: 1px solid rgba(255, 255, 255, .14);
   border-radius: 12px; padding: 13px 16px; color: #fff; font: inherit; font-size: 15px;
@@ -333,8 +333,10 @@ legend { font-size: 14px; color: #9fc3bd; padding: 0 0 10px; }
 .champ input::placeholder, .champ textarea::placeholder { color: #9fc3bd; }
 .champ textarea { min-height: 116px; resize: vertical; }
 .paire { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-.oblig { color: var(--safran); }
-.aide-form { color: #9fc3bd; font-size: 13.5px; margin-top: 14px; }
+/* Le safran ordinaire tombe à 3,97 sur le fond du formulaire : l'étoile qui désigne un champ
+   obligatoire doit se voir, c'est toute sa fonction. */
+.oblig { color: #f0bd6e; }
+.aide-form { color: #a8ccc6; font-size: 13.5px; margin-top: 14px; }
 /* Le refus se LIT, il ne se devine pas à la couleur d'une bordure : un daltonien,
    et un lecteur d'écran, n'ont que cette phrase. */
 .dit-faute { color: var(--safran); font-size: 14px; margin-top: 7px; }
@@ -899,3 +901,133 @@ legend { font-size: 14px; color: #9fc3bd; padding: 0 0 10px; }
 .guide-date { color: var(--gris-clair); font-size: 14px; margin-bottom: 22px; }
 .guide-date a { color: var(--gris); }
 .guide-date a:hover { color: var(--vert); }
+
+/* =============================================================================
+   La séquence du logiciel — dix écrans du vrai parcours devis → facture.
+   Sans JavaScript, `.film` reste une liste de dix figures légendées, lisible de
+   bout en bout. Le script lui ajoute `.film-lecteur` et n'en montre qu'une.
+   ============================================================================= */
+.film {
+  list-style: none;
+  margin: 34px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 26px;
+}
+.film figure { margin: 0; }
+.film img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 14px;
+  border: 1px solid var(--filet);
+  /* Une capture d'interface posée à plat sur un fond clair paraît flotter : l'ombre
+     douce lui rend un bord, sans imiter une fenêtre de système qui, elle, serait fausse. */
+  box-shadow: 0 10px 34px rgba(10, 74, 67, .12);
+  background: #fff;
+}
+.film figcaption {
+  margin-top: 13px;
+  font-size: 15px;
+  color: var(--gris);
+  line-height: 1.55;
+}
+.film figcaption b { color: var(--encre); }
+.film-num {
+  display: inline-block;
+  min-width: 22px;
+  height: 22px;
+  margin-right: 9px;
+  border-radius: 999px;
+  background: var(--vert);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 22px;
+  text-align: center;
+  vertical-align: 1px;
+}
+
+/* --- replié en lecteur. Les vues masquées portent `hidden` (donc invisibles aussi
+   pour un lecteur d'écran) ; la hauteur est tenue par le rapport de l'image, pour que
+   la page ne saute pas d'un écran à l'autre. */
+.film-lecteur { display: block; margin-bottom: 0; cursor: pointer; }
+.film-lecteur .film-vue[hidden] { display: none; }
+.film-lecteur img { aspect-ratio: 1440 / 900; object-fit: cover; object-position: top left; }
+.film-lecteur figcaption { min-height: 46px; }
+
+.film-cmd {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+.film-barre {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex: 1;
+  flex-wrap: wrap;
+}
+.film-point {
+  width: 26px;
+  height: 7px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: #cfd9d6;
+  cursor: pointer;
+  transition: background .18s ease;
+}
+.film-point:hover { background: #a9b8b4; }
+.film-point.ici { background: var(--safran); }
+.film-fleche {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid var(--filet);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--vert);
+  font-size: 19px;
+  line-height: 1;
+  cursor: pointer;
+}
+.film-fleche:hover { border-color: var(--vert); }
+.film-jouer { flex: none; }
+
+/* La cible tactile d'un point de 7 px de haut est trop petite au doigt : sur mobile, les
+   flèches et le bouton suffisent, et les points redeviennent un simple repère de position. */
+@media (max-width: 620px) {
+  .film-point { width: 18px; height: 9px; }
+  .film-lecteur figcaption { min-height: 0; }
+}
+
+/* =============================================================================
+   Le formulaire de demande de clé — même langage que celui du contact, sur une
+   seule colonne large plutôt que dans le duo formulaire + coordonnées.
+   ============================================================================= */
+.formulaire-large { max-width: 760px; margin-top: 34px; }
+.formulaire-large textarea { min-height: 0; }
+/* Dans le formulaire long, une note d'aide tombe ENTRE deux champs : sans marge basse elle se
+   colle à l'intitulé suivant, et on la lit comme le début de la question d'après. */
+.formulaire-large .aide-form { margin-bottom: 20px; }
+.qui-offres { flex-direction: column; align-items: stretch; gap: 10px; }
+.qui-offres label {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  min-width: 0;
+  border-radius: 13px;
+  padding: 14px 18px;
+}
+/* On ne repeint PAS ces puces en blanc : `.qui label:has(input:checked)` les teinte en safran
+   et passe leur texte en blanc, avec une spécificité que la classe seule ne bat pas. Un fond
+   blanc posé là-dessus ne s'appliquait qu'aux puces décochées — donc du gris moyen prévu pour
+   du blanc se retrouvait sur du vert foncé, à 1,33. On reste dans le langage du composant :
+   des puces claires sur fond sombre, comme celles du formulaire de contact. */
+.qui-offres label span { color: #a8ccc6; font-size: 14px; }
+.qui-offres label:has(input:checked) span { color: #f3e3cb; }
+
+.aide-mf { margin-top: -6px; }

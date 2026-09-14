@@ -68,7 +68,9 @@
           <a href="facturation.html"><b>Devis et factures</b><span>Clients, relances, contrats récurrents</span></a>
           <a href="gestion.html"><b>Achats, stock et trésorerie</b><span>Marges, immobilisations, paie</span></a>
           <a href="tunisie.html"><b>Les règles tunisiennes</b><span>Timbre, TVA, retenue à la source</span></a>
+          <a href="vos-donnees.html"><b>Vos données</b><span>Où elles vivent, ce qui sort du poste</span></a>
           <a href="excel.html"><b>SkanFact ou Excel ?</b><span>Ce qu'un classeur ne peut pas faire</span></a>
+          <a href="limites.html"><b>Ce que SkanFact ne fait pas</b><span>Les limites, avant l’achat</span></a>
           <a href="guide-facture-electronique.html"><b>La facture électronique</b><span>Où en est son intégration</span></a>
           <a href="nouveautes.html"><b>Nouveautés</b><span>Ce qui a changé, version par version</span></a>
         </div>
@@ -103,6 +105,79 @@
       </nav>
       <p class="sous-actions">Les captures viennent du jeu d'exemple livré avec l'application :
         les chiffres sont inventés, les écrans sont les vrais.</p>
+    </div>
+  </section>
+
+  <section class="section film-section" id="sequence">
+    <div class="conteneur">
+      <p class="oeil">En mouvement</p>
+      <h2>Du devis à la facture, en dix écrans.</h2>
+      <p class="chapeau">Ce ne sont pas des maquettes. Chaque image a été prise dans l'application,
+        en la pilotant pour de vrai : les montants affichés sont ceux qu'elle a calculés, et le
+        document du dernier écran est celui qu'elle a produit.</p>
+
+      <ol class="film" id="film">
+        <li class="film-vue">
+          <figure>
+            <img src="img/seq-01.jpg" width="1440" height="900" loading="eager" fetchpriority="high" decoding="async" alt="La page Devis de SkanFact : un tableau de devis avec leur numéro, leur client, leur montant et une pastille d'état.">
+            <figcaption><span class="film-num">1</span><b>La liste des devis</b> On part de là : tous les devis, leur client, leur montant, leur état.</figcaption>
+          </figure>
+        </li>
+        <li class="film-vue">
+          <figure>
+            <img src="img/seq-02.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Un devis vierge dans l'éditeur, avec les champs client, date, validité, et une première ligne vide.">
+            <figcaption><span class="film-num">2</span><b>Un devis neuf</b> Rien à configurer. La date, l'échéance et la devise sont déjà posées.</figcaption>
+          </figure>
+        </li>
+        <li class="film-vue">
+          <figure>
+            <img src="img/seq-03.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="La liste déroulante des clients, ouverte, avec un champ de recherche au-dessus.">
+            <figcaption><span class="film-num">3</span><b>Le client</b> Il se cherche au nom, au contact ou au matricule fiscal.</figcaption>
+          </figure>
+        </li>
+        <li class="film-vue">
+          <figure>
+            <img src="img/seq-04.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Une ligne de devis saisie : désignation, quantité 12, prix unitaire 145, TVA 19 %, et le total calculé.">
+            <figcaption><span class="film-num">4</span><b>Une ligne</b> Douze poses à 145 dinars. Le total de la ligne suit la frappe.</figcaption>
+          </figure>
+        </li>
+        <li class="film-vue">
+          <figure>
+            <img src="img/seq-05.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Le devis à deux lignes, avec le total HT, la TVA et le total TTC, et l'aperçu du document à droite.">
+            <figcaption><span class="film-num">5</span><b>La TVA se ventile</b> Par taux, ligne à ligne. Et le document se dessine à droite pendant que vous tapez.</figcaption>
+          </figure>
+        </li>
+        <li class="film-vue">
+          <figure>
+            <img src="img/seq-06.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Le devis enregistré, portant son numéro DEV-2026-012 dans le titre de la page.">
+            <figcaption><span class="film-num">6</span><b>Numéroté</b> À l'enregistrement, et plus jamais après : un numéro ne désigne qu'un contenu.</figcaption>
+          </figure>
+        </li>
+        <li class="film-vue">
+          <figure>
+            <img src="img/seq-07.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Le menu « Facturer » ouvert, proposant de convertir en facture ou d'émettre une facture d'acompte.">
+            <figcaption><span class="film-num">7</span><b>Facturer</b> En totalité, ou en n'émettant qu'un acompte : les deux chemins sont là.</figcaption>
+          </figure>
+        </li>
+        <li class="film-vue">
+          <figure>
+            <img src="img/seq-08.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Le brouillon de facture repris du devis, avec les mêmes lignes et le même client.">
+            <figcaption><span class="film-num">8</span><b>La facture</b> Elle reprend tout : le client, les lignes, les taux, l'affaire. Rien à retaper.</figcaption>
+          </figure>
+        </li>
+        <li class="film-vue">
+          <figure>
+            <img src="img/seq-09.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="La facture émise FAC-2026-027, verrouillée, avec le timbre fiscal et la retenue à la source dans les totaux.">
+            <figcaption><span class="film-num">9</span><b>Émise</b> Numérotée, verrouillée, le timbre fiscal posé et la retenue à la source déduite.</figcaption>
+          </figure>
+        </li>
+        <li class="film-vue">
+          <figure>
+            <img src="img/seq-10.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Le document final en grand : en-tête de la société, coordonnées du client, lignes, total, montant en lettres et cadre de signature.">
+            <figcaption><span class="film-num">10</span><b>Le document</b> Tel que votre client le recevra : mentions, montant en lettres, cachet.</figcaption>
+          </figure>
+        </li>
+      </ol>
     </div>
   </section>
 
@@ -313,15 +388,18 @@
         <a href="facturation.html">Devis et factures</a>
         <a href="gestion.html">Achats, stock, trésorerie</a>
         <a href="tunisie.html">Les règles tunisiennes</a>
+        <a href="vos-donnees.html">Vos données</a>
         <a href="telecharger.html">Télécharger</a>
       </div>
       <div class="col">
         <h2 class="pied-titre">Vous aider</h2>
         <a href="guides.html">Guides : facture, TVA, timbre</a>
         <a href="excel.html">SkanFact ou Excel ?</a>
+        <a href="limites.html">Ce que SkanFact ne fait pas</a>
         <a href="questions.html">Questions fréquentes</a>
         <a href="comptables.html">Pour les comptables</a>
         <a href="tarifs.html">Tarifs</a>
+        <a href="acheter.html">Acheter une clé</a>
         <a href="nouveautes.html">Nouveautés</a>
       </div>
       <div class="col">
