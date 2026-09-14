@@ -15,7 +15,10 @@
   --safran-clair: #fdf3e2;
   --encre: #16221f;
   --gris: #5e6e6a;
-  --gris-clair: #8b9995;
+  /* 4,89 sur blanc et 4,53 sur crème. L'ancien #8b9995 tombait à 2,96 et 2,75 :
+     le fil d'Ariane, l'adresse du pied, le nom du fichier à télécharger et les « — »
+     du tableau des offres étaient sous le seuil de lisibilité, sur TOUTES les pages. */
+  --gris-clair: #667470;
   --filet: #dfe8e5;
   --ombre: 0 24px 56px -24px rgba(10, 74, 67, .30);
   --ombre-douce: 0 10px 26px -12px rgba(10, 74, 67, .22);
@@ -25,7 +28,10 @@
 
 * { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+/* L'en-tête est collant sur 71 px : sans cette réserve, « Aller au contenu » et
+   toute ancre déposent la cible DERRIÈRE l'en-tête — le lien d'évitement, dont le
+   seul rôle est d'amener au contenu, amenait sous une barre opaque. */
+html { scroll-behavior: smooth; scroll-padding-top: 86px; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
@@ -205,7 +211,7 @@ h1 .surligne { background: linear-gradient(transparent 58%, rgba(232, 163, 61, .
   display: flex; gap: 18px; align-items: flex-start;
 }
 .rassure svg { flex: none; }
-.rassure p { color: #cfe3df; font-size: 15.5px; }
+.rassure p { color: #cfe3df; font-size: 15.5px; max-width: 70ch; }
 .rassure b { color: #fff; font-weight: 600; }
 
 /* ------------------------------------------------------------------ comptable */
@@ -231,7 +237,7 @@ h1 .surligne { background: linear-gradient(transparent 58%, rgba(232, 163, 61, .
 .offre .haut { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .offre .nom { font-family: "Bricolage Grotesque", sans-serif; font-weight: 600; font-size: 19px; letter-spacing: -.02em; }
 .offre.phare .nom { color: #fff; }
-.offre .ruban { background: var(--safran); color: #40280a; font-size: 12.5px; font-weight: 500; padding: 4px 12px; border-radius: 100px; }
+.offre .ruban { background: var(--safran); color: #40280a; font-size: 13px; font-weight: 500; padding: 4px 12px; border-radius: 100px; }
 .offre .prix { display: flex; align-items: baseline; gap: 8px; margin-top: 22px; flex-wrap: wrap; }
 .offre .prix .v { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: clamp(38px, 4.5vw, 48px); letter-spacing: -.04em; line-height: 1; }
 .offre.phare .prix .v { color: #fff; }
@@ -248,12 +254,8 @@ h1 .surligne { background: linear-gradient(transparent 58%, rgba(232, 163, 61, .
   margin-top: 28px; border-radius: var(--rayon); background: var(--creme); padding: 26px 30px;
   display: flex; gap: 26px; align-items: flex-start; flex-wrap: wrap;
 }
-.note-prix p { color: var(--gris); font-size: 14.5px; }
+.note-prix p { color: var(--gris); font-size: 14.5px; max-width: 74ch; }
 .note-prix b { color: var(--encre); font-weight: 600; }
-.provisoire {
-  background: #fff; border: 1px dashed var(--safran); color: var(--safran-fonce); border-radius: 100px;
-  padding: 6px 14px; font-size: 12.5px; white-space: nowrap;
-}
 
 /* ------------------------------------------------------------------ faq */
 .questions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 42px; align-items: start; }
@@ -291,24 +293,27 @@ legend { font-size: 14px; color: #9fc3bd; padding: 0 0 10px; }
   width: 100%; background: rgba(255, 255, 255, .07); border: 1px solid rgba(255, 255, 255, .14);
   border-radius: 12px; padding: 13px 16px; color: #fff; font: inherit; font-size: 15px;
 }
-.champ input::placeholder, .champ textarea::placeholder { color: #7fa6a0; }
+.champ input::placeholder, .champ textarea::placeholder { color: #9fc3bd; }
 .champ textarea { min-height: 116px; resize: vertical; }
 .paire { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 .oblig { color: var(--safran); }
 .aide-form { color: #9fc3bd; font-size: 13.5px; margin-top: 14px; }
+/* Le refus se LIT, il ne se devine pas à la couleur d'une bordure : un daltonien,
+   et un lecteur d'écran, n'ont que cette phrase. */
+.dit-faute { color: var(--safran); font-size: 14px; margin-top: 7px; }
 .aide-form a { color: #fff; text-decoration: underline; }
 
 .infos .bloc-info { border-bottom: 1px solid rgba(255, 255, 255, .12); padding: 20px 0; }
 .infos .bloc-info:last-child { border-bottom: none; }
 .infos .bloc-info .t { color: #9fc3bd; font-size: 14px; }
 .infos .bloc-info b { display: block; font-size: 17px; font-weight: 600; margin-top: 4px; color: #fff; }
-.infos .bloc-info b a { color: #fff; }
+.infos .bloc-info b a { color: #fff; display: inline-block; padding-block: 6px; }
 .infos .bloc-info span { display: block; color: #9fc3bd; font-size: 14px; margin-top: 3px; }
 
 /* ------------------------------------------------------------------ pied */
 .pied { padding-block: 54px 40px; background: #fff; border-top: 1px solid var(--filet); }
 .pied-grille { display: grid; grid-template-columns: 1.6fr repeat(3, minmax(0, 1fr)); gap: 40px; }
-.pied h4 { font-family: "Lexend", sans-serif; font-size: 13px; font-weight: 600; color: var(--encre); margin: 0 0 14px; letter-spacing: 0; }
+.pied .pied-titre { font-family: "Lexend", sans-serif; font-size: 14px; font-weight: 600; color: var(--encre); margin: 0 0 14px; letter-spacing: 0; }
 .pied .col a { display: block; color: var(--gris); font-size: 14.5px; margin-bottom: 9px; }
 .pied .bas {
   border-top: 1px solid var(--filet); margin-top: 40px; padding-top: 22px;
@@ -434,7 +439,7 @@ legend { font-size: 14px; color: #9fc3bd; padding: 0 0 10px; }
 .fil a { color: var(--gris); }
 .fil a:hover { color: var(--vert); }
 .fil span { margin: 0 6px; }
-.fil-clair { color: #7fa6a0; }
+.fil-clair { color: #9fc3bd; }
 .fil-clair a { color: #9fc3bd; }
 .fil-clair a:hover { color: #fff; }
 .h1-page { font-size: clamp(30px, 4.6vw, 47px); }
@@ -511,18 +516,21 @@ legend { font-size: 14px; color: #9fc3bd; padding: 0 0 10px; }
 .bande-fin h2 { color: #fff; }
 .bande-fin .chapeau { color: #9fc3bd; margin-inline: auto; }
 .bande-fin .actions { justify-content: center; }
-.bande-fin .sous-actions { color: #7fa6a0; }
+.bande-fin .sous-actions { color: #9fc3bd; }
 
 /* --------------------------------------------------------- le tableau des offres */
 .scroll-x { overflow-x: auto; margin-top: 38px; }
 .compare { width: 100%; border-collapse: collapse; min-width: 620px; background: #fff; border-radius: var(--rayon); overflow: hidden; }
 .compare th, .compare td { padding: 14px 18px; font-size: 15px; text-align: center; border-bottom: 1px solid var(--filet); }
 .compare thead th { font-family: "Bricolage Grotesque", sans-serif; font-weight: 600; font-size: 17px; background: var(--vert); color: #fff; }
+/* « Essai » porte sa durée DANS l'en-tête : sans elle, quatorze « Oui » d'affilée
+   font passer la colonne gratuite pour la meilleure offre du tableau. */
+.compare thead .col-duree { display: block; font-family: "Lexend", sans-serif; font-weight: 400; font-size: 13.5px; color: #9fc3bd; letter-spacing: 0; }
 .compare tbody th { text-align: left; font-weight: 400; color: var(--encre); }
 .compare tbody tr:last-child th, .compare tbody tr:last-child td { border-bottom: none; }
 .compare .oui { color: var(--vert); font-weight: 500; }
 .compare .non { color: var(--gris-clair); }
-.sous-tableau { color: var(--gris); font-size: 14.5px; margin-top: 18px; }
+.sous-tableau { color: var(--gris); font-size: 14.5px; margin-top: 18px; max-width: 74ch; }
 .vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 /* ------------------------------------------------------------ variantes de blocs */
@@ -535,9 +543,12 @@ legend { font-size: 14px; color: #9fc3bd; padding: 0 0 10px; }
 .modules-sombre .module span { color: #9fc3bd; }
 .avis-large { max-width: 84ch; }
 .etapes { list-style: none; padding: 0; }
-.repere { background: var(--vert-clair); color: var(--vert); font-size: 12.5px; padding: 4px 12px; margin-left: auto; }
+/* Un seul des deux systèmes reçoit « Votre système » : sans cette règle, l'autre
+   garde un ovale vert vide de 24×8 px, visible par tout le monde. */
+.repere { background: var(--vert-clair); color: var(--vert); font-size: 13px; padding: 4px 12px; margin-left: auto; }
+.repere:empty { display: none; }
 .pied-mot { color: var(--gris); font-size: 14px; max-width: 34ch; }
-.pied-adresse { color: var(--gris-clair); font-size: 13px; margin-top: 14px; line-height: 1.5; }
+.pied-adresse { color: var(--gris-clair); font-size: 14px; margin-top: 14px; line-height: 1.55; }
 
 /* -------------------------------------------------- tailles d'écran, la suite */
 @media (max-width: 1080px) {
@@ -565,6 +576,10 @@ legend { font-size: 14px; color: #9fc3bd; padding: 0 0 10px; }
 @media (max-width: 620px) {
   .bande-grille { grid-template-columns: minmax(0, 1fr); gap: 14px; }
   .bande-fin .actions .btn { width: 100%; }
+  /* Un lien de pied faisait 24 px de haut : au doigt, on tombe sur la ligne voisine.
+     On ne l'agrandit pas visuellement, on lui donne la place de se faire viser. */
+  .pied .col a { padding-block: 9px; margin-bottom: 0; font-size: 15px; }
+  .aide-form { font-size: 14.5px; }
 }
 
 /* -------------------------------------- les recadrages et les grilles fixes

@@ -87,11 +87,49 @@ Règle apprise : une balise `<img>` qui porte ses attributs `width` et `height` 
 celle de l'attribut, et toutes les captures sont étirées en hauteur — ça ne se voit sur aucune
 relecture du code, seulement en mesurant `getBoundingClientRect()` dans un vrai navigateur.
 
+## Audit UI/UX de septembre 2026
+
+Onze pages mesurées dans un vrai navigateur, à quatre largeurs (1440, 1024, 768, 380) : débordement
+élément par élément, contraste de **tout** le texte (pas seulement des boutons), taille des cibles au
+doigt, taille de police, longueur de ligne, images, liens, hiérarchie des titres, étiquettes de
+formulaire, identifiants en double, entêtes de page. 256 constats au départ, zéro à l'arrivée.
+
+Les règles apprises, à ne pas recasser :
+
+- **Un gris « secondaire » reste du texte.** `--gris-clair` valait `#8b9995` : **2,96 sur blanc et
+  2,75 sur crème**, quand il en faut 4,5. Il portait le fil d'Ariane, l'adresse du pied, le nom du
+  fichier à télécharger et les « — » du tableau des offres — sur les onze pages. Personne ne l'avait
+  vu parce que ça se lit encore *presque*. Il vaut `#667470` (4,89 et 4,53). Même histoire sur le
+  vert avec `#7fa6a0` (3,79) remplacé par `#9fc3bd` (5,31), déjà employé partout ailleurs.
+- **Un en-tête collant casse toutes les ancres.** Sans `scroll-padding-top`, « Aller au contenu » —
+  dont c'est l'unique raison d'être — déposait le haut du contenu **derrière** la barre de 71 px.
+- **Une pastille vide reste une pastille.** Un seul des deux systèmes reçoit « Votre système » :
+  l'autre gardait un ovale vert de 24×8 px, visible par tout le monde. `:empty { display: none }`.
+- **Une image de partage en chemin relatif n'est résolue par aucun réseau social.** `og:image`
+  valait `img/accueil.jpg` : tout lien SkanFact partagé sur WhatsApp, Facebook ou LinkedIn arrivait
+  **sans aperçu**. Les adresses de partage sont absolues, et elles changeront le jour du domaine —
+  c'est le seul endroit à reprendre, avec le `CNAME`.
+- **Une marque de faute qui ne s'efface pas devient un mensonge.** Le champ refusé restait orange une
+  fois rempli. Et déplacer le curseur sans rien dire ne renseigne personne : le refus porte une
+  phrase (`role="alert"`, `aria-invalid`), pas seulement une couleur.
+- **Un tableau comparatif se lit avant d'être expliqué.** La colonne « Essai » alignait quatorze
+  « Oui » face aux « — » d'Indépendant : l'offre gratuite paraissait la meilleure. L'explication
+  existait — *sous* le tableau, après la mauvaise impression. Elle est passée au-dessus, et la
+  colonne porte sa durée dans son en-tête.
+- **Deux pages ne peuvent pas répondre deux choses.** « Puis-je l'installer sur deux ordinateurs ?
+  Oui » contredisait la page des tarifs, où Indépendant couvre un poste.
+
+L'outil vit dans le dossier de travail (`audit/audit.mjs`, `audit/preuve.mjs`). **Chaque correctif se
+prouve en réintroduisant son défaut** : `preuve.mjs` remet les trois défauts mesurables et vérifie
+que le contrôle tombe. Un contrôle qui reste vert avec le défaut ne prouve rien.
+
 ## Ce qui reste à compléter
 
 - Le **nom de domaine** (`skanfact.tn`) : une fois acheté, ajouter un fichier `CNAME` contenant le
   domaine et faire pointer les DNS vers GitHub Pages. Ajouter alors `robots.txt` et `sitemap.xml`
-  (pas avant : ils doivent porter l'adresse définitive).
+  (pas avant : ils doivent porter l'adresse définitive). **Reprendre aussi les `og:url` et
+  `link rel=canonical` des onze pages** : ils portent l'adresse GitHub Pages, et une canonique qui
+  désigne une autre adresse que celle qu'on sert annule le bénéfice du domaine.
 - L'adresse **contact@skanfact.tn**, à créer avec le domaine.
 - Le **numéro de téléphone**, écrit `+216 XX XXX XXX` partout.
 - Un **vrai formulaire de contact** : aujourd'hui le bouton ouvre le logiciel de messagerie du

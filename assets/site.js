@@ -88,20 +88,54 @@
      de logiciel de messagerie configuré. */
   var form = document.getElementById('form-contact');
   if (form) {
+    /* Une marque de faute qui ne s'efface pas devient un mensonge : le champ rempli
+       restait orange. Elle part dès que le champ redevient acceptable. */
+    var laver = function (champ) {
+      champ.style.borderColor = '';
+      champ.removeAttribute('aria-invalid');
+      var d = document.getElementById('dit-' + champ.id);
+      if (d) d.remove();
+    };
+    var marquer = function (champ, phrase) {
+      champ.style.borderColor = '#e8a33d';
+      champ.setAttribute('aria-invalid', 'true');
+      if (!document.getElementById('dit-' + champ.id)) {
+        // Déplacer le curseur sans rien dire ne renseigne personne, et un lecteur
+        // d'écran n'a alors aucun moyen de savoir POURQUOI il a été déplacé.
+        var d = document.createElement('p');
+        d.id = 'dit-' + champ.id;
+        d.className = 'dit-faute';
+        d.setAttribute('role', 'alert');
+        d.textContent = phrase;
+        champ.insertAdjacentElement('afterend', d);
+        champ.setAttribute('aria-describedby', d.id);
+      }
+      champ.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      champ.focus();
+    };
+    ['nom', 'email', 'message', 'societe', 'tel'].forEach(function (id) {
+      var champ = document.getElementById(id);
+      if (champ) champ.addEventListener('input', function () { laver(champ); });
+    });
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      var manquant = null;
+      var courriel = document.getElementById('email');
+      var fautif = null, phrase = '';
       ['nom', 'email', 'message'].forEach(function (id) {
         var champ = document.getElementById(id);
-        if (champ && !champ.value.trim() && !manquant) manquant = champ;
+        if (champ && !champ.value.trim() && !fautif) {
+          fautif = champ;
+          phrase = 'Ce champ est nécessaire pour vous répondre.';
+        }
       });
-      if (manquant) {
-        // On MONTRE le champ refusé au lieu d'afficher un message au-dessus du vide.
-        manquant.scrollIntoView({ block: 'center', behavior: 'smooth' });
-        manquant.focus();
-        manquant.style.borderColor = '#e8a33d';
-        return;
+      /* Une adresse mal tapée ne casse rien ici — mais la réponse n'arrive jamais,
+         et personne ne sait pourquoi. Autant le dire pendant qu'on est sur la page. */
+      if (!fautif && courriel && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(courriel.value.trim())) {
+        fautif = courriel;
+        phrase = 'Cette adresse ne permettra pas de vous répondre — vérifiez-la.';
       }
+      if (fautif) { marquer(fautif, phrase); return; }
       var v = function (id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; };
       var profil = (form.querySelector('input[name="profil"]:checked') || {}).value || 'une entreprise';
       var corps = [
