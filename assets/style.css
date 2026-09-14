@@ -57,6 +57,11 @@
   --ombre-douce: 0 10px 26px -12px rgba(10, 74, 67, .22);
   --rayon: 20px;
   --large: 1180px;
+  /* La hauteur de l'en-tête collant. Elle servait à deux endroits, écrite deux fois : la
+     réserve de défilement des ancres, et la hauteur disponible pour le menu du burger. Deux
+     nombres qui doivent rester égaux et qui ne se voient pas l'un l'autre finissent par
+     diverger. */
+  --h-entete: 72px;
 }
 
 * { box-sizing: border-box; }
@@ -64,7 +69,7 @@
 /* L'en-tête est collant sur 71 px : sans cette réserve, « Aller au contenu » et
    toute ancre déposent la cible DERRIÈRE l'en-tête — le lien d'évitement, dont le
    seul rôle est d'amener au contenu, amenait sous une barre opaque. */
-html { scroll-behavior: smooth; scroll-padding-top: 86px; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--h-entete) + 14px); }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
@@ -423,6 +428,19 @@ legend { font-size: 14px; color: #a8ccc6; padding: 0 0 10px; }
     background: #fff; border-bottom: 1px solid var(--filet);
     flex-direction: column; align-items: stretch; gap: 0; padding: 10px 22px 20px;
     box-shadow: var(--ombre-douce);
+    /* Le menu dépassait de l'écran : 800 px de contenu sous un en-tête de 72, sur un téléphone
+       qui en offre 640. « Essayer 30 jours » se trouvait donc hors de l'écran, et le seul moyen
+       de l'atteindre était de faire défiler LA PAGE — c'est-à-dire d'emporter l'en-tête avec
+       elle. Mesuré, pas déduit.
+       `dvh` plutôt que `vh` : sur un téléphone, la barre d'adresse se replie, et `vh` garde la
+       hauteur de la page dépliée — donc une centaine de pixels de trop. La ligne `vh` reste
+       au-dessus comme repli pour les navigateurs qui ignorent `dvh`.
+       `overscroll-behavior: contain` est la moitié qui manquerait sinon : sans elle, arriver au
+       bout du menu passe le doigt à la page derrière, qui se met à défiler sous un menu ouvert. */
+    max-height: calc(100vh - var(--h-entete));
+    max-height: calc(100dvh - var(--h-entete));
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
   .nav-site.ouvert { display: flex; }
   .nav-site a:not(.btn) { padding: 13px 0; font-size: 17px; border-bottom: 1px solid var(--filet); }
@@ -614,17 +632,28 @@ legend { font-size: 14px; color: #a8ccc6; padding: 0 0 10px; }
 }
 
 @media (max-width: 900px) {
-  /* Dans le panneau du burger, le sous-menu est déplié : rien ne se cache. */
+  /* Le sous-menu redevient un volet qu'on déplie, comme sur grand écran. Il était déplié
+     d'office — « rien ne se cache » — et c'était tenable à sept entrées. À neuf, le menu
+     mesurait 800 px : plus rien ne tenait, et la moitié basse était inatteignable. Un volet
+     replié n'est pas une page cachée : il porte son nom, son chevron, et le clavier l'ouvre ;
+     c'est exactement ce que fait déjà le grand écran. */
   .sous { width: 100%; }
-  .lien-menu { display: none; }
-  .panneau {
-    display: block; position: static; width: auto; border: none; border-radius: 0;
-    padding: 0; box-shadow: none;
+  .lien-menu {
+    display: flex; width: 100%; justify-content: space-between;
+    padding: 13px 0; font-size: 17px; border-bottom: 1px solid var(--filet);
   }
-  .panneau a { padding: 13px 0; border-radius: 0; border-bottom: 1px solid var(--filet); }
+  .panneau {
+    position: static; width: auto; border: none; border-radius: 0;
+    padding: 0 0 6px 14px; box-shadow: none;
+  }
+  /* Le trait gauche dit que ces lignes appartiennent au volet ouvert au-dessus, sans avoir à
+     l'écrire. Sans lui, elles se lisent comme des entrées de même rang. */
+  .sous.ouvert .panneau { border-left: 2px solid var(--vert-clair); }
+  .panneau a { padding: 12px 0; border-radius: 0; border-bottom: 1px solid var(--filet); }
+  .panneau a:last-child { border-bottom: none; }
   .panneau a:hover { background: none; }
   .panneau a span { display: none; }
-  .panneau a b { font-size: 17px; font-weight: 400; }
+  .panneau a b { font-size: 16px; font-weight: 400; }
 
   .cartes, .prix-resume { grid-template-columns: minmax(0, 1fr); }
   .carte p { max-width: none; }

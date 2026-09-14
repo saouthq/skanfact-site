@@ -147,6 +147,35 @@ Et il se prouve comme le reste : en **remettant** un défaut (remettre `var(--sa
 `.lc .num` fait remonter 24 constats). Un contrôle qui ne peut pas échouer est pire que pas de
 contrôle.
 
+## Le menu du téléphone
+
+Signalé par le propriétaire : « il y a trop d'onglets, donc le défilement se passe sur la page
+et pas dans le menu burger ». Mesuré : **800 px de menu** sous un en-tête de 72, sur un
+téléphone qui en offre 640. Le bas — dont le bouton « Essayer 30 jours » — était hors de
+l'écran, et le seul moyen de l'atteindre était de faire défiler **la page**, donc d'emporter
+l'en-tête avec elle.
+
+Deux moitiés, et il faut les deux :
+
+- **Le menu se plafonne et défile chez lui.** `max-height: calc(100dvh - var(--h-entete))`,
+  `overflow-y: auto`, et surtout `overscroll-behavior: contain` — sans cette dernière, arriver
+  au bout du menu passe le doigt à la page derrière, qui se met à défiler sous un menu ouvert.
+  `dvh` et pas `vh` : sur un téléphone la barre d'adresse se replie, et `vh` garde la hauteur
+  de la page dépliée, soit une centaine de pixels de trop. Une ligne `vh` reste au-dessus comme
+  repli.
+- **Le sous-menu redevient un volet.** Il était déplié d'office (« rien ne se cache »), ce qui
+  était tenable à sept entrées ; à neuf, plus rien ne tenait. Replié, le menu passe de 800 px à
+  **360** et tient sur tous les téléphones. Un volet replié n'est pas une page cachée : il porte
+  son nom, son chevron, son état au clavier — c'est exactement ce que fait déjà le grand écran.
+
+`--h-entete` existe pour que la hauteur de l'en-tête ne soit écrite qu'une fois : elle sert à la
+réserve de défilement des ancres **et** à la hauteur disponible du menu. Deux nombres qui doivent
+rester égaux et qui ne se voient pas l'un l'autre finissent par diverger.
+
+`outils/audit.mjs` mesure désormais les deux états, volet replié et volet ouvert, à chaque
+largeur de téléphone : le dépassement, le défilement qui fuit vers la page, et le bouton d'essai
+atteignable. Prouvé en remettant le défaut — 52 constats remontent.
+
 ## Les captures d'écran
 
 Elles sont produites par le dépôt de l'application :

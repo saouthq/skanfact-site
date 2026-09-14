@@ -244,6 +244,55 @@ for (const largeur of LARGEURS) {
 
     for (const e of erreurs) dit('grave', f, largeur.nom, 'erreur JavaScript : ' + e.slice(0, 120));
 
+    // ------------------------------------------------------------- le menu du burger
+    // Signalé par le propriétaire : « il y a trop d'onglets, donc le défilement se passe sur la
+    // page et pas dans le menu ». Le menu faisait 800 px sous un en-tête de 72, sur un téléphone
+    // qui en offre 640 : « Essayer 30 jours » était hors de l'écran, et le seul moyen de
+    // l'atteindre était de faire défiler LA PAGE — donc d'emporter l'en-tête avec elle.
+    // Deux entrées de plus dans le menu suffisent à le recasser, et rien ne le dirait : on
+    // mesure donc les deux états, volet replié ET volet ouvert, à chaque largeur de téléphone.
+    if (largeur.width <= 900 && await onglet.$('#burger')) {
+      for (const volet of [false, true]) {
+        const m = await onglet.evaluate(async (ouvrirVolet) => {
+          const attendre = () => new Promise(r => setTimeout(r, 220));
+          const burger = document.getElementById('burger');
+          const nav = document.getElementById('nav-site');
+          if (nav.classList.contains('ouvert')) { burger.click(); await attendre(); }
+          burger.click();
+          await attendre();
+          const bf = document.getElementById('btn-fonc');
+          if (ouvrirVolet && bf) { bf.click(); await attendre(); }
+          const r = nav.getBoundingClientRect();
+          const cta = nav.querySelector('a.btn');
+          const c = cta && cta.getBoundingClientRect();
+          const s = getComputedStyle(nav);
+          const res = {
+            depasse: Math.round(r.bottom - window.innerHeight),
+            defilable: nav.scrollHeight > nav.clientHeight + 1,
+            retient: s.overscrollBehaviorY === 'contain' || s.overscrollBehaviorY === 'none',
+            ctaDansLeMenu: !!(c && c.bottom <= r.bottom + 1 + (nav.scrollHeight - nav.clientHeight)),
+            volet: !!document.querySelector('.sous.ouvert')
+          };
+          burger.click();
+          return res;
+        }, volet);
+
+        const quoi = volet ? 'volet ouvert' : 'volet replié';
+        if (volet && !m.volet) dit('grave', f, largeur.nom, `menu : le volet « Le logiciel » ne s'ouvre pas`);
+        if (m.depasse > 1) {
+          dit('grave', f, largeur.nom,
+            `menu (${quoi}) : il dépasse de l'écran de ${m.depasse} px — le bas est hors de portée`);
+        }
+        if (m.defilable && !m.retient) {
+          dit('grave', f, largeur.nom,
+            `menu (${quoi}) : il défile, mais le défilement passe à la page derrière (overscroll-behavior)`);
+        }
+        if (!m.ctaDansLeMenu) {
+          dit('grave', f, largeur.nom, `menu (${quoi}) : le bouton d'essai n'est pas atteignable dans le menu`);
+        }
+      }
+    }
+
     for (const t of releve.textes) {
       const c = rgb(t.couleur), d = rgb(t.fond);
       if (!c || !d || c.a < 0.95) continue;
