@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Confidentialité — SkanFact</title>
+<meta name="description" content="Ce que SkanFact fait de vos données : rien ne quitte votre ordinateur sans votre geste. Le site n'utilise aucun cookie et aucun traceur.">
+<meta name="theme-color" content="#0a4a43">
+<link rel="icon" href="img/icone.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Lexend:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<a class="saut-contenu" href="#contenu">Aller au contenu</a>
+
+<header class="entete" id="entete">
+  <div class="conteneur">
+    <a class="marque" href="index.html" aria-label="SkanFact, accueil">
+      <svg width="30" height="30" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="26" height="26" rx="9" fill="#0a4a43"></rect>
+        <path d="M8 10.5h12M8 14h12M8 17.5h7" stroke="#e8a33d" stroke-width="2.1" stroke-linecap="round"></path>
+      </svg>
+      <span class="mot">SkanFact</span>
+    </a>
+    <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-site">
+      <span></span>
+    </button>
+    <nav class="nav-site" id="nav-site" aria-label="Navigation principale">
+      <a href="index.html#ce-que-ca-fait">Ce que ça fait</a>
+      <a href="index.html#tarifs">Tarifs</a>
+      <a href="index.html#contact">Contact</a>
+      <a class="btn btn-vert btn-petit" href="telecharger.html">Télécharger</a>
+    </nav>
+  </div>
+</header>
+
+<main id="contenu">
+  <section class="section">
+    <div class="conteneur">
+      <p class="oeil">Vos données</p>
+      <h1 style="font-size: clamp(28px, 4vw, 40px);">Confidentialité</h1>
+
+      <div class="texte-legal">
+        <p style="font-size: 18px; color: var(--encre); margin-top: 22px;"><strong>Vos factures, vos
+          clients et vos salaires ne quittent pas votre ordinateur.</strong> Ce n'est pas une promesse
+          commerciale : c'est la façon dont l'application est construite. Elle n'a pas de serveur, pas
+          de compte utilisateur, et fonctionne sans connexion internet.</p>
+
+        <h2>Ce que le site fait</h2>
+        <p>Ce site est composé de fichiers statiques. Il <strong>ne dépose aucun cookie</strong>, ne
+          contient <strong>aucun traceur publicitaire</strong> et <strong>aucun outil de
+          mesure d'audience</strong>. Aucun compte n'est créé, aucun formulaire n'envoie de données
+          vers un serveur : le bouton de contact prépare un email dans votre propre logiciel de
+          messagerie, que vous relisez avant de l'envoyer.</p>
+        <p>Deux requêtes sortent de votre navigateur quand vous consultez ces pages :</p>
+        <ul>
+          <li><strong>Google Fonts</strong>, pour charger les deux polices de caractères du site ;</li>
+          <li><strong>l'interface publique de GitHub</strong>, pour afficher le numéro de la dernière
+            version publiée et le lien de téléchargement correspondant.</li>
+        </ul>
+        <p>Ces deux services voient l'adresse IP de votre connexion, comme pour toute page web. Aucune
+          information vous concernant ne leur est transmise par nos soins.</p>
+
+        <h2>Ce que l'application fait</h2>
+        <p>Toutes vos données — société, clients, devis, factures, achats, stock, salariés, paie —
+          sont enregistrées dans un fichier situé sur votre ordinateur, dont le chemin exact est
+          affiché dans les réglages de l'application. Elles peuvent être chiffrées par un mot de
+          passe que vous choisissez et dont nous n'avons aucune copie.</p>
+        <p>L'application ne se connecte à aucune administration, n'effectue aucune déclaration à votre
+          place, et n'envoie aucune donnée d'usage, aucune statistique et aucun rapport d'erreur.</p>
+
+        <h2>Les seules sorties, et elles viennent de vous</h2>
+        <ul>
+          <li><strong>Les mises à jour.</strong> Au démarrage, l'application vérifie s'il existe une
+            version plus récente. Cette requête ne transporte aucune de vos données.</li>
+          <li><strong>L'envoi d'un document.</strong> Quand vous envoyez un devis, une facture ou une
+            relance, l'application prépare le message dans votre logiciel de messagerie. C'est vous
+            qui l'envoyez.</li>
+          <li><strong>Le dossier du comptable.</strong> Le paquet mensuel est un fichier que vous
+            fabriquez et que vous transmettez vous-même. Quand le cabinet de votre comptable est
+            appairé, ce fichier est chiffré et <strong>lui seul peut l'ouvrir</strong> — nous ne
+            pourrions pas en lire le contenu.</li>
+          <li><strong>La lecture d'une photo de facture</strong>, fonction optionnelle et
+            <strong>désactivée par défaut</strong>. Elle n'envoie une image hors de votre ordinateur
+            que si vous saisissez vous-même une clé d'accès à un service de reconnaissance de texte,
+            et l'écran vous dit exactement ce qui partira avant que vous acceptiez. Sans cette clé,
+            aucune requête n'est possible.</li>
+        </ul>
+
+        <h2>Vos clients et vos salariés</h2>
+        <p>En saisissant vos clients, vos fournisseurs et vos salariés dans l'application, vous
+          traitez des données personnelles dont <strong>vous êtes responsable</strong>. Elles ne nous
+          sont jamais transmises. Les obligations qui vous incombent à leur égard — information,
+          conservation, déclaration éventuelle auprès de l'Instance nationale de protection des
+          données personnelles — relèvent de votre entreprise. <strong>À vérifier auprès de votre
+          conseil</strong> selon votre activité et le nombre de personnes concernées.</p>
+
+        <h2>Si vous nous écrivez</h2>
+        <p>Les messages que vous nous adressez à <a href="mailto:contact@skanfact.tn">contact@skanfact.tn</a>
+          contiennent ce que vous y mettez. Ils sont conservés le temps de traiter votre demande et de
+          gérer la relation commerciale qui pourrait en découler, puis supprimés. Ils ne sont ni
+          revendus, ni transmis à un tiers.</p>
+        <p>Vous pouvez demander à tout moment la consultation ou la suppression des messages que vous
+          nous avez envoyés, à cette même adresse.</p>
+
+        <h2>Ce que nous ne pouvons pas faire</h2>
+        <p>Parce que nous n'hébergeons rien, nous ne pouvons ni récupérer un fichier perdu, ni
+          réinitialiser un mot de passe de chiffrement oublié, ni consulter vos chiffres pour vous
+          aider à distance. C'est le revers de la promesse : <strong>gardez une sauvegarde</strong>.
+          L'application en prépare une chaque matin et peut en déposer une copie sur un dossier, un
+          disque externe ou un service de synchronisation de votre choix.</p>
+
+        <p style="margin-top: 32px; color: var(--gris-clair); font-size: 14px;">Dernière mise à jour :
+          septembre 2026. Toute évolution de cette page sera datée ici.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="pied">
+  <div class="conteneur">
+    <div class="bas" style="border-top: none; margin-top: 0; padding-top: 0;">
+      <span>© 2026 SKANCYBER SECURITY SUARL — tous droits réservés</span>
+      <span><a href="index.html">Accueil</a> · <a href="mentions-legales.html">Mentions légales</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/site.js" defer></script>
+</body>
+</html>
