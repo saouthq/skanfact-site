@@ -64,13 +64,10 @@ Les images sont ensuite réduites en deux tailles (1400 px et 720 px) et servies
 
 - Le **nom de domaine** (`skanfact.tn`) : une fois acheté, ajouter un fichier `CNAME` contenant le
   domaine et faire pointer les DNS vers GitHub Pages.
-- Les **mentions légales** : registre de commerce, matricule fiscal, adresse du siège et tribunal
-  compétent sont marqués `[à compléter]`.
-- Le **numéro de téléphone**, écrit `+216 XX XXX XXX` partout.
 - L'adresse **contact@skanfact.tn**, à créer avec le domaine.
-- Les **tarifs** affichés (390 et 690 DT HT/an) sont une proposition, signalée « à confirmer » sur
-  la page.
-- Le **logo** est provisoire : un logotype dessiné en SVG, à remplacer par le vrai.
+- Le **numéro de téléphone**, écrit `+216 XX XXX XXX` partout.
+- Dans les mentions légales : le **numéro au registre national des entreprises** et le **capital
+  social**, qui ne figurent pas sur la carte d'identification fiscale.
 
 ## Droits
 
