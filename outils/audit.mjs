@@ -363,6 +363,45 @@ for (const largeur of LARGEURS) {
 await navigateur.close();
 serveur.close();
 
+// ------------------------------------------------------------------ le plan du site
+// Depuis le 15/09/2026, Google LIT ce fichier : une adresse morte ou une page indexable qui n'y
+// figure pas n'est plus une négligence sans conséquence. Le contrôle se fait dans les deux sens
+// — ce que le plan annonce doit exister, et ce qui existe doit être annoncé — parce qu'un plan
+// incomplet ne se remarque jamais : il ne produit aucune erreur, seulement des pages que
+// personne ne trouve.
+{
+  const BASE = 'https://skanfact.tn/';
+  const plan = await readFile(path.join(RACINE, 'sitemap.xml'), 'utf8');
+  const adresses = [...plan.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1]);
+  if (!adresses.length) dit('grave', 'sitemap.xml', '—', 'aucune adresse dans le plan du site');
+
+  const listees = new Set();
+  for (const u of adresses) {
+    if (!u.startsWith(BASE)) { dit('grave', 'sitemap.xml', '—', 'adresse hors domaine : ' + u); continue; }
+    const f = u.slice(BASE.length) || 'index.html';
+    listees.add(f);
+    if (!existsSync(path.join(RACINE, f))) {
+      dit('grave', 'sitemap.xml', '—', 'adresse sans page : ' + u);
+      continue;
+    }
+    const html = await readFile(path.join(RACINE, f), 'utf8');
+    if (/name="robots"[^>]*noindex/.test(html)) {
+      dit('grave', 'sitemap.xml', '—', `page en noindex mais annoncée au plan : ${f}`);
+    }
+    const can = (html.match(/<link rel="canonical" href="([^"]+)"/) || [])[1];
+    // Une canonique qui désigne une AUTRE adresse que celle du plan annule le bénéfice des deux :
+    // on demande l'indexation d'une page qui, elle, en désigne une autre.
+    if (can && can !== u) dit('grave', 'sitemap.xml', '—', `canonique ≠ plan : ${f} → ${can}`);
+  }
+  for (const f of pages) {
+    if (f === '404.html' || listees.has(f)) continue;
+    const html = await readFile(path.join(RACINE, f), 'utf8');
+    if (!/name="robots"[^>]*noindex/.test(html)) {
+      dit('grave', 'sitemap.xml', '—', `page indexable absente du plan : ${f}`);
+    }
+  }
+}
+
 const graves = constats.filter(c => c.gravite === 'grave');
 for (const c of constats) {
   console.log(`${c.gravite === 'grave' ? '✗' : '·'} ${c.page} [${c.largeur}] ${c.quoi}`);

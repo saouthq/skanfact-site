@@ -146,6 +146,12 @@ Deux pièges qu'il a fallu lui apprendre, et qu'il ne faut pas lui retirer :
   de développement bloque `api.github.com` ; la page le prévoit et retombe sur un lien. Signaler
   ce blocage à chaque passage noierait les vraies erreurs JavaScript.
 
+Il vérifie aussi le **plan du site, dans les deux sens** : ce que `sitemap.xml` annonce doit
+exister, porter sa canonique et ne pas être en `noindex` ; et toute page indexable doit y
+figurer. Depuis que Google le lit (15/09/2026), une adresse morte devient une erreur qui remonte
+dans la Search Console, et une page oubliée du plan est une page que personne ne trouve — sans
+qu'aucune erreur ne soit levée nulle part.
+
 Et il se prouve comme le reste : en **remettant** un défaut (remettre `var(--safran)` sur
 `.lc .num` fait remonter 24 constats). Un contrôle qui ne peut pas échouer est pire que pas de
 contrôle.
