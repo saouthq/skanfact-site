@@ -41,9 +41,16 @@ async function playwright() {
   process.exit(4);
 }
 
-// Le site est servi sous un préfixe sur GitHub Pages : on sert de la même façon, sinon les
-// chemins absolus de la page 404 sont examinés dans des conditions qui n'existent pas.
-const PREFIXE = '/skanfact-site/';
+// On sert le site EXACTEMENT comme il est servi en vrai, sinon la page 404 — la seule qui vise
+// en absolu — est examinée dans des conditions qui n'existent pas.
+//
+// Jusqu'au 15/09/2026 c'était `/skanfact-site/`, le préfixe de GitHub Pages. Depuis que
+// `skanfact.tn` est en place, le site vit à la RACINE : `/assets/style.css` désigne enfin ce
+// qu'il prétend désigner. Servir encore sous l'ancien préfixe laissait la 404 sans feuille de
+// style ni logo pendant l'audit, sur la seule page où le visiteur est déjà perdu — et l'audit
+// n'en disait rien, puisqu'il ne vérifiait pas que le style avait chargé. C'est réparé
+// ci-dessous : on mesure désormais que la page 404 est bien HABILLÉE.
+const PREFIXE = '/';
 const TYPES = {
   '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8',
   '.js': 'text/javascript; charset=utf-8', '.jpg': 'image/jpeg', '.png': 'image/png',
@@ -238,7 +245,12 @@ for (const largeur of LARGEURS) {
         h1: document.querySelectorAll('h1').length,
         og: (document.querySelector('meta[property="og:image"]') || {}).content || '',
         largeurDoc: document.documentElement.scrollWidth,
-        vue: document.documentElement.clientWidth
+        vue: document.documentElement.clientWidth,
+        // La feuille de style a-t-elle VRAIMENT chargé ? Une page dont le CSS ne résout pas
+        // s'affiche quand même — nue, et sans une erreur. C'est le piège des chemins absolus
+        // de la 404 : ils ne se voient qu'en regardant, ou en mesurant comme ici.
+        habillee: getComputedStyle(document.body).fontFamily.includes('Lexend')
+          && getComputedStyle(document.body).margin !== '8px'
       };
     });
 
@@ -309,6 +321,9 @@ for (const largeur of LARGEURS) {
       if (!b.bord && contraste(s.c, a.c) < 1.25) {
         dit('grave', f, largeur.nom, `bouton invisible (fond confondu, sans bordure) — « ${b.texte} »`);
       }
+    }
+    if (!releve.habillee) {
+      dit('grave', f, largeur.nom, 'la feuille de style n’a pas chargé : la page s’affiche nue');
     }
     if (releve.largeurDoc > releve.vue + 1) {
       dit('grave', f, largeur.nom, `la page déborde de ${releve.largeurDoc - releve.vue} px`);

@@ -120,9 +120,12 @@ page reste utilisable : c'est volontaire.
 node outils/audit.mjs        # 27 pages × 4 largeurs, dans un vrai Chromium
 ```
 
-Il sert le site sous le préfixe réel (`/skanfact-site/`, pour que les chemins absolus de la 404
-soient examinés dans les conditions où ils vivent), ouvre chaque page à quatre largeurs et
-**mesure** : contraste texte/fond, boutons dont le fond se confond avec celui de leur bloc,
+Il sert le site **à la racine**, comme il est servi en vrai depuis que `skanfact.tn` est en
+place — jusqu'au 15/09/2026 c'était sous `/skanfact-site/`. Le préfixe n'est pas un détail : la
+404 est la seule page qui vise en absolu, et servie sous le mauvais préfixe elle s'affiche
+**nue**, sans feuille de style ni logo, sans qu'une erreur soit levée. D'où le contrôle
+« la page s'affiche nue », qui mesure que le style a vraiment chargé. Il ouvre ensuite chaque
+page à quatre largeurs et **mesure** : contraste texte/fond, boutons dont le fond se confond avec celui de leur bloc,
 débordements, titres et descriptions, adresses canoniques, `og:image` en chemin relatif, images
 sans texte de remplacement, balisage JSON-LD, liens morts, erreurs JavaScript. Il se termine sur
 un code d'erreur s'il reste un constat grave.
