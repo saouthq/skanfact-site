@@ -4,65 +4,160 @@
   "h": 875,
   "octets": 137069
  },
+ "accueil.webp": {
+  "w": 1400,
+  "h": 875,
+  "octets": 62338
+ },
+ "accueil@small.jpg": {
+  "w": 720,
+  "h": 450,
+  "octets": 42534
+ },
+ "accueil@small.webp": {
+  "w": 720,
+  "h": 450,
+  "octets": 21800
+ },
+ "c-balance.jpg": {
+  "w": 1267,
+  "h": 432,
+  "octets": 79501
+ },
+ "c-balance.webp": {
+  "w": 1267,
+  "h": 432,
+  "octets": 34908
+ },
+ "c-balance@small.jpg": {
+  "w": 720,
+  "h": 245,
+  "octets": 25351
+ },
+ "c-balance@small.webp": {
+  "w": 720,
+  "h": 245,
+  "octets": 13460
+ },
  "c-journal.jpg": {
   "w": 1267,
-  "h": 430,
-  "octets": 88061
+  "h": 416,
+  "octets": 78048
  },
  "c-journal.webp": {
   "w": 1267,
-  "h": 430,
-  "octets": 39786
+  "h": 416,
+  "octets": 34766
  },
  "c-journal@small.jpg": {
   "w": 720,
-  "h": 244,
-  "octets": 27734
+  "h": 236,
+  "octets": 24156
  },
  "c-journal@small.webp": {
   "w": 720,
-  "h": 244,
-  "octets": 15640
+  "h": 236,
+  "octets": 13108
+ },
+ "c-liasse.jpg": {
+  "w": 1217,
+  "h": 440,
+  "octets": 51642
+ },
+ "c-liasse.webp": {
+  "w": 1217,
+  "h": 440,
+  "octets": 22604
+ },
+ "c-liasse@small.jpg": {
+  "w": 720,
+  "h": 260,
+  "octets": 16873
+ },
+ "c-liasse@small.webp": {
+  "w": 720,
+  "h": 260,
+  "octets": 8634
+ },
+ "c-portefeuille.jpg": {
+  "w": 900,
+  "h": 392,
+  "octets": 33594
+ },
+ "c-portefeuille.webp": {
+  "w": 900,
+  "h": 392,
+  "octets": 16440
+ },
+ "c-portefeuille@small.jpg": {
+  "w": 620,
+  "h": 270,
+  "octets": 18672
+ },
+ "c-portefeuille@small.webp": {
+  "w": 620,
+  "h": 270,
+  "octets": 10098
  },
  "c-production.jpg": {
   "w": 900,
-  "h": 305,
-  "octets": 28852
+  "h": 302,
+  "octets": 27935
  },
  "c-production.webp": {
   "w": 900,
-  "h": 305,
-  "octets": 13746
+  "h": 302,
+  "octets": 13726
  },
  "c-production@small.jpg": {
   "w": 620,
-  "h": 210,
-  "octets": 15293
+  "h": 208,
+  "octets": 14729
  },
  "c-production@small.webp": {
   "w": 620,
-  "h": 210,
-  "octets": 7844
+  "h": 208,
+  "octets": 7586
  },
  "c-saisie.jpg": {
   "w": 1267,
-  "h": 205,
-  "octets": 19135
+  "h": 202,
+  "octets": 19133
  },
  "c-saisie.webp": {
   "w": 1267,
-  "h": 205,
-  "octets": 5888
+  "h": 202,
+  "octets": 5956
  },
  "c-saisie@small.jpg": {
   "w": 720,
-  "h": 116,
-  "octets": 6731
+  "h": 115,
+  "octets": 6927
  },
  "c-saisie@small.webp": {
   "w": 720,
-  "h": 116,
-  "octets": 2538
+  "h": 115,
+  "octets": 2740
+ },
+ "cab-balance.jpg": {
+  "w": 1400,
+  "h": 875,
+  "octets": 117509
+ },
+ "cab-balance.webp": {
+  "w": 1400,
+  "h": 875,
+  "octets": 54424
+ },
+ "cab-balance@small.jpg": {
+  "w": 720,
+  "h": 450,
+  "octets": 34250
+ },
+ "cab-balance@small.webp": {
+  "w": 720,
+  "h": 450,
+  "octets": 18990
  },
  "cab-banque.jpg": {
   "w": 1400,
@@ -104,6 +199,46 @@
   "h": 450,
   "octets": 16420
  },
+ "cab-dossiers.jpg": {
+  "w": 1400,
+  "h": 875,
+  "octets": 105371
+ },
+ "cab-dossiers.webp": {
+  "w": 1400,
+  "h": 875,
+  "octets": 54268
+ },
+ "cab-dossiers@small.jpg": {
+  "w": 720,
+  "h": 450,
+  "octets": 34246
+ },
+ "cab-dossiers@small.webp": {
+  "w": 720,
+  "h": 450,
+  "octets": 20290
+ },
+ "cab-echeances.jpg": {
+  "w": 1400,
+  "h": 875,
+  "octets": 123866
+ },
+ "cab-echeances.webp": {
+  "w": 1400,
+  "h": 875,
+  "octets": 55056
+ },
+ "cab-echeances@small.jpg": {
+  "w": 720,
+  "h": 450,
+  "octets": 33622
+ },
+ "cab-echeances@small.webp": {
+  "w": 720,
+  "h": 450,
+  "octets": 18360
+ },
  "cab-exercice.jpg": {
   "w": 1400,
   "h": 875,
@@ -144,6 +279,66 @@
   "h": 450,
   "octets": 18284
  },
+ "cab-journal.jpg": {
+  "w": 1400,
+  "h": 875,
+  "octets": 84211
+ },
+ "cab-journal.webp": {
+  "w": 1400,
+  "h": 875,
+  "octets": 43296
+ },
+ "cab-journal@small.jpg": {
+  "w": 720,
+  "h": 450,
+  "octets": 27348
+ },
+ "cab-journal@small.webp": {
+  "w": 720,
+  "h": 450,
+  "octets": 16008
+ },
+ "cab-lettrage.jpg": {
+  "w": 1400,
+  "h": 875,
+  "octets": 111594
+ },
+ "cab-lettrage.webp": {
+  "w": 1400,
+  "h": 875,
+  "octets": 50174
+ },
+ "cab-lettrage@small.jpg": {
+  "w": 720,
+  "h": 450,
+  "octets": 33038
+ },
+ "cab-lettrage@small.webp": {
+  "w": 720,
+  "h": 450,
+  "octets": 17820
+ },
+ "cab-liasse.jpg": {
+  "w": 1400,
+  "h": 875,
+  "octets": 122021
+ },
+ "cab-liasse.webp": {
+  "w": 1400,
+  "h": 875,
+  "octets": 59396
+ },
+ "cab-liasse@small.jpg": {
+  "w": 720,
+  "h": 450,
+  "octets": 36993
+ },
+ "cab-liasse@small.webp": {
+  "w": 720,
+  "h": 450,
+  "octets": 20422
+ },
  "cab-production.jpg": {
   "w": 1400,
   "h": 875,
@@ -164,6 +359,26 @@
   "h": 450,
   "octets": 11444
  },
+ "cab-relances.jpg": {
+  "w": 1400,
+  "h": 875,
+  "octets": 60837
+ },
+ "cab-relances.webp": {
+  "w": 1400,
+  "h": 875,
+  "octets": 29026
+ },
+ "cab-relances@small.jpg": {
+  "w": 720,
+  "h": 450,
+  "octets": 17781
+ },
+ "cab-relances@small.webp": {
+  "w": 720,
+  "h": 450,
+  "octets": 9848
+ },
  "cab-revision.jpg": {
   "w": 1400,
   "h": 875,
@@ -183,6 +398,46 @@
   "w": 720,
   "h": 450,
   "octets": 17760
+ },
+ "cab-saisie.jpg": {
+  "w": 1400,
+  "h": 875,
+  "octets": 90975
+ },
+ "cab-saisie.webp": {
+  "w": 1400,
+  "h": 875,
+  "octets": 39906
+ },
+ "cab-saisie@small.jpg": {
+  "w": 720,
+  "h": 450,
+  "octets": 27141
+ },
+ "cab-saisie@small.webp": {
+  "w": 720,
+  "h": 450,
+  "octets": 13954
+ },
+ "clients.jpg": {
+  "w": 1400,
+  "h": 875,
+  "octets": 143828
+ },
+ "clients.webp": {
+  "w": 1400,
+  "h": 875,
+  "octets": 69844
+ },
+ "clients@small.jpg": {
+  "w": 720,
+  "h": 450,
+  "octets": 39237
+ },
+ "clients@small.webp": {
+  "w": 720,
+  "h": 450,
+  "octets": 22604
  },
  "comptable.jpg": {
   "w": 1400,
@@ -206,143 +461,163 @@
  },
  "d-clients.jpg": {
   "w": 900,
-  "h": 396,
-  "octets": 52980
+  "h": 362,
+  "octets": 44285
  },
  "d-clients.webp": {
   "w": 900,
-  "h": 396,
-  "octets": 26658
+  "h": 362,
+  "octets": 21896
  },
  "d-clients@small.jpg": {
   "w": 620,
-  "h": 273,
-  "octets": 25377
+  "h": 249,
+  "octets": 20761
  },
  "d-clients@small.webp": {
   "w": 620,
-  "h": 273,
-  "octets": 14948
+  "h": 249,
+  "octets": 11980
  },
  "d-factures.jpg": {
   "w": 869,
-  "h": 430,
-  "octets": 60671
+  "h": 367,
+  "octets": 50189
  },
  "d-factures.webp": {
   "w": 869,
-  "h": 430,
-  "octets": 30032
+  "h": 367,
+  "octets": 24540
  },
  "d-factures@small.jpg": {
   "w": 620,
-  "h": 307,
-  "octets": 31583
+  "h": 262,
+  "octets": 26584
  },
  "d-factures@small.webp": {
   "w": 620,
-  "h": 307,
-  "octets": 17562
+  "h": 262,
+  "octets": 14442
  },
  "d-manque.jpg": {
   "w": 869,
-  "h": 261,
-  "octets": 38830
+  "h": 211,
+  "octets": 32582
  },
  "d-manque.webp": {
   "w": 869,
-  "h": 261,
-  "octets": 17278
+  "h": 211,
+  "octets": 13974
  },
  "d-manque@small.jpg": {
   "w": 620,
-  "h": 186,
-  "octets": 19041
+  "h": 151,
+  "octets": 16260
  },
  "d-manque@small.webp": {
   "w": 620,
-  "h": 186,
-  "octets": 10558
+  "h": 151,
+  "octets": 8154
  },
  "d-marges.jpg": {
   "w": 884,
-  "h": 309,
-  "octets": 32584
+  "h": 259,
+  "octets": 28141
  },
  "d-marges.webp": {
   "w": 884,
-  "h": 309,
-  "octets": 18002
+  "h": 259,
+  "octets": 14862
  },
  "d-marges@small.jpg": {
   "w": 620,
-  "h": 217,
-  "octets": 17378
+  "h": 182,
+  "octets": 15714
  },
  "d-marges@small.webp": {
   "w": 620,
-  "h": 217,
-  "octets": 11498
+  "h": 182,
+  "octets": 9714
  },
  "d-paie.jpg": {
   "w": 884,
-  "h": 372,
-  "octets": 40091
+  "h": 322,
+  "octets": 33964
  },
  "d-paie.webp": {
   "w": 884,
-  "h": 372,
-  "octets": 20946
+  "h": 322,
+  "octets": 17290
  },
  "d-paie@small.jpg": {
   "w": 620,
-  "h": 261,
-  "octets": 21725
+  "h": 226,
+  "octets": 18342
  },
  "d-paie@small.webp": {
   "w": 620,
-  "h": 261,
-  "octets": 12342
+  "h": 226,
+  "octets": 10384
+ },
+ "d-paquet.jpg": {
+  "w": 819,
+  "h": 281,
+  "octets": 23064
+ },
+ "d-paquet.webp": {
+  "w": 819,
+  "h": 281,
+  "octets": 9024
+ },
+ "d-paquet@small.jpg": {
+  "w": 620,
+  "h": 213,
+  "octets": 13186
+ },
+ "d-paquet@small.webp": {
+  "w": 620,
+  "h": 213,
+  "octets": 5942
  },
  "d-relances.jpg": {
   "w": 869,
-  "h": 264,
-  "octets": 42914
+  "h": 275,
+  "octets": 43406
  },
  "d-relances.webp": {
   "w": 869,
-  "h": 264,
+  "h": 275,
   "octets": 21454
  },
  "d-relances@small.jpg": {
   "w": 620,
-  "h": 188,
-  "octets": 22637
+  "h": 196,
+  "octets": 22914
  },
  "d-relances@small.webp": {
   "w": 620,
-  "h": 188,
-  "octets": 12636
+  "h": 196,
+  "octets": 12676
  },
  "d-stock.jpg": {
   "w": 884,
-  "h": 413,
-  "octets": 39079
+  "h": 349,
+  "octets": 31837
  },
  "d-stock.webp": {
   "w": 884,
-  "h": 413,
-  "octets": 21438
+  "h": 349,
+  "octets": 16584
  },
  "d-stock@small.jpg": {
   "w": 620,
-  "h": 290,
-  "octets": 21142
+  "h": 245,
+  "octets": 17954
  },
  "d-stock@small.webp": {
   "w": 620,
-  "h": 290,
-  "octets": 12310
+  "h": 245,
+  "octets": 9510
  },
  "d-todo.jpg": {
   "w": 869,
@@ -429,10 +704,85 @@
   "h": 875,
   "octets": 166270
  },
+ "factures.webp": {
+  "w": 1400,
+  "h": 875,
+  "octets": 80960
+ },
+ "factures@small.jpg": {
+  "w": 720,
+  "h": 450,
+  "octets": 45322
+ },
+ "factures@small.webp": {
+  "w": 720,
+  "h": 450,
+  "octets": 27188
+ },
  "icone.png": {
   "w": 180,
   "h": 180,
   "octets": 18192
+ },
+ "marges.jpg": {
+  "w": 1400,
+  "h": 875,
+  "octets": 70520
+ },
+ "marges.webp": {
+  "w": 1400,
+  "h": 875,
+  "octets": 35756
+ },
+ "marges@small.jpg": {
+  "w": 720,
+  "h": 450,
+  "octets": 22519
+ },
+ "marges@small.webp": {
+  "w": 720,
+  "h": 450,
+  "octets": 12984
+ },
+ "paie.jpg": {
+  "w": 1400,
+  "h": 875,
+  "octets": 91495
+ },
+ "paie.webp": {
+  "w": 1400,
+  "h": 875,
+  "octets": 46354
+ },
+ "paie@small.jpg": {
+  "w": 720,
+  "h": 450,
+  "octets": 30079
+ },
+ "paie@small.webp": {
+  "w": 720,
+  "h": 450,
+  "octets": 16296
+ },
+ "relances.jpg": {
+  "w": 1400,
+  "h": 875,
+  "octets": 132567
+ },
+ "relances.webp": {
+  "w": 1400,
+  "h": 875,
+  "octets": 62036
+ },
+ "relances@small.jpg": {
+  "w": 720,
+  "h": 450,
+  "octets": 38466
+ },
+ "relances@small.webp": {
+  "w": 720,
+  "h": 450,
+  "octets": 20974
  },
  "seq-01.jpg": {
   "w": 1400,
@@ -633,6 +983,26 @@
   "w": 720,
   "h": 450,
   "octets": 8786
+ },
+ "stock.jpg": {
+  "w": 1400,
+  "h": 875,
+  "octets": 92383
+ },
+ "stock.webp": {
+  "w": 1400,
+  "h": 875,
+  "octets": 46416
+ },
+ "stock@small.jpg": {
+  "w": 720,
+  "h": 450,
+  "octets": 29600
+ },
+ "stock@small.webp": {
+  "w": 720,
+  "h": 450,
+  "octets": 17202
  },
  "tresorerie.jpg": {
   "w": 1400,
