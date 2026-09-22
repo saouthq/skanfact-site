@@ -58,25 +58,35 @@
       <span></span>
     </button>
     <nav class="nav-site" id="nav-site" aria-label="Navigation principale">
-      <div class="sous" id="sous-fonc">
-        <button class="lien-menu" id="btn-fonc" aria-expanded="false" aria-controls="menu-fonc">
-          Le logiciel
+      <div class="sous" id="sous-entreprise">
+        <button class="lien-menu" id="btn-entreprise" aria-expanded="false" aria-controls="menu-entreprise">
+          Pour l'entreprise
           <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="m2.5 4.5 3.5 3.5 3.5-3.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
         </button>
-        <div class="panneau" id="menu-fonc">
+        <div class="panneau" id="menu-entreprise">
           <a href="visite.html"><b>Voir SkanFact en images</b><span>La visite guidée, sans rien installer</span></a>
           <a href="facturation.html"><b>Devis et factures</b><span>Clients, relances, contrats récurrents</span></a>
           <a href="gestion.html"><b>Achats, stock et trésorerie</b><span>Marges, immobilisations, paie</span></a>
           <a href="tunisie.html"><b>Les règles tunisiennes</b><span>Timbre, TVA, retenue à la source</span></a>
           <a href="vos-donnees.html"><b>Vos données</b><span>Où elles vivent, ce qui sort du poste</span></a>
           <a href="excel.html"><b>SkanFact ou Excel ?</b><span>Ce qu'un classeur ne peut pas faire</span></a>
-          <a href="limites.html"><b>Ce que SkanFact ne fait pas</b><span>Les limites, avant l’achat</span></a>
-          <a href="guide-facture-electronique.html"><b>La facture électronique</b><span>Où en est son intégration</span></a>
+          <a href="limites.html"><b>Ce que SkanFact ne fait pas</b><span>Les limites, avant l'achat</span></a>
           <a href="nouveautes.html"><b>Nouveautés</b><span>Ce qui a changé, version par version</span></a>
         </div>
       </div>
+      <div class="sous" id="sous-cabinet">
+        <button class="lien-menu" id="btn-cabinet" aria-expanded="false" aria-controls="menu-cabinet">
+          Pour les cabinets
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="m2.5 4.5 3.5 3.5 3.5-3.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </button>
+        <div class="panneau" id="menu-cabinet">
+          <a href="cabinet.html"><b>SkanFact Cabinet</b><span>Le logiciel de tenue : saisie, livres, liasse</span></a>
+          <a href="comptables.html"><b>Le dossier qui arrive écrit</b><span>Ce que change un client sur SkanFact</span></a>
+          <a href="pour-votre-client.html"><b>Le lien à remettre à un client</b><span>Une page courte, à envoyer telle quelle</span></a>
+          <a href="guide-facture-electronique.html"><b>La facture électronique</b><span>Où en est son intégration</span></a>
+        </div>
+      </div>
       <a href="guides.html">Guides</a>
-      <a href="comptables.html">Comptables</a>
       <a href="tarifs.html">Tarifs</a>
       <a href="contact.html">Contact</a>
       <a class="btn btn-vert btn-petit" href="telecharger.html">Essayer 30 jours</a>
@@ -93,7 +103,7 @@
       <h1 class="h1-page">Installez SkanFact, et faites votre première facture.</h1>
       <p class="chapeau">Trente jours d'essai, toutes les fonctions, sans carte bancaire et sans
         compte à créer. L'application s'installe sur votre ordinateur : vos données n'en sortent pas.</p>
-      <p class="etat-version" id="etat-version">Dernière version : <b data-version>8.0.0</b></p>
+      <p class="etat-version" id="etat-version">Dernière version : <b data-version>10.0.0</b></p>
 
       <div class="tele-grille">
         <div class="tele" data-carte="mac">
@@ -158,13 +168,17 @@
     </div>
   </section>
 
-  <section class="section section-safran">
+  <section class="section section-safran section-ample" id="cabinet">
     <div class="conteneur">
-      <p class="oeil">Vous êtes comptable</p>
-      <h2>SkanFact Cabinet est gratuite.</h2>
-      <p class="chapeau">L'application du cabinet reçoit les dossiers mensuels de vos clients, vérifie
-        chaque pièce, regroupe les écritures et prépare les relances. Elle vous sert même pour les
-        clients qui n'utilisent pas SkanFact — sans limite de dossiers, et sans rien payer.</p>
+      <p class="oeil">Vous êtes expert-comptable</p>
+      <h2>SkanFact Cabinet — le logiciel de tenue.</h2>
+      <p class="chapeau">Une <em>seconde</em> application, à installer à côté de la première ou toute
+        seule. Plan SCE, saisie, banque et lettrage, TVA et déclarations, inventaire, clôture
+        d'exercice, états financiers, liasse et révision — pour tous vos dossiers, que le client soit
+        sur SkanFact ou non.</p>
+      <p class="chapeau"><b>Elle ne vous coûte rien</b> pour les dossiers dont le client a une licence
+        SkanFact, et pour trois dossiers de plus. Au-delà, elle se paie par dossier, jamais par poste
+        ni par collaborateur.</p>
       <div class="actions">
         <a class="btn btn-vert" data-tele="cab-mac" href="https://github.com/saouthq/skanfact/releases/latest">
           Cabinet pour Mac
@@ -174,7 +188,39 @@
         </a>
       </div>
       <p class="sous-actions" data-fichier="cab-mac"></p>
-      <p class="sous-actions"><a href="comptables.html">Ce que fait l'application du cabinet, en détail →</a></p>
+      <p class="sous-actions"><a href="cabinet.html">Ce que fait SkanFact Cabinet, en détail →</a>
+        &nbsp;·&nbsp; <a href="tarifs.html#cabinet">Ses tarifs →</a></p>
+    </div>
+  </section>
+
+  <!-- ============================================================ LE CANAL BÊTA -->
+  <section class="section">
+    <div class="conteneur">
+      <p class="oeil">Pour ceux qui veulent voir venir</p>
+      <h2>Il existe un canal d'essai, et il ne vous est pas proposé par hasard.</h2>
+      <p class="chapeau">Les versions que vous téléchargez ici sont les versions <b>stables</b>.
+        À côté, un canal <b>bêta</b> reçoit les versions d'essai avant qu'elles ne soient confirmées.
+        Il est <b>décoché à l'installation</b> : vous ne recevrez jamais une version d'essai sans
+        l'avoir demandée.</p>
+      <div class="trois">
+        <div class="bloc">
+          <h3>Où il se coche</h3>
+          <p>Dans l'application, <em>Paramètres → Mises à jour</em>. Une question vous rappelle
+            d'abord qu'une bêta s'installe par-dessus votre vraie comptabilité.</p>
+        </div>
+        <div class="bloc">
+          <h3>Ce qui est pris avant</h3>
+          <p>Une sauvegarde nommée <code>avant-beta</code> est écrite sur le disque avant que le
+            canal ne s'arme — pas au moment de l'installation, où il serait trop tard.</p>
+        </div>
+        <div class="bloc">
+          <h3>Comment on revient</h3>
+          <p>On décoche, et la stable suivante réinstalle par-dessus. Sans question, sans perte :
+            revenir en arrière ne doit jamais être plus difficile qu'avancer.</p>
+        </div>
+      </div>
+      <p class="sous-tableau">Si vous hésitez, ne cochez rien : la stable est le bon choix pour
+        facturer et pour tenir des dossiers de clients.</p>
     </div>
   </section>
 
@@ -273,7 +319,7 @@
     </div>
     <div class="bas">
       <span>© 2026 SKANCYBER SECURITY SUARL — tous droits réservés</span>
-      <span>SkanFact <span data-version>8.0.0</span> · macOS et Windows</span>
+      <span>SkanFact <span data-version>10.0.0</span> · macOS et Windows</span>
     </div>
   </div>
 </footer>

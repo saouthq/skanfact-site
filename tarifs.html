@@ -58,25 +58,35 @@
       <span></span>
     </button>
     <nav class="nav-site" id="nav-site" aria-label="Navigation principale">
-      <div class="sous" id="sous-fonc">
-        <button class="lien-menu" id="btn-fonc" aria-expanded="false" aria-controls="menu-fonc">
-          Le logiciel
+      <div class="sous" id="sous-entreprise">
+        <button class="lien-menu" id="btn-entreprise" aria-expanded="false" aria-controls="menu-entreprise">
+          Pour l'entreprise
           <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="m2.5 4.5 3.5 3.5 3.5-3.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
         </button>
-        <div class="panneau" id="menu-fonc">
+        <div class="panneau" id="menu-entreprise">
           <a href="visite.html"><b>Voir SkanFact en images</b><span>La visite guidée, sans rien installer</span></a>
           <a href="facturation.html"><b>Devis et factures</b><span>Clients, relances, contrats récurrents</span></a>
           <a href="gestion.html"><b>Achats, stock et trésorerie</b><span>Marges, immobilisations, paie</span></a>
           <a href="tunisie.html"><b>Les règles tunisiennes</b><span>Timbre, TVA, retenue à la source</span></a>
           <a href="vos-donnees.html"><b>Vos données</b><span>Où elles vivent, ce qui sort du poste</span></a>
           <a href="excel.html"><b>SkanFact ou Excel ?</b><span>Ce qu'un classeur ne peut pas faire</span></a>
-          <a href="limites.html"><b>Ce que SkanFact ne fait pas</b><span>Les limites, avant l’achat</span></a>
-          <a href="guide-facture-electronique.html"><b>La facture électronique</b><span>Où en est son intégration</span></a>
+          <a href="limites.html"><b>Ce que SkanFact ne fait pas</b><span>Les limites, avant l'achat</span></a>
           <a href="nouveautes.html"><b>Nouveautés</b><span>Ce qui a changé, version par version</span></a>
         </div>
       </div>
+      <div class="sous" id="sous-cabinet">
+        <button class="lien-menu" id="btn-cabinet" aria-expanded="false" aria-controls="menu-cabinet">
+          Pour les cabinets
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="m2.5 4.5 3.5 3.5 3.5-3.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </button>
+        <div class="panneau" id="menu-cabinet">
+          <a href="cabinet.html"><b>SkanFact Cabinet</b><span>Le logiciel de tenue : saisie, livres, liasse</span></a>
+          <a href="comptables.html"><b>Le dossier qui arrive écrit</b><span>Ce que change un client sur SkanFact</span></a>
+          <a href="pour-votre-client.html"><b>Le lien à remettre à un client</b><span>Une page courte, à envoyer telle quelle</span></a>
+          <a href="guide-facture-electronique.html"><b>La facture électronique</b><span>Où en est son intégration</span></a>
+        </div>
+      </div>
       <a href="guides.html">Guides</a>
-      <a href="comptables.html">Comptables</a>
       <a href="tarifs.html">Tarifs</a>
       <a href="contact.html">Contact</a>
       <a class="btn btn-vert btn-petit" href="telecharger.html">Essayer 30 jours</a>
@@ -143,12 +153,25 @@
         </div>
       </div>
 
+      <div class="preuve" style="margin-top: 38px;">
+        <b>L'option « Comptabilité » — 190 DT HT / an, sur l'une ou l'autre offre</b>
+        <p>Grand livre, balance, états financiers et saisie d'opérations diverses <em>dans votre
+          propre application</em>. Elle ne sert qu'à une chose : tenir vos livres vous-même quand
+          vous n'avez pas de comptable. <b>Si votre cabinet est sur SkanFact Cabinet, vous n'en avez
+          pas besoin</b> — c'est lui qui les tient, et nous ne vendons pas deux fois la même chose à
+          deux personnes. L'essai de 30 jours l'inclut : on ne vend pas ce qu'on n'a pas laissé
+          essayer. Sans elle, rien ne change à ce qui part chez votre comptable : le dossier mensuel
+          et l'onglet Écritures restent libres et complets.</p>
+      </div>
+
       <div class="note-prix">
         <div style="flex: 1; min-width: 260px;">
-          <p><b>Votre comptable ne paie rien, jamais.</b> Son application est gratuite et sans limite
-            de dossiers — elle lui sert même pour les clients qui n'utilisent pas SkanFact. Si c'est
-            lui qui vous a parlé de nous, vous avez <b>20 % la première année</b>, et il ne touche
-            aucune commission.</p>
+          <p><b>Votre comptable ne paie rien pour vous.</b> Tant que vous avez une licence SkanFact
+            — ou un essai en cours — votre dossier est gratuit et sans limite dans son application.
+            Il ne paie que pour ses clients qui ne sont pas sur SkanFact, et il en a trois gratuits.
+            Si c'est lui qui vous a parlé de nous, vous avez <b>20 % la première année</b>, et il ne
+            touche aucune commission : le seul avantage qu'il en tire, c'est que votre dossier cesse
+            de lui coûter quelque chose. <a href="tarifs.html#cabinet">Le détail côté cabinet</a>.</p>
           <p style="margin-top: 10px;">390 DT par an, c'est <b>32,500 DT par mois</b>. Et ce prix ne
             bouge ni avec le nombre de factures que vous émettez, ni avec le nombre de clients, ni avec
             le nombre de postes : il n'y a pas de palier au-dessus, ni de compteur qui se déclenche le
@@ -199,6 +222,58 @@
   </section>
 
 
+    <!-- ======================================================= L'OFFRE CABINET -->
+  <section class="section section-vert section-ample" id="cabinet">
+    <div class="conteneur">
+      <p class="oeil">Pour les cabinets d'expertise comptable</p>
+      <h2>On vend des dossiers, jamais des sièges.</h2>
+      <p class="chapeau">SkanFact Cabinet est un logiciel de tenue complet. Ce que vous payez ne
+        dépend ni du nombre de vos postes, ni du nombre de vos collaborateurs, ni du nombre de vos
+        écritures — seulement du nombre de dossiers que vous tenez pour des clients qui ne sont pas
+        sur SkanFact.</p>
+
+      <div class="trois reveal">
+        <div class="bloc">
+          <h3>Vos clients sur SkanFact</h3>
+          <p style="font-size: 26px; color: #fff; font-weight: 800; font-family: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif; letter-spacing: -.02em;">0 DT</p>
+          <p>Sans limite de nombre. Un dossier compte comme « sur SkanFact » tant que son dernier
+            paquet date de moins de treize mois et porte une licence valide — ou un essai en cours.</p>
+        </div>
+        <div class="bloc">
+          <h3>Trois dossiers de plus</h3>
+          <p style="font-size: 26px; color: #fff; font-weight: 800; font-family: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif; letter-spacing: -.02em;">0 DT</p>
+          <p>Hors SkanFact, gratuits pour toujours. Un cabinet doit pouvoir essayer sur de vrais
+            dossiers sans rien signer, et un petit cabinet ne paie rien.</p>
+        </div>
+        <div class="bloc">
+          <h3>Les suivants</h3>
+          <p style="font-size: 26px; color: #fff; font-weight: 800; font-family: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif; letter-spacing: -.02em;">72 DT<span style="font-size: 15px; font-weight: 400; color: #9fc3bd;"> HT / dossier / an</span></p>
+          <p>Soit 6 DT par mois et par dossier. Dégressif&nbsp;: <b>60 DT</b> au-delà de 20 dossiers
+            payants, <b>48 DT</b> au-delà de 50.</p>
+        </div>
+      </div>
+
+      <div class="preuve reveal">
+        <b>Ce qu'une licence de cabinet ne bloque jamais.</b>
+        <p>Si votre quota est dépassé, seule la <em>validation de nouvelles écritures</em> s'arrête
+          sur les dossiers hors quota — et c'est vous qui choisissez lesquels restent actifs. Lire,
+          exporter, imprimer, déclarer sur ce qui est déjà validé : toujours. Un dossier archivé ne
+          compte jamais. C'est la même règle que côté entreprise : <b>jamais de données en otage</b>.</p>
+      </div>
+
+      <p class="chapeau" style="margin-top: 30px;">Un exemple concret. Un cabinet de 60 dossiers dont
+        10 sont sur SkanFact : les 10 ne coûtent rien, 3 des 50 restants sont gratuits, et les 47
+        autres font <b>3 384 DT HT par an</b>. Chaque client qu'il convainc de passer sur SkanFact
+        lui retire 72 DT de facture — et l'entreprise, elle, paie sa licence directement à
+        l'éditeur. Aucun argent ne passe jamais par le cabinet.</p>
+
+      <div class="actions" style="margin-top: 30px;">
+        <a class="btn btn-safran" href="cabinet.html">Voir SkanFact Cabinet</a>
+        <a class="btn btn-clair" href="contact.html">Demander une démonstration</a>
+      </div>
+    </div>
+  </section>
+
   <section class="section section-creme" id="acheter">
     <div class="conteneur">
       <p class="oeil">Passer à la licence</p>
@@ -223,8 +298,8 @@
       <div class="note-prix" style="margin-top: 34px;">
         <div style="flex: 1; min-width: 260px;">
           <p><b>Si c'est votre comptable qui vous a parlé de nous</b>, dites-le dans votre message :
-            vous avez <b>20 % la première année</b>. Il ne touche aucune commission — son
-            application est gratuite, et le restera.</p>
+            vous avez <b>20 % la première année</b>. Il ne touche aucune commission — votre dossier
+            est simplement gratuit dans son application, et le restera.</p>
           <p style="margin-top: 10px;">La licence court douze mois, <b>sans reconduction
             automatique</b> : rien ne se prélève tout seul, nous vous écrivons avant l'échéance.
             D'autres durées existent — trimestre, semestre, deux ans, ou <b>sans limite de
@@ -279,7 +354,7 @@
       <div class="cartes-mini">
         <a class="mini" href="questions.html"><b>Questions fréquentes</b><span>Les données, l’essai, le changement d’ordinateur, l’e-facture.</span><span class="fleche" aria-hidden="true">→</span></a>
         <a class="mini" href="telecharger.html"><b>Télécharger</b><span>Mac et Windows, trente jours d’essai, sans compte à créer.</span><span class="fleche" aria-hidden="true">→</span></a>
-        <a class="mini" href="comptables.html"><b>Votre comptable</b><span>Le dossier du mois part en un bouton. Son application est gratuite.</span><span class="fleche" aria-hidden="true">→</span></a>
+        <a class="mini" href="comptables.html"><b>Votre comptable</b><span>Le dossier du mois part en un bouton. Son application ne lui coûte rien pour vous.</span><span class="fleche" aria-hidden="true">→</span></a>
       </div>
     </div>
   </section>
@@ -344,7 +419,7 @@
     </div>
     <div class="bas">
       <span>© 2026 SKANCYBER SECURITY SUARL — tous droits réservés</span>
-      <span>SkanFact <span data-version>8.0.0</span> · macOS et Windows</span>
+      <span>SkanFact <span data-version>10.0.0</span> · macOS et Windows</span>
     </div>
   </div>
 </footer>

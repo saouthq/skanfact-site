@@ -58,25 +58,35 @@
       <span></span>
     </button>
     <nav class="nav-site" id="nav-site" aria-label="Navigation principale">
-      <div class="sous" id="sous-fonc">
-        <button class="lien-menu" id="btn-fonc" aria-expanded="false" aria-controls="menu-fonc">
-          Le logiciel
+      <div class="sous" id="sous-entreprise">
+        <button class="lien-menu" id="btn-entreprise" aria-expanded="false" aria-controls="menu-entreprise">
+          Pour l'entreprise
           <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="m2.5 4.5 3.5 3.5 3.5-3.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
         </button>
-        <div class="panneau" id="menu-fonc">
+        <div class="panneau" id="menu-entreprise">
           <a href="visite.html"><b>Voir SkanFact en images</b><span>La visite guidée, sans rien installer</span></a>
           <a href="facturation.html"><b>Devis et factures</b><span>Clients, relances, contrats récurrents</span></a>
           <a href="gestion.html"><b>Achats, stock et trésorerie</b><span>Marges, immobilisations, paie</span></a>
           <a href="tunisie.html"><b>Les règles tunisiennes</b><span>Timbre, TVA, retenue à la source</span></a>
           <a href="vos-donnees.html"><b>Vos données</b><span>Où elles vivent, ce qui sort du poste</span></a>
           <a href="excel.html"><b>SkanFact ou Excel ?</b><span>Ce qu'un classeur ne peut pas faire</span></a>
-          <a href="limites.html"><b>Ce que SkanFact ne fait pas</b><span>Les limites, avant l’achat</span></a>
-          <a href="guide-facture-electronique.html"><b>La facture électronique</b><span>Où en est son intégration</span></a>
+          <a href="limites.html"><b>Ce que SkanFact ne fait pas</b><span>Les limites, avant l'achat</span></a>
           <a href="nouveautes.html"><b>Nouveautés</b><span>Ce qui a changé, version par version</span></a>
         </div>
       </div>
+      <div class="sous" id="sous-cabinet">
+        <button class="lien-menu" id="btn-cabinet" aria-expanded="false" aria-controls="menu-cabinet">
+          Pour les cabinets
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="m2.5 4.5 3.5 3.5 3.5-3.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </button>
+        <div class="panneau" id="menu-cabinet">
+          <a href="cabinet.html"><b>SkanFact Cabinet</b><span>Le logiciel de tenue : saisie, livres, liasse</span></a>
+          <a href="comptables.html"><b>Le dossier qui arrive écrit</b><span>Ce que change un client sur SkanFact</span></a>
+          <a href="pour-votre-client.html"><b>Le lien à remettre à un client</b><span>Une page courte, à envoyer telle quelle</span></a>
+          <a href="guide-facture-electronique.html"><b>La facture électronique</b><span>Où en est son intégration</span></a>
+        </div>
+      </div>
       <a href="guides.html">Guides</a>
-      <a href="comptables.html">Comptables</a>
       <a href="tarifs.html">Tarifs</a>
       <a href="contact.html">Contact</a>
       <a class="btn btn-vert btn-petit" href="telecharger.html">Essayer 30 jours</a>
@@ -94,7 +104,7 @@
       <p class="chapeau">SkanFact est corrigé et complété en continu. Chaque version part avec ses
         notes, et l'application vous propose la mise à jour toute seule — c'est compris dans la
         licence, y compris pendant l'essai.</p>
-      <p class="etat-version" id="etat-version">Dernière version : <b data-version>8.0.0</b></p>
+      <p class="etat-version" id="etat-version">Dernière version : <b data-version>10.0.0</b></p>
     </div>
   </section>
 
@@ -102,45 +112,45 @@
     <div class="conteneur">
       <ol class="versions" id="versions">
         <li class="version derniere">
-          <div class="v-num">8.0.0<span class="v-neuf">dernière</span></div>
+          <div class="v-num">10.0.0<span class="v-neuf">dernière</span></div>
           <div class="v-corps">
-            <p class="v-quoi">La licence est armée.</p>
-            <p class="v-quand"><time datetime="2026-09-14">14 septembre 2026</time> · <a href="https://github.com/saouthq/skanfact/releases/tag/v8.0.0" rel="noopener">Notes complètes</a></p>
+            <p class="v-quoi">La liasse et l&#x27;annuel.</p>
+            <p class="v-quand"><time datetime="2026-09-21">21 septembre 2026</time> · <a href="https://github.com/saouthq/skanfact/releases/tag/v10.0.0" rel="noopener">Notes complètes</a></p>
           </div>
         </li>
         <li class="version">
-          <div class="v-num">7.33.0</div>
+          <div class="v-num">9.10.0</div>
           <div class="v-corps">
-            <p class="v-quoi">SkanFact sait maintenant se vendre : deux offres portées par la clé de licence, et un module Éditeur qui émet la clé, fait la facture et tient l'historique — depuis SkanFact lui-même.</p>
-            <p class="v-quand"><time datetime="2026-09-14">14 septembre 2026</time> · <a href="https://github.com/saouthq/skanfact/releases/tag/v7.33.0" rel="noopener">Notes complètes</a></p>
+            <p class="v-quoi">La révision et les questions.</p>
+            <p class="v-quand"><time datetime="2026-09-21">21 septembre 2026</time> · <a href="https://github.com/saouthq/skanfact/releases/tag/v9.10.0" rel="noopener">Notes complètes</a></p>
           </div>
         </li>
         <li class="version">
-          <div class="v-num">7.32.0</div>
+          <div class="v-num">9.9.1</div>
           <div class="v-corps">
-            <p class="v-quoi">L'application du comptable range ses Réglages en trois onglets, comme la tienne — et l'alerte la plus importante de toute l'application sort enfin de sa cachette.</p>
-            <p class="v-quand"><time datetime="2026-09-14">14 septembre 2026</time> · <a href="https://github.com/saouthq/skanfact/releases/tag/v7.32.0" rel="noopener">Notes complètes</a></p>
+            <p class="v-quoi">Entretien.</p>
+            <p class="v-quand"><time datetime="2026-09-21">21 septembre 2026</time> · <a href="https://github.com/saouthq/skanfact/releases/tag/v9.9.1" rel="noopener">Notes complètes</a></p>
           </div>
         </li>
         <li class="version">
-          <div class="v-num">7.31.0</div>
+          <div class="v-num">9.9.0</div>
           <div class="v-corps">
-            <p class="v-quoi">Un devis long tient enfin la route : de vraies pages A4, chacune avec son pied de page numéroté, son bandeau de rappel et ses en-têtes de colonnes — et un document de huit lignes qui ne…</p>
-            <p class="v-quand"><time datetime="2026-09-14">14 septembre 2026</time> · <a href="https://github.com/saouthq/skanfact/releases/tag/v7.31.0" rel="noopener">Notes complètes</a></p>
+            <p class="v-quoi">Le cabinet à plusieurs.</p>
+            <p class="v-quand"><time datetime="2026-09-21">21 septembre 2026</time> · <a href="https://github.com/saouthq/skanfact/releases/tag/v9.9.0" rel="noopener">Notes complètes</a></p>
           </div>
         </li>
         <li class="version">
-          <div class="v-num">7.28.0</div>
+          <div class="v-num">9.8.7</div>
           <div class="v-corps">
-            <p class="v-quoi">Partager l'entreprise qu'on a déjà saisie. Une seule porte par ligne. Et l'aide du cabinet.</p>
-            <p class="v-quand"><time datetime="2026-09-14">14 septembre 2026</time> · <a href="https://github.com/saouthq/skanfact/releases/tag/v7.28.0" rel="noopener">Notes complètes</a></p>
+            <p class="v-quoi">Deux défauts trouvés en testant le Cabinet écran par écran, et les deux sont des trous de la 9.8.5 elle-même.</p>
+            <p class="v-quand"><time datetime="2026-09-18">18 septembre 2026</time> · <a href="https://github.com/saouthq/skanfact/releases/tag/v9.8.7" rel="noopener">Notes complètes</a></p>
           </div>
         </li>
         <li class="version">
-          <div class="v-num">7.27.0</div>
+          <div class="v-num">9.8.6</div>
           <div class="v-corps">
-            <p class="v-quoi">L'Aide : un plan coloré, un fil qui tient sur une ligne, et un sommaire.</p>
-            <p class="v-quand"><time datetime="2026-09-14">14 septembre 2026</time> · <a href="https://github.com/saouthq/skanfact/releases/tag/v7.27.0" rel="noopener">Notes complètes</a></p>
+            <p class="v-quoi">L&#x27;app du comptable ne se construisait plus.</p>
+            <p class="v-quand"><time datetime="2026-09-18">18 septembre 2026</time> · <a href="https://github.com/saouthq/skanfact/releases/tag/v9.8.6" rel="noopener">Notes complètes</a></p>
           </div>
         </li>
       </ol>
@@ -242,7 +252,7 @@
     </div>
     <div class="bas">
       <span>© 2026 SKANCYBER SECURITY SUARL — tous droits réservés</span>
-      <span>SkanFact <span data-version>8.0.0</span> · macOS et Windows</span>
+      <span>SkanFact <span data-version>10.0.0</span> · macOS et Windows</span>
     </div>
   </div>
 </footer>

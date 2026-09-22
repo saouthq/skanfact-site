@@ -264,16 +264,29 @@ for (const largeur of LARGEURS) {
     // Deux entrées de plus dans le menu suffisent à le recasser, et rien ne le dirait : on
     // mesure donc les deux états, volet replié ET volet ouvert, à chaque largeur de téléphone.
     if (largeur.width <= 900 && await onglet.$('#burger')) {
-      for (const volet of [false, true]) {
-        const m = await onglet.evaluate(async (ouvrirVolet) => {
+      // Les volets du menu. Il y en a DEUX depuis la 10.0.0 — « Pour l'entreprise » et « Pour
+      // les cabinets » — et ils ne s'ouvrent jamais ensemble : ouvrir l'un referme l'autre,
+      // parce que deux panneaux ouverts se recouvrent. On mesure donc le menu replié, puis
+      // une fois par volet, et le pire cas décide. Ce test visait `#btn-fonc` par son
+      // identifiant : le jour où ce bouton a été renommé, il a annoncé que le volet « ne
+      // s'ouvrait pas » sur vingt-cinq pages — un test qui nomme un élément se relit quand
+      // l'élément change, avant de conclure à une régression.
+      const volets = await onglet.evaluate(() =>
+        [...document.querySelectorAll('.sous .lien-menu')]
+          .map(b => ({ id: b.id, nom: (b.textContent || '').trim().replace(/\s+/g, ' ') })));
+
+      for (const volet of [null, ...volets]) {
+        const m = await onglet.evaluate(async (quelVolet) => {
           const attendre = () => new Promise(r => setTimeout(r, 220));
           const burger = document.getElementById('burger');
           const nav = document.getElementById('nav-site');
           if (nav.classList.contains('ouvert')) { burger.click(); await attendre(); }
           burger.click();
           await attendre();
-          const bf = document.getElementById('btn-fonc');
-          if (ouvrirVolet && bf) { bf.click(); await attendre(); }
+          if (quelVolet && quelVolet.id) {
+            const b = document.getElementById(quelVolet.id);
+            if (b) { b.click(); await attendre(); }
+          }
           const r = nav.getBoundingClientRect();
           const cta = nav.querySelector('a.btn');
           const c = cta && cta.getBoundingClientRect();
@@ -289,8 +302,10 @@ for (const largeur of LARGEURS) {
           return res;
         }, volet);
 
-        const quoi = volet ? 'volet ouvert' : 'volet replié';
-        if (volet && !m.volet) dit('grave', f, largeur.nom, `menu : le volet « Le logiciel » ne s'ouvre pas`);
+        const quoi = volet ? `volet « ${volet.nom} » ouvert` : 'volet replié';
+        if (volet && !m.volet) {
+          dit('grave', f, largeur.nom, `menu : le volet « ${volet.nom} » ne s'ouvre pas`);
+        }
         if (m.depasse > 1) {
           dit('grave', f, largeur.nom,
             `menu (${quoi}) : il dépasse de l'écran de ${m.depasse} px — le bas est hors de portée`);

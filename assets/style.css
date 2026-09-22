@@ -1060,3 +1060,266 @@ legend { font-size: 14px; color: #a8ccc6; padding: 0 0 10px; }
 .qui-offres label:has(input:checked) span { color: #f3e3cb; }
 
 .aide-mf { margin-top: -6px; }
+
+/* =============================================================================
+   LA 10.0.0 — deux produits, deux parcours, et de quoi montrer un logiciel de
+   comptabilité sans en avoir honte.
+   -----------------------------------------------------------------------------
+   Ce qui est ajouté ici ne remplace rien : la direction « Atelier » (blanc franc,
+   vert profond, safran, Bricolage + Lexend) tient toujours. Ce qui manquait, ce
+   n'était pas une couleur, c'était trois choses :
+     1. un CADRE pour les captures — une image de tableur posée à nu sur du blanc
+        ressemble à une capture d'écran, pas à un produit ;
+     2. de quoi séparer DEUX publics dès l'accueil sans faire deux sites ;
+     3. de l'air. Les sections faisaient 56 px de respiration là où l'œil en
+        attend le double sur un site qu'on veut cher.
+   ============================================================================= */
+
+/* --------------------------------------------------------- le cadre d'application
+   Une barre de fenêtre au-dessus de la capture. Trois pastilles et un nom : c'est
+   le signe qui dit « ceci est un logiciel » plutôt que « ceci est une image ».
+   Le cadre porte l'ombre ; l'image, elle, n'a plus ni bordure ni rayon propres,
+   sinon on voit deux arrondis concentriques. */
+.cadre-app {
+  border-radius: 16px;
+  border: 1px solid var(--filet);
+  background: #fff;
+  box-shadow: var(--ombre);
+  overflow: hidden;
+}
+.cadre-app .barre {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 16px;
+  background: linear-gradient(180deg, #fbfdfc, #f1f6f4);
+  border-bottom: 1px solid var(--filet);
+}
+.cadre-app .pastilles { display: flex; gap: 6px; }
+.cadre-app .pastilles i { width: 10px; height: 10px; border-radius: 50%; background: #d7e3df; }
+.cadre-app .titre-fen {
+  font-size: 12.5px;
+  color: var(--gris-clair);
+  font-weight: 600;
+  letter-spacing: .01em;
+  margin-inline: auto;
+  /* Le nom de la fenêtre est décoratif : sur un téléphone il n'apporte rien et
+     pousse les pastilles hors du cadre. */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cadre-app img { display: block; width: 100%; height: auto; }
+.section-vert .cadre-app { border-color: rgba(255, 255, 255, .14); box-shadow: 0 30px 70px -30px rgba(0, 0, 0, .55); }
+.section-vert .cadre-app .barre { background: #0d5c53; border-bottom-color: rgba(255, 255, 255, .12); }
+.section-vert .cadre-app .pastilles i { background: rgba(255, 255, 255, .22); }
+.section-vert .cadre-app .titre-fen { color: #9fc3bd; }
+
+/* --------------------------------------------------------------- les deux portes
+   L'accueil parle à un chef d'entreprise ET à un expert-comptable. Les deux ne
+   cherchent pas la même chose et ne se reconnaissent pas dans la page de l'autre :
+   on le dit franchement, au lieu d'écrire un texte moyen qui ne vise personne. */
+.portes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; margin-top: 40px; }
+.porte {
+  display: block;
+  border: 1px solid var(--filet);
+  border-radius: var(--rayon);
+  padding: 30px 30px 26px;
+  background: #fff;
+  color: var(--encre);
+  text-decoration: none;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.porte:hover { border-color: var(--vert); transform: translateY(-3px); box-shadow: var(--ombre-douce); color: var(--encre); }
+.porte .qui { font-size: 13px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--safran-fonce); }
+.porte h3 { font-size: clamp(21px, 2.4vw, 26px); margin-top: 10px; }
+.porte p { color: var(--gris); margin-top: 10px; font-size: 15.5px; }
+.porte ul { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 7px; }
+.porte li { position: relative; padding-left: 22px; font-size: 14.5px; color: var(--gris); }
+.porte li::before {
+  content: ""; position: absolute; left: 3px; top: .52em;
+  width: 7px; height: 7px; border-radius: 50%; background: var(--safran);
+}
+.porte .mene {
+  display: inline-flex; align-items: center; gap: 7px;
+  margin-top: 22px; font-weight: 700; color: var(--vert); font-size: 15px;
+}
+.porte:hover .mene span { transform: translateX(3px); }
+.porte .mene span { transition: transform .18s ease; }
+
+/* ------------------------------------------------------------------- le pont
+   Trois temps reliés par un trait. C'est le produit : ni la facturation ni la
+   comptabilité prises séparément, mais le chemin entre les deux. */
+.pont { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px; margin-top: 44px; position: relative; }
+.pont-etape { position: relative; padding-top: 52px; }
+.pont-etape .n {
+  position: absolute; top: 0; left: 0;
+  width: 38px; height: 38px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--vert); color: #fff;
+  font-family: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 800; font-size: 16px;
+}
+/* Le trait qui relie les étapes part du centre de la pastille et s'arrête avant
+   la suivante. Il ne se dessine PAS après la dernière : un trait qui sort dans le
+   vide se lit comme une quatrième étape manquante. */
+.pont-etape::after {
+  content: ""; position: absolute; top: 18px; left: 46px; right: -26px; height: 2px;
+  background: repeating-linear-gradient(90deg, var(--filet) 0 7px, transparent 7px 14px);
+}
+.pont-etape:last-child::after { display: none; }
+.pont-etape h3 { font-size: 19px; }
+.pont-etape p { color: var(--gris); margin-top: 8px; font-size: 15px; }
+.section-vert .pont-etape .n { background: var(--safran); color: #40280a; }
+.section-vert .pont-etape::after { background: repeating-linear-gradient(90deg, rgba(255,255,255,.24) 0 7px, transparent 7px 14px); }
+.section-vert .pont-etape p { color: #9fc3bd; }
+.section-vert .pont-etape h3 { color: #fff; }
+
+/* ------------------------------------------------------------------ la preuve
+   Un encadré pour UNE affirmation vérifiable, et sa façon de se vérifier. Il n'y
+   a ni témoignage, ni logo client, ni compteur d'utilisateurs sur ce site : on
+   n'a pas de clients à citer, et en inventer serait la seule chose qui rendrait
+   tout le reste douteux. Ce bloc est ce qu'on met à la place. */
+.preuve {
+  margin-top: 40px;
+  border-left: 3px solid var(--safran);
+  background: var(--safran-clair);
+  border-radius: 0 16px 16px 0;
+  padding: 26px 30px;
+}
+.section-vert .preuve { background: rgba(255, 255, 255, .06); border-left-color: var(--safran); }
+.preuve b { font-family: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif; font-size: 18px; letter-spacing: -.01em; }
+.preuve p { margin-top: 8px; color: var(--gris); font-size: 15.5px; max-width: 70ch; }
+.section-vert .preuve b { color: #fff; }
+.section-vert .preuve p { color: #9fc3bd; }
+
+/* ------------------------------------------------------------- grille de trois */
+.trois { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 40px; }
+.bloc {
+  border: 1px solid var(--filet); border-radius: var(--rayon);
+  padding: 26px; background: #fff;
+}
+.section-creme .bloc { border-color: transparent; }
+.section-vert .bloc { background: rgba(255, 255, 255, .05); border-color: rgba(255, 255, 255, .12); }
+.bloc h3 { font-size: 18px; }
+.bloc p { color: var(--gris); margin-top: 9px; font-size: 15px; }
+.section-vert .bloc h3 { color: #fff; }
+.section-vert .bloc p { color: #9fc3bd; }
+
+/* --------------------------------------------------------- la révélation au défilement
+   Un mouvement de 14 px, une fois, sans rien déplacer d'autre. Deux garde-fous :
+   l'état de départ n'est posé QUE si le JavaScript a marqué la page (sinon une
+   page sans JS resterait invisible pour toujours), et on ne bouge rien du tout
+   si la personne a demandé moins d'animations. */
+.js .reveal { opacity: 0; transform: translateY(14px); }
+.js .reveal.vu { opacity: 1; transform: none; transition: opacity .5s ease, transform .5s ease; }
+@media (prefers-reduced-motion: reduce) {
+  .js .reveal { opacity: 1; transform: none; }
+  .js .reveal.vu { transition: none; }
+}
+
+/* --------------------------------------------------------------- respirations
+   Une section « ample » pour les pages de haut de tunnel. Les autres gardent
+   leur rythme : tout élargir rendrait les guides interminables. */
+.section-ample { padding-block: clamp(72px, 11vw, 128px); }
+.hero-large h1 { font-size: clamp(36px, 6.2vw, 68px); }
+.hero-large .chapeau { max-width: 54ch; }
+
+/* ------------------------------------------------------------------- téléphone */
+@media (max-width: 900px) {
+  .portes, .pont, .trois { grid-template-columns: minmax(0, 1fr); }
+  /* Empilées, les étapes n'ont plus de voisine à droite : le trait pointillé
+     partirait dans la marge. */
+  .pont-etape::after { display: none; }
+  .cadre-app .titre-fen { display: none; }
+}
+
+/* ------------------------------------------------------------------- la paire
+   Les deux applications côte à côte, et la flèche entre elles. C'est le produit :
+   ni la facture seule, ni l'écriture seule, mais le fait que la seconde vienne de
+   la première sans que personne ne la retape. Une seule image ne peut pas dire ça.
+   Les deux cadres ne font PAS la même hauteur (une facture est haute, un extrait de
+   journal est large) : on les aligne en haut, pas au centre, sinon le plus court
+   flotte au milieu de son vide. */
+.paire {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: clamp(14px, 2.4vw, 26px);
+  align-items: start;
+  margin-top: clamp(34px, 5vw, 54px);
+}
+.paire-legende {
+  display: flex; align-items: center; gap: 8px;
+  margin-top: 14px; font-size: 14px; color: var(--gris);
+}
+.paire-legende b { color: var(--encre); font-weight: 700; }
+.paire-fleche {
+  align-self: center;
+  display: grid; place-items: center; gap: 7px;
+  padding-top: 40px;   /* la hauteur de la barre de fenêtre, pour viser l'image et non le cadre */
+  color: var(--vert);
+  text-align: center;
+}
+.paire-fleche .rond {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--vert); color: #fff;
+  display: grid; place-items: center;
+  box-shadow: 0 12px 26px -12px rgba(10, 74, 67, .6);
+}
+.paire-fleche .quoi {
+  font-size: 12.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+  color: var(--safran-fonce); max-width: 11ch; line-height: 1.3;
+}
+@media (max-width: 900px) {
+  .paire { grid-template-columns: minmax(0, 1fr); }
+  /* Empilée, la flèche ne relie plus deux colonnes : elle descend. */
+  .paire-fleche { padding-top: 0; }
+  .paire-fleche .rond svg { transform: rotate(90deg); }
+}
+
+/* --------------------------------------------------------- le héros centré
+   Le héros d'une page de haut de tunnel n'a plus de colonne d'image à droite
+   (la paire vit dessous, sur toute la largeur) : aligné à gauche, il laissait
+   une moitié d'écran vide qui se lit comme une image qui n'a pas chargé. */
+.hero-centre { text-align: center; }
+.hero-centre .chapeau { margin-inline: auto; }
+.hero-centre .actions { justify-content: center; }
+.hero-centre .paire { text-align: left; }
+
+/* Les deux cadres de la paire ne font pas la même hauteur — une liste de factures
+   est haute, un extrait de journal est large — et leurs légendes se retrouvaient
+   à soixante pixels d'écart. On étire les deux colonnes à la même hauteur et on
+   pousse la légende en bas : elles se lisent alors comme une seule ligne. */
+.paire { align-items: stretch; }
+.paire > div { display: flex; flex-direction: column; }
+.paire-legende { margin-top: auto; padding-top: 14px; }
+
+/* Une capture d'écran entière porte souvent un bas vide : l'application occupe la fenêtre,
+   son contenu non. Posée telle quelle dans un cadre, elle donne un rectangle dont le tiers
+   inférieur est blanc — et l'œil lit ce vide comme « il n'y a rien dans ce logiciel ».
+   On rogne par le bas, jamais par les côtés : la barre latérale à gauche est ce qui dit
+   « ceci est une vraie application », et les colonnes de droite portent les chiffres. */
+.cadre-app img.rogne { aspect-ratio: 1440 / 700; object-fit: cover; object-position: top left; }
+
+/* =============================================================================
+   Ce que l'audit a trouvé sur les écrans neufs de la 10.0.0.
+   ============================================================================= */
+
+/* `.bloc h3 { color: #fff }` existe depuis longtemps — pour les blocs posés sur le vert
+   profond, où il est juste. Mes blocs de la 10.0.0 vivent AUSSI sur fond blanc, et ils ont
+   hérité de cette règle en silence : dix titres blancs sur blanc, contraste 1.00, sur trois
+   pages. Rien ne plante, et relire le HTML ne peut pas le montrer.
+   La couleur claire est donc posée explicitement ici (plus bas dans la feuille, donc elle
+   gagne à spécificité égale), et la règle du fond vert la reprend juste après avec deux
+   classes, donc elle gagne à son tour. */
+.bloc h3 { color: var(--encre); }
+.section-vert .bloc h3 { color: #fff; }
+
+/* Le nom dans la barre de fenêtre : 4,12 sur le vert, 4,47 sur le gris clair — sous le seuil
+   dans les deux cas, et de peu, ce qui est la façon la plus sûre de ne jamais le voir. */
+.cadre-app .titre-fen { color: var(--gris); }
+.section-vert .cadre-app .titre-fen { color: #b3d4ce; }
+
+/* Le corps d'un encadré de preuve sur fond vert : 4,49 contre un seuil de 4,5. Un centième
+   manquant reste un texte sous le seuil — on ne discute pas avec la mesure. */
+.section-vert .preuve p { color: #b3d4ce; }

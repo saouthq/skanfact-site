@@ -6,6 +6,13 @@
 (function () {
   'use strict';
 
+  /* La marque « ce fichier tourne ». Elle est posee TOUT DE SUITE, avant le reste, parce que
+     c'est elle qui autorise la feuille de style a cacher les blocs qui apparaissent au
+     defilement. Sans elle — JavaScript coupe, fichier non charge, erreur trois lignes plus
+     bas — ces blocs restent simplement visibles, ce qui est le comportement voulu : on ne
+     rend jamais du contenu invisible en pariant sur un script. */
+  document.documentElement.classList.add('js');
+
   var DEPOT = 'saouthq/skanfact';
   var RELEASES = 'https://github.com/' + DEPOT + '/releases';
 
@@ -38,30 +45,49 @@
     }
   });
 
-  /* ------------------------------------------- le menu « Fonctionnalités »
-     Sous 900 px il est déplié dans le panneau du burger : la CSS s'en charge,
-     et ce bouton n'existe plus. */
-  var sousFonc = document.getElementById('sous-fonc');
-  var btnFonc = document.getElementById('btn-fonc');
-  if (sousFonc && btnFonc) {
-    var fermerSous = function () {
-      sousFonc.classList.remove('ouvert');
-      btnFonc.setAttribute('aria-expanded', 'false');
-    };
-    btnFonc.addEventListener('click', function (e) {
-      e.stopPropagation();
-      var ouvert = sousFonc.classList.toggle('ouvert');
-      btnFonc.setAttribute('aria-expanded', ouvert ? 'true' : 'false');
+  /* ------------------------------------------------- les menus déroulants
+     Il y en a DEUX depuis la 10.0.0 — « Pour l'entreprise » et « Pour les cabinets » — et le
+     code n'en connaissait qu'un, par son identifiant. Recopier le bloc aurait garanti la
+     divergence : le second menu aurait eu, six mois plus tard, une touche Échap et pas
+     l'autre. On les branche donc tous, quel que soit leur nombre.
+     Sous 900 px ils sont dépliés dans le panneau du burger : la feuille de style s'en charge,
+     et ces boutons n'existent plus.
+     Ouvrir l'un FERME l'autre : deux panneaux ouverts se recouvrent, et le second se lit
+     comme la suite du premier. */
+  var sousMenus = [].slice.call(document.querySelectorAll('.sous'))
+    .map(function (bloc) { return { bloc: bloc, bouton: bloc.querySelector('.lien-menu') }; })
+    .filter(function (m) { return m.bouton; });
+
+  var fermerSousMenus = function (sauf) {
+    sousMenus.forEach(function (m) {
+      if (m.bloc === sauf) return;
+      m.bloc.classList.remove('ouvert');
+      m.bouton.setAttribute('aria-expanded', 'false');
     });
+  };
+
+  sousMenus.forEach(function (m) {
+    m.bouton.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var ouvert = !m.bloc.classList.contains('ouvert');
+      fermerSousMenus(ouvert ? m.bloc : null);
+      m.bloc.classList.toggle('ouvert', ouvert);
+      m.bouton.setAttribute('aria-expanded', ouvert ? 'true' : 'false');
+    });
+  });
+
+  if (sousMenus.length) {
     // Un menu qui ne se referme pas ailleurs reste en travers du contenu.
     document.addEventListener('click', function (e) {
-      if (!sousFonc.contains(e.target)) fermerSous();
+      var dedans = sousMenus.some(function (m) { return m.bloc.contains(e.target); });
+      if (!dedans) fermerSousMenus(null);
     });
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && sousFonc.classList.contains('ouvert')) {
-        fermerSous();
-        btnFonc.focus();
-      }
+      if (e.key !== 'Escape') return;
+      var ouvert = sousMenus.filter(function (m) { return m.bloc.classList.contains('ouvert'); })[0];
+      if (!ouvert) return;
+      fermerSousMenus(null);
+      ouvert.bouton.focus();
     });
   }
 
@@ -530,6 +556,34 @@
         var repere = carte.querySelector('[data-repere]');
         if (repere) repere.textContent = 'Votre système';
       }
+    }
+  }
+  /* ------------------------------------------- ce qui apparait au defilement
+     Quatorze pixels et une opacite, une seule fois par bloc. Trois garde-fous,
+     dans cet ordre d'importance :
+       1. sans IntersectionObserver (vieux navigateur), on RETIRE la classe au
+          lieu de l'observer : le contenu doit se voir, toujours ;
+       2. si la personne a demande moins d'animations, on ne pose rien — la
+          feuille de style neutralise deja l'etat de depart, mais compter sur
+          une seule des deux moities est exactement la faute que ce projet
+          repete : la ceinture ET les bretelles ;
+       3. on cesse d'observer un bloc des qu'il est vu : un observateur qui
+          continue de surveiller quarante blocs pour rien fait ramer le
+          defilement sur un telephone. */
+  var blocs = [].slice.call(document.querySelectorAll('.reveal'));
+  if (blocs.length) {
+    var sobre = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!('IntersectionObserver' in window) || sobre) {
+      blocs.forEach(function (b) { b.classList.add('vu'); });
+    } else {
+      var oeil = new IntersectionObserver(function (entrees) {
+        entrees.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          e.target.classList.add('vu');
+          oeil.unobserve(e.target);
+        });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+      blocs.forEach(function (b) { oeil.observe(b); });
     }
   }
 })();
