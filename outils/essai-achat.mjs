@@ -144,6 +144,14 @@ console.log('\n— 4. La commande envoie l’identifiant, jamais le prix —');
     const interdits = Object.keys(env.corps).filter(k=>/prix|montant|ttc|ht|remise/i.test(k));
     dit(interdits.length===0, 'elle n’envoie NI prix NI remise', interdits.join(', ')||'aucun champ de prix');
     dit(env.corps.nom==='Skander Ben Amor' && env.corps.email==='test@test.com', 'elle envoie qui achète');
+    // Ce qui met la facture en règle, et que le worker jetait avant sa 10.9.1 : la raison sociale
+    // nomme le client sur la pièce, l'adresse y figure, et le contact reste une personne à part.
+    // Sans cette assertion, la page pourrait cesser de les envoyer sans que rien ne le dise.
+    dit(env.corps.raison==='Atelier Ben Salah SUARL', 'elle envoie la raison sociale — c’est elle qui va sur la facture',
+      JSON.stringify(env.corps.raison));
+    dit(env.corps.adresse==='12 rue de Carthage, 1002 Tunis', 'elle envoie l’adresse — une facture tunisienne la porte',
+      JSON.stringify(env.corps.adresse));
+    dit(env.corps.raison!==env.corps.nom, 'la société et la personne restent deux champs distincts');
   }
   await ctx.close();
 }

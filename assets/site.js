@@ -512,8 +512,13 @@
       var version = (rel.tag_name || '').replace(/^v/, '');
       var assets = rel.assets || [];
 
+      /* Le numéro arrive d'ici, jamais du HTML : une page statique ne peut pas savoir quelle
+         version est publiée, et celle qui y était écrite annonçait la 10.0.0 huit versions plus
+         tard. Le repli ne porte donc aucun chiffre — « — » là où une phrase l'attend, rien
+         ailleurs — et l'espace qui précède vient AVEC le numéro, sinon le pied garderait un
+         blanc en trop les fois où le script ne répond pas. */
       Array.prototype.forEach.call(document.querySelectorAll('[data-version]'), function (el) {
-        if (version) el.textContent = version;
+        if (version) el.textContent = ' ' + version;
       });
 
       if (!pageTele) return;
@@ -728,7 +733,10 @@
        GET  /v1/achat/tarifs
          -> { ouvert, raison, devise, offres: [{ id, label, ht, ttc }], tva, timbre,
               remiseParrainage }
-       POST /v1/achat/commander   { offre, nom, email, matricule?, tel?, cabinet? }
+       POST /v1/achat/commander   { offre, raison, nom?, adresse?, email, matricule?, tel?, cabinet? }
+         `raison` est la RAISON SOCIALE — c'est elle qui nomme le client sur la facture, avec le
+         matricule et l'adresse ; `nom` est la personne qui suit le dossier, et n'apparaît sur
+         aucune pièce. Les confondre ferait établir une facture au nom d'un salarié (worker 10.9.1).
          -> { commande, payUrl, montant, devise, parraine }
        GET  /v1/achat/etat/<commande>
          -> { etat, phrase, offre, montant, devise }   etat : ouverte | payee | en_cours |
@@ -938,10 +946,11 @@
     fetch(API_ACHAT + '/commander', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      /* Le contrat tient en six champs. On n'envoie NI prix NI remise : le serveur les
-         ignore, et c'est la seule façon qu'un montant ne puisse pas venir du navigateur.
-         `raison` et `adresse` voyagent en plus — ils ne portent aucune autorité, et c'est
-         ce qu'il faut pour établir la facture. */
+      /* Huit champs, et pas un de plus. On n'envoie NI prix NI remise : le serveur les ignore,
+         et c'est la seule façon qu'un montant ne puisse pas venir du navigateur.
+         `raison` nomme le client sur la facture, `nom` est la personne à appeler, `adresse`
+         figure sur la pièce. Aucun des trois ne porte d'autorité : le worker les range, il ne
+         leur laisse rien décider. */
       body: JSON.stringify({
         offre: offre, nom: valeurs.nom || '', email: valeurs.email || '',
         matricule: valeurs.matricule || '', tel: valeurs.tel || '',
