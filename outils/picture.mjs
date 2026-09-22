@@ -34,6 +34,22 @@ for (const f of (await readdir(RACINE)).filter(x => x.endsWith('.html')).sort())
   const avant = await readFile(path.join(RACINE, f), 'utf8');
   let après = avant;
 
+  // IDEMPOTENCE. Lancé deux fois — ce qui arrive dès qu'on recapture — la première version
+  // enveloppait un `<img>` DÉJÀ dans un `<picture>` : 57 `<picture>` imbriqués, que le navigateur
+  // tolère en silence. On déballe donc d'abord, systématiquement, puis on remballe. Un outil qui
+  // n'est juste qu'au premier lancement n'est pas un outil.
+  // On déballe de l'intérieur vers l'extérieur, donc en BOUCLE : un `replace` ne passe qu'une
+  // fois, et il laisserait la coquille extérieure d'un emballage double.
+  for (let garde = 0; garde < 8; garde++) {
+    const avantDéballage = après;
+    après = après.replace(/[ \t]*<picture>\s*(?:<source\b[^>]*>\s*)*(<img\b[^>]*>)\s*<\/picture>[ \t]*\n?/g,
+      (tout, img) => {
+        const ind = (/^([ \t]*)/.exec(tout) || ['', ''])[1];
+        return `${ind}${img}\n`;
+      });
+    if (après === avantDéballage) break;
+  }
+
   après = après.replace(/(\s*)<img\b([^>]*)>/g, (tout, blanc, attrs) => {
     const lire = (k) => { const m = new RegExp(`${k}="([^"]*)"`).exec(attrs); return m ? m[1] : null; };
     const src = lire('src');

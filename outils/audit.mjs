@@ -276,6 +276,10 @@ for (const largeur of LARGEURS) {
         promesses.push({
           src, w: im.getAttribute('width'), h: im.getAttribute('height'),
           dansPicture: !!(pere && pere.tagName === 'PICTURE'),
+          // Un outil lancé deux fois peut emballer un `<img>` déjà emballé. Le navigateur le
+          // tolère en silence, donc seule une mesure le voit.
+          picturesImbriques: !!(pere && pere.tagName === 'PICTURE'
+            && pere.parentElement && pere.parentElement.tagName === 'PICTURE'),
           jeux: jeux.filter(j => j.txt).map(j => ({ ou: j.ou,
             parts: j.txt.split(',').map(x => x.trim().split(/\s+/)).filter(x => x[0]) })),
         });
@@ -413,6 +417,9 @@ for (const largeur of LARGEURS) {
         const vrai = TAILLES[base + '.jpg'] || TAILLES[base + '.png'];
         if (vrai && (+p.w !== vrai.w || +p.h !== vrai.h)) {
           dit('moyen', f, '—', `${p.src} : width/height annoncés ${p.w}x${p.h}, le fichier fait ${vrai.w}x${vrai.h}`);
+        }
+        if (p.picturesImbriques) {
+          dit('grave', f, '—', `${p.src} : <picture> imbriqué dans un <picture>`);
         }
         if (vrai && !p.dansPicture) {
           dit('moyen', f, '—', `${p.src} : pas de <picture>, donc aucune variante WebP proposée`);

@@ -1331,3 +1331,11 @@ legend { font-size: 14px; color: #a8ccc6; padding: 0 0 10px; }
    l'espace d'une ligne de texte. C'est l'`<img>` qu'il porte que toutes les autres règles visent
    (`.capture img`, `.cadre-app img`, `.vign img`) : elles continuent donc de s'appliquer. */
 picture { display: block; }
+
+/* La paire « chez vous / chez lui » ne vaut que par sa SYMÉTRIE : deux fenêtres côte à côte qui
+   montrent la même facture des deux côtés du pont. Or les deux tableaux n'ont pas la même
+   largeur (869 px contre 1267), donc posés sur la même colonne ils n'ont pas la même hauteur —
+   l'une finissait 44 px plus haut que l'autre, et la paire paraissait bancale. On leur impose
+   la même proportion, et on rogne PAR LE BAS : rogner par le côté couperait les colonnes Débit
+   et Crédit, c'est-à-dire ce que l'image est là pour montrer. */
+.paire .cadre-app img { aspect-ratio: 1267 / 416; object-fit: cover; object-position: top left; }
