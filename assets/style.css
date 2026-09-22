@@ -1326,3 +1326,8 @@ legend { font-size: 14px; color: #a8ccc6; padding: 0 0 10px; }
 /* Le corps d'un encadré de preuve sur fond vert : 4,49 contre un seuil de 4,5. Un centième
    manquant reste un texte sous le seuil — on ne discute pas avec la mesure. */
 .section-vert .preuve p { color: #b3d4ce; }
+
+/* `<picture>` n'est qu'un conteneur : sans ça il reste en `inline` et ajoute sous chaque capture
+   l'espace d'une ligne de texte. C'est l'`<img>` qu'il porte que toutes les autres règles visent
+   (`.capture img`, `.cadre-app img`, `.vign img`) : elles continuent donc de s'appliquer. */
+picture { display: block; }

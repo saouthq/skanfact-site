@@ -102,6 +102,10 @@ async function servir(port) {
 }
 
 const { chromium } = await playwright();
+// Les tailles RÉELLES des fichiers de img/, écrites par `outils/images.mjs`. On ne les redevine
+// pas ici : une seconde mesure diverge de la première au premier changement.
+const TAILLES = JSON.parse(await readFile(path.join(RACINE, 'img', 'tailles.json'), 'utf8'));
+
 const PORT = 8781;
 const serveur = await servir(PORT);
 const pages = (await readdir(RACINE)).filter(f => f.endsWith('.html')).sort();
@@ -254,8 +258,31 @@ for (const largeur of LARGEURS) {
         grilles.push({ nom: g.className, total: tuiles.length, rangees: compte });
       }
 
+      // Ce que chaque image PROMET au navigateur : les fichiers de son `srcset`, la taille
+      // annoncée pour chacun, et le couple width/height qui réserve sa place. L'appelant les
+      // confronte aux fichiers RÉELS. Un catalogue faux empêche le navigateur de choisir juste,
+      // et rien ne le signale — c'était le cas de deux images de 1267 px données pour 900 w.
+      const promesses = [];
+      for (const im of document.querySelectorAll('img')) {
+        const src = im.getAttribute('src') || '';
+        if (!src.startsWith('img/')) continue;
+        const jeux = [{ ou: 'img', txt: im.getAttribute('srcset') || '' }];
+        const pere = im.parentElement;
+        if (pere && pere.tagName === 'PICTURE') {
+          for (const so of pere.querySelectorAll('source')) {
+            jeux.push({ ou: so.getAttribute('type') || 'source', txt: so.getAttribute('srcset') || '' });
+          }
+        }
+        promesses.push({
+          src, w: im.getAttribute('width'), h: im.getAttribute('height'),
+          dansPicture: !!(pere && pere.tagName === 'PICTURE'),
+          jeux: jeux.filter(j => j.txt).map(j => ({ ou: j.ou,
+            parts: j.txt.split(',').map(x => x.trim().split(/\s+/)).filter(x => x[0]) })),
+        });
+      }
+
       return {
-        textes, boutons, debordent, liens, images, jsonld, grilles,
+        textes, boutons, debordent, liens, images, jsonld, grilles, promesses,
         titre: (document.querySelector('title') || {}).textContent || '',
         desc: (document.querySelector('meta[name=description]') || {}).content || '',
         canonique: (document.querySelector('link[rel=canonical]') || {}).href || '',
@@ -381,6 +408,24 @@ for (const largeur of LARGEURS) {
       if (!releve.canonique && !releve.noindex) dit('grave', f, '—', 'aucune adresse canonique');
       if (releve.og && !/^https?:/.test(releve.og)) dit('grave', f, '—', 'og:image en chemin relatif');
       for (const src of releve.images) dit('grave', f, '—', 'image sans texte de remplacement : ' + src);
+      for (const p of releve.promesses) {
+        const base = p.src.replace(/^img\//, '').replace(/\.(jpe?g|png)$/i, '');
+        const vrai = TAILLES[base + '.jpg'] || TAILLES[base + '.png'];
+        if (vrai && (+p.w !== vrai.w || +p.h !== vrai.h)) {
+          dit('moyen', f, '—', `${p.src} : width/height annoncés ${p.w}x${p.h}, le fichier fait ${vrai.w}x${vrai.h}`);
+        }
+        if (vrai && !p.dansPicture) {
+          dit('moyen', f, '—', `${p.src} : pas de <picture>, donc aucune variante WebP proposée`);
+        }
+        for (const jeu of p.jeux) for (const [fic, desc] of jeu.parts) {
+          const t = TAILLES[fic.replace(/^img\//, '')];
+          if (!t) { dit('grave', f, '—', `${jeu.ou} vise ${fic}, qui n'existe pas`); continue; }
+          const annonce = +String(desc || '').replace('w', '');
+          if (annonce && annonce !== t.w) {
+            dit('grave', f, '—', `${jeu.ou} annonce ${fic} à ${annonce}w, le fichier fait ${t.w}w`);
+          }
+        }
+      }
       for (const j of releve.jsonld) {
         try { JSON.parse(j); } catch (e) { dit('grave', f, '—', 'balisage JSON-LD invalide : ' + e.message); }
       }

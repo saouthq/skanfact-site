@@ -94,11 +94,10 @@
 
       <figure class="cadre-app reveal" style="margin-top: clamp(34px, 5vw, 54px);">
         <div class="barre"><span class="pastilles" aria-hidden="true"><i></i><i></i><i></i></span><span class="titre-fen">SkanFact Cabinet — Grand livre</span></div>
-        <img class="rogne" src="img/cab-grand-livre.jpg"
-             srcset="img/cab-grand-livre@small.jpg 720w, img/cab-grand-livre.jpg 1400w"
-             sizes="(max-width: 1100px) 100vw, 1080px"
-             alt="Le grand livre d'un dossier dans SkanFact Cabinet : les comptes, leurs mouvements, leur solde progressif."
-             width="1400" height="875" fetchpriority="high">
+        <picture>
+          <source type="image/webp" srcset="img/cab-grand-livre@small.webp 720w, img/cab-grand-livre.webp 1400w" sizes="(max-width: 1100px) 100vw, 1080px">
+          <img class="rogne" src="img/cab-grand-livre.jpg" alt="Le grand livre d'un dossier dans SkanFact Cabinet : les comptes, leurs mouvements, leur solde progressif." fetchpriority="high" srcset="img/cab-grand-livre@small.jpg 720w, img/cab-grand-livre.jpg 1400w" sizes="(max-width: 1100px) 100vw, 1080px" width="1400" height="875">
+        </picture>
       </figure>
     </div>
   </section>
@@ -163,10 +162,10 @@
       <div class="cartes">
         <a class="carte" href="telecharger.html#cabinet">
           <div class="vign">
-            <img src="img/c-production.jpg"
-                 srcset="img/c-production@small.jpg 620w, img/c-production.jpg 900w"
-                 sizes="(max-width: 900px) 100vw, 508px"
-                 alt="Le tableau de production : chaque client en ligne, chaque mois en colonne, et une pastille d'état par case." width="900" height="305" loading="lazy">
+            <picture>
+              <source type="image/webp" srcset="img/c-production@small.webp 620w, img/c-production.webp 900w" sizes="(max-width: 900px) 100vw, 508px">
+              <img src="img/c-production.jpg" alt="Le tableau de production : chaque client en ligne, chaque mois en colonne, et une pastille d'état par case." loading="lazy" srcset="img/c-production@small.jpg 620w, img/c-production.jpg 900w" sizes="(max-width: 900px) 100vw, 508px" width="900" height="305">
+            </picture>
           </div>
           <b>La production, d'un coup d'œil</b>
           <p>Qui a envoyé, qui n'a rien envoyé, ce qui reste à saisir et ce qui est déjà déclaré.
@@ -175,10 +174,10 @@
         </a>
         <a class="carte" href="telecharger.html#cabinet">
           <div class="vign">
-            <img src="img/c-saisie.jpg"
-                 srcset="img/c-saisie@small.jpg 620w, img/c-saisie.jpg 900w"
-                 sizes="(max-width: 900px) 100vw, 508px"
-                 alt="La grille de saisie : journal, date, pièce, compte, tiers, libellé, débit et crédit, avec le solde qui se calcule." width="900" height="146" loading="lazy">
+            <picture>
+              <source type="image/webp" srcset="img/c-saisie@small.webp 720w, img/c-saisie.webp 1267w" sizes="(max-width: 900px) 100vw, 508px">
+              <img src="img/c-saisie.jpg" alt="La grille de saisie : journal, date, pièce, compte, tiers, libellé, débit et crédit, avec le solde qui se calcule." loading="lazy" srcset="img/c-saisie@small.jpg 720w, img/c-saisie.jpg 1267w" sizes="(max-width: 900px) 100vw, 508px" width="1267" height="205">
+            </picture>
           </div>
           <b>La saisie au clavier</b>
           <p>Brouillard puis validation. Guides d'écritures, abonnements, contre-passation. Une
@@ -187,8 +186,10 @@
         </a>
         <a class="carte" href="telecharger.html#cabinet">
           <div class="vign">
-            <img src="img/cab-banque@small.jpg"
-                 alt="L'écran Banque : les lignes du relevé importé, et celles qui ne sont pas encore rapprochées." width="720" height="450" loading="lazy">
+            <picture>
+              <source type="image/webp" srcset="img/cab-banque@small.webp 720w, img/cab-banque.webp 1400w" sizes="(max-width: 900px) 100vw, 1136px">
+              <img src="img/cab-banque.jpg" alt="L'écran Banque : les lignes du relevé importé, et celles qui ne sont pas encore rapprochées." loading="lazy" srcset="img/cab-banque@small.jpg 720w, img/cab-banque.jpg 1400w" sizes="(max-width: 900px) 100vw, 1136px" width="1400" height="875">
+            </picture>
           </div>
           <b>Banque et lettrage</b>
           <p>Import du relevé, rapprochement, lettrage automatique puis manuel, balance âgée. Les
@@ -197,8 +198,10 @@
         </a>
         <a class="carte" href="telecharger.html#cabinet">
           <div class="vign">
-            <img src="img/cab-declaration@small.jpg"
-                 alt="L'écran Déclaration : la TVA du mois lue dans le livre, collectée, déductible et report de crédit." width="720" height="450" loading="lazy">
+            <picture>
+              <source type="image/webp" srcset="img/cab-declaration@small.webp 720w, img/cab-declaration.webp 1400w" sizes="(max-width: 900px) 100vw, 1136px">
+              <img src="img/cab-declaration.jpg" alt="L'écran Déclaration : la TVA du mois lue dans le livre, collectée, déductible et report de crédit." loading="lazy" srcset="img/cab-declaration@small.jpg 720w, img/cab-declaration.jpg 1400w" sizes="(max-width: 900px) 100vw, 1136px" width="1400" height="875">
+            </picture>
           </div>
           <b>La déclaration du mois</b>
           <p>Lue dans le livre, pas ressaisie. Le calendrier suit le régime que <em>vous</em>
@@ -226,11 +229,10 @@
       </div>
       <figure class="cadre-app reveal">
         <div class="barre"><span class="pastilles" aria-hidden="true"><i></i><i></i><i></i></span><span class="titre-fen">SkanFact Cabinet — Exercice</span></div>
-        <img class="rogne" src="img/cab-exercice.jpg"
-             srcset="img/cab-exercice@small.jpg 720w, img/cab-exercice.jpg 1400w"
-             sizes="(max-width: 900px) 100vw, 610px"
-             alt="L'écran de clôture d'exercice : les contrôles avant clôture, et ce qui reste à traiter avant de fermer l'année."
-             width="1400" height="875" loading="lazy">
+        <picture>
+          <source type="image/webp" srcset="img/cab-exercice@small.webp 720w, img/cab-exercice.webp 1400w" sizes="(max-width: 900px) 100vw, 610px">
+          <img class="rogne" src="img/cab-exercice.jpg" alt="L'écran de clôture d'exercice : les contrôles avant clôture, et ce qui reste à traiter avant de fermer l'année." loading="lazy" srcset="img/cab-exercice@small.jpg 720w, img/cab-exercice.jpg 1400w" sizes="(max-width: 900px) 100vw, 610px" width="1400" height="875">
+        </picture>
       </figure>
     </div>
   </section>
@@ -275,11 +277,10 @@
 
       <figure class="cadre-app reveal" style="margin-top: 40px;">
         <div class="barre"><span class="pastilles" aria-hidden="true"><i></i><i></i><i></i></span><span class="titre-fen">SkanFact Cabinet — Révision</span></div>
-        <img class="rogne" src="img/cab-revision.jpg"
-             srcset="img/cab-revision@small.jpg 720w, img/cab-revision.jpg 1400w"
-             sizes="(max-width: 1100px) 100vw, 1080px"
-             alt="L'écran de révision : les feuilles maîtresses par cycle avec le nombre de comptes signés, et les boutons pour poser une question et l'envoyer au client."
-             width="1400" height="875" loading="lazy">
+        <picture>
+          <source type="image/webp" srcset="img/cab-revision@small.webp 720w, img/cab-revision.webp 1400w" sizes="(max-width: 1100px) 100vw, 1080px">
+          <img class="rogne" src="img/cab-revision.jpg" alt="L'écran de révision : les feuilles maîtresses par cycle avec le nombre de comptes signés, et les boutons pour poser une question et l'envoyer au client." loading="lazy" srcset="img/cab-revision@small.jpg 720w, img/cab-revision.jpg 1400w" sizes="(max-width: 1100px) 100vw, 1080px" width="1400" height="875">
+        </picture>
       </figure>
     </div>
   </section>

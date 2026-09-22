@@ -1,0 +1,4 @@
+# Les outils de `outils/` ont besoin de libvips (sharp) et d'un navigateur (playwright).
+# Le SITE, lui, n'a aucune dépendance : il est servi tel quel par GitHub Pages.
+node_modules/
+package-lock.json
