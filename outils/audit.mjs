@@ -236,8 +236,26 @@ for (const largeur of LARGEURS) {
       const jsonld = Array.from(document.querySelectorAll('script[type="application/ld+json"]'))
         .map(s => s.textContent);
 
+      // Une grille qui laisse UNE tuile seule sur sa dernière rangée se lit comme un accident :
+      // c'est ce que `repeat(auto-fill, minmax(210px, 1fr))` faisait de six cartes à 1440 px —
+      // cinq, puis une. Le défaut ne se voit pas dans le HTML, qui est juste ; il se MESURE,
+      // comme un en-tête mal aligné ou un bouton hors de l'écran. On compare donc les abscisses
+      // réelles des tuiles, sans rien présumer du nombre de colonnes.
+      const grilles = [];
+      for (const g of document.querySelectorAll('.modules, .cartes-mini, .trio, .trois')) {
+        const tuiles = [...g.children].filter(e => e.getBoundingClientRect().width > 1);
+        if (tuiles.length < 3) continue;
+        const rangees = new Map();
+        for (const t of tuiles) {
+          const y = Math.round(t.getBoundingClientRect().top);
+          rangees.set(y, (rangees.get(y) || 0) + 1);
+        }
+        const compte = [...rangees.values()];
+        grilles.push({ nom: g.className, total: tuiles.length, rangees: compte });
+      }
+
       return {
-        textes, boutons, debordent, liens, images, jsonld,
+        textes, boutons, debordent, liens, images, jsonld, grilles,
         titre: (document.querySelector('title') || {}).textContent || '',
         desc: (document.querySelector('meta[name=description]') || {}).content || '',
         canonique: (document.querySelector('link[rel=canonical]') || {}).href || '',
@@ -335,6 +353,12 @@ for (const largeur of LARGEURS) {
       if (!s || !a || s.a < 0.95) continue;
       if (!b.bord && contraste(s.c, a.c) < 1.25) {
         dit('grave', f, largeur.nom, `bouton invisible (fond confondu, sans bordure) — « ${b.texte} »`);
+      }
+    }
+    for (const g of releve.grilles) {
+      if (g.rangees.length > 1 && g.rangees[g.rangees.length - 1] === 1 && g.rangees[0] > 1) {
+        dit('moyen', f, largeur.nom,
+          `grille « ${g.nom} » : ${g.total} tuiles, la dernière reste seule sur sa rangée`);
       }
     }
     if (!releve.habillee) {

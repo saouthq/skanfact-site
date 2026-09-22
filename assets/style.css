@@ -691,7 +691,10 @@ legend { font-size: 14px; color: #a8ccc6; padding: 0 0 10px; }
 
 @media (max-width: 900px) {
   .duo { grid-template-columns: minmax(0, 1fr); }
-  .modules-3, .modules-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* `modules-3` GARDE ses trois colonnes jusqu'au téléphone : ramenée à deux, une grille de
+     neuf tuiles laisse la dernière seule sur sa rangée, ce qui se lit comme un accident.
+     Mesuré par `outils/audit.mjs`, jamais déduit. */
+  .modules-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   /* Dans l'en-tête d'une page, l'image passe SOUS le texte et ses boutons. */
   .page-titre .duo .capture { order: 2; }
 }
