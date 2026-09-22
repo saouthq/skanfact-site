@@ -138,6 +138,30 @@
                       formulaire soumis par bouton ne déclenche aucune validation du navigateur.
      Les intitulés partent avec le message : le relais n'a pas à connaître les champs de chaque
      formulaire, et un champ ajouté demain arrive tout seul dans l'email. */
+  /* ------------------------------------------------- qui tient votre comptabilité
+     Une QUESTION, pas une vente en plus. Celui qui a un cabinet lit « rien à ajouter » ; celui
+     qui tient ses livres lui-même voit l'option. C'est aussi la seule façon de savoir combien
+     d'acheteurs ont un cabinet — le chiffre qui dira si le canal cabinet existe vraiment.
+     Sans JavaScript, les DEUX blocs restent visibles et le formulaire marche : l'option se coche
+     à la main, et le nom du cabinet aussi. On ne cache jamais un champ qu'on ne peut pas rendre. */
+  (function () {
+    var tenue = document.querySelectorAll('input[name="tenue"]');
+    var blocCabinet = document.getElementById('bloc-cabinet');
+    var blocCompta = document.getElementById('bloc-compta');
+    if (!tenue.length || !blocCabinet || !blocCompta) return;
+    var montrer = function () {
+      var choisi = document.querySelector('input[name="tenue"]:checked');
+      var soi = !!(choisi && choisi.getAttribute('data-tenue') === 'soi');
+      blocCabinet.hidden = soi;
+      blocCompta.hidden = !soi;
+      /* Décocher en repartant vers « un cabinet » : sinon l'option resterait dans le message
+         envoyé alors que l'écran ne la montre plus — on facturerait ce que personne ne voit. */
+      if (!soi) { var c = document.getElementById('opt-compta'); if (c) c.checked = false; }
+    };
+    Array.prototype.forEach.call(tenue, function (r) { r.addEventListener('change', montrer); });
+    montrer();
+  }());
+
   Array.prototype.forEach.call(document.querySelectorAll('form[data-envoi]'), function (form) {
     var genre = form.getAttribute('data-envoi');
     var sujet = form.getAttribute('data-sujet') || 'SkanFact';

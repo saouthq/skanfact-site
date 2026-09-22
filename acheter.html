@@ -201,14 +201,35 @@
             <label for="tel">Téléphone</label>
             <input type="tel" id="tel" name="tel" autocomplete="tel" placeholder="+216 ...">
           </div>
-          <div class="champ">
-            <label for="cabinet">Votre cabinet comptable</label>
-            <input type="text" id="cabinet" name="cabinet" placeholder="Nom du cabinet, si c’est lui qui vous envoie">
-          </div>
         </div>
-        <p class="aide-form">C’est lui qui vous a parlé de SkanFact ? Nommez-le :
-          vous avez <b>20 % la première année</b>, et il ne touche aucune commission —
-          <a href="comptables.html">pourquoi</a>.</p>
+
+        <fieldset>
+          <legend>Qui tient votre comptabilité <span class="oblig" aria-hidden="true">*</span></legend>
+          <div class="qui qui-empile">
+            <label><input type="radio" name="tenue" value="un cabinet comptable" checked data-tenue="cabinet">
+              <b>Un cabinet comptable</b> <span>Rien à ajouter : c’est lui qui tient vos livres</span></label>
+            <label><input type="radio" name="tenue" value="moi-même" data-tenue="soi">
+              <b>Moi-même</b> <span>Vous tenez vos livres vous-même</span></label>
+          </div>
+
+          <div class="champ" id="bloc-cabinet" style="margin-top: 14px;">
+            <label for="cabinet">Le nom de votre cabinet</label>
+            <input type="text" id="cabinet" name="cabinet" placeholder="Nom du cabinet, si c’est lui qui vous envoie">
+            <p class="aide-form">C’est lui qui vous a parlé de SkanFact ? Nommez-le :
+              vous avez <b>20 % la première année</b>, et il ne touche aucune commission —
+              <a href="comptables.html">pourquoi</a>. Le dossier mensuel part chez lui dans les deux
+              offres, sans rien ajouter.</p>
+          </div>
+
+          <div id="bloc-compta" style="margin-top: 14px;">
+            <label class="case"><input type="checkbox" name="option" value="Comptabilité — 190 DT HT/an" id="opt-compta">
+              <span><b>Ajouter l’option Comptabilité — 190 DT HT / an</b>
+              Grand livre, balance, états financiers et saisie d’opérations diverses dans votre
+              propre application.</span></label>
+            <p class="aide-form">Vous pouvez aussi l’ajouter plus tard depuis l’application, sans
+              repartir de zéro. L’essai de 30 jours l’inclut : jugez-la avant de la payer.</p>
+          </div>
+        </fieldset>
 
         <div class="piege" aria-hidden="true">
           <label for="site-web">Ne remplissez pas ce champ</label>
