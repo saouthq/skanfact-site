@@ -1155,12 +1155,45 @@
       remplacee: 'Licence remplacée', inconnue: 'Licence inconnue', illisible: 'Empreinte illisible'
     };
 
+    /* Ce qu'on a sous la main quand on veut vérifier une licence, c'est la CLÉ : elle arrive par
+       mail, elle est dans le presse-papiers, c'est elle qu'on appelle « ma licence ». L'empreinte,
+       elle, se cherche dans un écran. Refuser la clé, c'était refuser le geste naturel — et
+       l'éditeur du logiciel lui-même s'y est fait prendre le premier jour.
+
+       On l'accepte donc, et on la transforme ICI : `crypto.subtle` calcule le SHA-256 dans le
+       navigateur et on en garde 32 caractères, exactement comme `empreinteCle` côté application
+       et côté serveur. **La clé ne part jamais sur le réseau** — ce serait envoyer un titre de
+       licence à une route publique pour poser une question à laquelle son condensé répond. */
+    var empreinteDeLaCle = function (cle) {
+      if (!window.crypto || !window.crypto.subtle || !window.TextEncoder) return Promise.resolve(null);
+      return window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(cle)).then(function (buf) {
+        var hex = '';
+        new Uint8Array(buf).forEach(function (o) { hex += ('0' + o.toString(16)).slice(-2); });
+        return hex.slice(0, 32);
+      }).catch(function () { return null; });
+    };
+
     formVerif.addEventListener('submit', function (e) {
       e.preventDefault();
       var saisie = champVerif.value.trim();
       if (!saisie) {
-        poser('non', 'Empreinte manquante', 'Collez l’empreinte que SkanFact affiche sous Paramètres › L’application › Licence.');
+        poser('non', 'Empreinte manquante', 'Collez l’empreinte que SkanFact affiche sous Paramètres › L’application › Licence — ou la clé elle-même, on s’occupe du reste.');
         champVerif.focus();
+        return;
+      }
+      /* Une clé se reconnaît à son préfixe. On la remplace par son empreinte et on relance le
+         MÊME envoi : une seule route, un seul chemin, rien à tenir en double. */
+      if (/^SKAN1\./.test(saisie)) {
+        if (btnVerif) { btnVerif.disabled = true; btnVerif.textContent = 'Vérification…'; }
+        empreinteDeLaCle(saisie).then(function (emp) {
+          if (btnVerif) { btnVerif.disabled = false; btnVerif.textContent = libelleVerif; }
+          if (!emp) {
+            poser('non', 'Clé non convertie', 'Ce navigateur ne sait pas calculer l’empreinte d’une clé. Collez celle que SkanFact affiche sous Paramètres › L’application › Licence.');
+            return;
+          }
+          champVerif.value = emp;
+          formVerif.dispatchEvent(new Event('submit', { cancelable: true }));
+        });
         return;
       }
       if (SECOURS) SECOURS.hidden = true;

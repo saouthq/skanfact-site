@@ -81,20 +81,25 @@
     <div class="conteneur" style="max-width: 720px;">
       <p class="oeil">Licence</p>
       <h1>Vérifier une licence SkanFact</h1>
-      <p class="chapeau">Collez l’empreinte d’une licence, et l’outil vous dit si elle est valable,
-        expirée, révoquée ou inconnue. Il ne dit <b>jamais</b> à qui elle appartient.</p>
+      <p class="chapeau">Collez l’empreinte d’une licence — ou la clé elle-même — et l’outil vous dit
+        si elle est valable, expirée, révoquée ou inconnue. Il ne dit <b>jamais</b> à qui elle
+        appartient.</p>
       <form class="form-verif" id="form-verif" novalidate>
         <div class="champ">
-          <label for="empreinte">Empreinte de la licence <span class="oblig" aria-hidden="true">*</span></label>
+          <label for="empreinte">Empreinte de la licence, ou la clé <span class="oblig" aria-hidden="true">*</span></label>
           <input type="text" id="empreinte" name="empreinte" autocomplete="off" spellcheck="false"
-            placeholder="3F9A-2C1E-7B04-D158-6A2F" required>
+            placeholder="519de1b5d928793fbd0e9adf25b7d678 — ou SKAN1.…" required>
         </div>
         <button class="btn btn-vert" type="submit">Vérifier</button>
       </form>
       <div class="verdict" id="verdict" role="status" hidden></div>
-      <p class="sous-actions">Vous trouvez l’empreinte dans SkanFact, sous
-        <em>Paramètres › L’application › Licence</em>. Avec ou sans tirets, en majuscules ou
-        en minuscules&nbsp;: nous la lisons telle que vous la collez.</p>
+      <p class="sous-actions">L’empreinte fait 32 caractères et s’affiche dans SkanFact sous
+        <em>Paramètres › L’application › Licence</em>, avec un bouton pour la copier. Si vous n’avez
+        que la clé (celle qui commence par <em>SKAN1.</em>), collez-la&nbsp;: votre navigateur en
+        calcule l’empreinte et <b>la clé ne nous est jamais envoyée</b>.</p>
+      <p class="sous-actions">À ne pas confondre avec l’<b>empreinte d’un cabinet comptable</b>,
+        qui s’écrit en cinq groupes de quatre (<em>3F9A-2C1E-7B04-D158-6A2F</em>) et sert au
+        parrainage, pas à la vérification d’une licence.</p>
       <p class="sous-actions" id="verif-secours" hidden>La vérification en ligne ne répond pas.
         Ce n’est pas grave&nbsp;: c’est un service d’appoint. SkanFact vérifie votre licence sur
         votre propre poste, sans connexion — ouvrez <em>Paramètres › L’application › Licence</em>,
