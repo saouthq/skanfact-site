@@ -214,7 +214,7 @@ for (const largeur of LARGEURS) {
           .some(c => parseFloat(s['border' + c + 'Width']) > 0.4 && !/rgba\(0, 0, 0, 0\)/.test(s['border' + c + 'Color']));
         boutons.push({
           texte: el.textContent.trim().slice(0, 40), sien: fond(el),
-          autour: fond(el.parentElement), bord
+          autour: fond(el.parentElement), bord, bordCouleur: s.borderTopColor
         });
       });
 
@@ -250,9 +250,16 @@ for (const largeur of LARGEURS) {
         }
       });
 
+      /* Un lien ABSOLU vers notre propre domaine était écarté avant le contrôle des liens
+         morts : c'est par là que les deux liens vers api.skanfact.tn sont passés. Un lien mort
+         vers son propre service est plus grave qu'un lien mort interne — il donne l'impression
+         d'un service qui existe. On les ramène, ramenés à leur chemin. */
       const liens = Array.from(document.querySelectorAll('a[href]'))
         .map(a => a.getAttribute('href'))
+        .map(h => (h || '').replace(/^https?:\/\/(www\.)?skanfact\.tn\/?/, ''))
         .filter(h => h && !/^(https?:|mailto:|tel:|#)/.test(h));
+      const liensApi = Array.from(document.querySelectorAll('a[href^="https://api.skanfact.tn"]'))
+        .map(a => a.getAttribute('href'));
       const images = Array.from(document.querySelectorAll('img'))
         .filter(i => !i.hasAttribute('alt'))
         .map(i => i.getAttribute('src'));
@@ -318,7 +325,7 @@ for (const largeur of LARGEURS) {
                      txt: (e.textContent || '').trim().slice(0, 40) }));
 
       return {
-        textes, boutons, debordent, liens, images, jsonld, grilles, promesses, enligne, champs,
+        textes, boutons, debordent, liens, liensApi, images, jsonld, grilles, promesses, enligne, champs,
         titre: (document.querySelector('title') || {}).textContent || '',
         desc: (document.querySelector('meta[name=description]') || {}).content || '',
         canonique: (document.querySelector('link[rel=canonical]') || {}).href || '',
@@ -414,8 +421,15 @@ for (const largeur of LARGEURS) {
     for (const b of releve.boutons) {
       const s = rgb(b.sien), a = rgb(b.autour);
       if (!s || !a || s.a < 0.95) continue;
-      if (!b.bord && contraste(s.c, a.c) < 1.25) {
-        dit('grave', f, largeur.nom, `bouton invisible (fond confondu, sans bordure) — « ${b.texte} »`);
+      /* La bordure était comptée PRÉSENTE, jamais VISIBLE : un bouton blanc bordé de gris très
+         clair sur une carte blanche passait le contrôle, et c'est très exactement le bouton
+         d'achat de la page Tarifs qui est passé au travers. On mesure la bordure contre le fond,
+         comme on le fait douze lignes plus bas pour les champs de saisie. */
+      const bd = rgb(b.bordCouleur);
+      const fondVu = contraste(s.c, a.c) >= 1.25;
+      const bordVu = b.bord && bd && bd.a >= 0.3 && contraste(bd.c, a.c) >= 1.25;
+      if (!fondVu && !bordVu) {
+        dit('grave', f, largeur.nom, `bouton invisible (fond et bordure confondus) — « ${b.texte} »`);
       }
     }
     for (const c of releve.champs) {
@@ -487,6 +501,13 @@ for (const largeur of LARGEURS) {
       for (const j of releve.jsonld) {
         try { JSON.parse(j); } catch (e) { dit('grave', f, '—', 'balisage JSON-LD invalide : ' + e.message); }
       }
+      /* api.skanfact.tn n'est pas un site : c'est un worker qui ne sert que les routes de sa
+         table. Un lien posé dessus depuis une page se lit comme une adresse à ouvrir, et rend
+         du JSON. On les NOMME plutôt que de les vérifier au réseau — l'audit doit tourner hors
+         ligne — pour qu'aucun n'arrive là par distraction. */
+      for (const l of releve.liensApi) {
+        dit('moyen', f, '—', `lien vers l'API posé dans une page : ${l} — une route de worker n'est pas une page`);
+      }
       for (const l of releve.liens) {
         // On retire l'ancre ET la chaîne de requête : `acheter.html?offre=independant` désigne
         // bien un fichier qui existe. Les garder faisait passer trois liens justes pour morts.
@@ -513,6 +534,90 @@ serveur.close();
 // — ce que le plan annonce doit exister, et ce qui existe doit être annoncé — parce qu'un plan
 // incomplet ne se remarque jamais : il ne produit aucune erreur, seulement des pages que
 // personne ne trouve.
+// UNE PAGE INCOMPLÈTE NE SE LIE PAS. Une clause de vente laissée en attente est la sorte de
+// chose qu'on publie sans s'en apercevoir : la page s'affiche, elle a l'air finie, et il reste
+// « À COMPLÉTER » au milieu. Tant qu'il en reste un, la page doit être en noindex, hors du
+// plan du site, et sans aucun lien entrant. Le jour où tout est renseigné, le contrôle se tait
+// tout seul et il n'y a plus qu'à la lier.
+{
+  const pages = (await readdir(RACINE)).filter(f => f.endsWith('.html'));
+  for (const f of pages) {
+    const t = await readFile(path.join(RACINE, f), 'utf8');
+    const restant = (t.match(/À COMPLÉTER|\[à compléter\]/g) || []).length;
+    if (!restant) continue;
+    if (!/name="robots" content="noindex"/.test(t)) {
+      dit('grave', f, '—', `${restant} clause(s) en attente et la page est indexable`);
+    }
+    for (const autre of pages) {
+      if (autre === f) continue;
+      const u = await readFile(path.join(RACINE, autre), 'utf8');
+      if (new RegExp('href="' + f.replace('.', '\\.') + '"').test(u)) {
+        dit('grave', autre, '—', `lie ${f}, qui a encore ${restant} clause(s) en attente`);
+      }
+    }
+  }
+}
+
+// L'EN-TÊTE ET LE PIED sont recopiés à la main dans trente fichiers : ils ont déjà divergé
+// deux fois — trois liens en double dans le pied de limites.html, et « Acheter une clé »
+// affiché deux fois de suite sur la page qui sert justement à établir l'honnêteté du produit.
+// Rien ne le signale : la page s'affiche, elle fonctionne, elle est simplement fausse.
+// 404.html porte volontairement un pied réduit ; c'est l'exception, et elle est NOMMÉE.
+{
+  const pages = (await readdir(RACINE)).filter(f => f.endsWith('.html') && f !== '404.html');
+  const empreintes = new Map();
+  for (const f of pages) {
+    const t = await readFile(path.join(RACINE, f), 'utf8');
+    for (const [quoi, ouvre, ferme] of [['en-tête', '<header', '</header>'], ['pied', '<footer', '</footer>']]) {
+      const a = t.indexOf(ouvre), b = t.indexOf(ferme);
+      if (a < 0 || b < 0) { dit('grave', f, '—', `aucun ${quoi}`); continue; }
+      const bloc = t.slice(a, b + ferme.length);
+      const cle = quoi + '|' + bloc;
+      empreintes.set(cle, [...(empreintes.get(cle) || []), f]);
+    }
+  }
+  for (const quoi of ['en-tête', 'pied']) {
+    const groupes = [...empreintes.entries()].filter(([k]) => k.startsWith(quoi + '|'));
+    if (groupes.length <= 1) continue;
+    // Le groupe majoritaire fait foi ; les autres ont dérivé.
+    groupes.sort((a, b) => b[1].length - a[1].length);
+    for (const [, fichiers] of groupes.slice(1)) {
+      for (const f of fichiers) {
+        dit('grave', f, '—', `${quoi} différent des ${groupes[0][1].length} autres pages — recopié à la main, il a dérivé`);
+      }
+    }
+  }
+}
+
+// LES MONTANTS écrits dans les pages se recalculent à partir des mêmes constantes que le
+// décompte vivant. Le script les réécrit au chargement, donc un chiffre périmé ne se verrait
+// JAMAIS dans un navigateur : il ne resterait faux que pour qui n'a pas JavaScript, et pour
+// celui qui relit le fichier. C'est le fichier qu'on juge ici.
+{
+  const TVA = 0.19, TIMBRE = 1;
+  const F = {
+    ttc: ht => ht * (1 + TVA) + TIMBRE,
+    tva: ht => ht * TVA,
+    'mois-ht': ht => ht / 12,
+    'mois-ttc': ht => (ht * (1 + TVA) + TIMBRE) / 12,
+  };
+  const ecrit = n => {
+    const t = (Math.round(n * 1000) / 1000).toFixed(3).split('.');
+    return t[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ',' + t[1] + ' DT';
+  };
+  for (const f of (await readdir(RACINE)).filter(f => f.endsWith('.html'))) {
+    const t = await readFile(path.join(RACINE, f), 'utf8');
+    for (const m of t.matchAll(/data-prix="([a-z-]+):(\d+(?:\.\d+)?)"[^>]*>([^<]*)</g)) {
+      const [, quoi, ht, vu] = m;
+      if (!F[quoi]) { dit('grave', f, '—', `data-prix inconnu : ${quoi}`); continue; }
+      const attendu = ecrit(F[quoi](Number(ht)));
+      if (vu.trim() !== attendu) {
+        dit('grave', f, '—', `montant périmé : « ${vu.trim()} » écrit, ${attendu} calculé (${quoi} de ${ht} DT HT)`);
+      }
+    }
+  }
+}
+
 {
   const BASE = 'https://skanfact.tn/';
   const plan = await readFile(path.join(RACINE, 'sitemap.xml'), 'utf8');

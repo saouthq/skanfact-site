@@ -60,7 +60,7 @@
     <nav class="nav-site" id="nav-site" aria-label="Navigation principale">
       <div class="sous" id="sous-entreprise">
         <button class="lien-menu" id="btn-entreprise" aria-expanded="false" aria-controls="menu-entreprise">
-          Pour l'entreprise
+          Pour l’entreprise
           <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="m2.5 4.5 3.5 3.5 3.5-3.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
         </button>
         <div class="panneau" id="menu-entreprise">
@@ -69,8 +69,8 @@
           <a href="gestion.html"><b>Achats, stock et trésorerie</b><span>Marges, immobilisations, paie</span></a>
           <a href="tunisie.html"><b>Les règles tunisiennes</b><span>Timbre, TVA, retenue à la source</span></a>
           <a href="vos-donnees.html"><b>Vos données</b><span>Où elles vivent, ce qui sort du poste</span></a>
-          <a href="excel.html"><b>SkanFact ou Excel ?</b><span>Ce qu'un classeur ne peut pas faire</span></a>
-          <a href="limites.html"><b>Ce que SkanFact ne fait pas</b><span>Les limites, avant l'achat</span></a>
+          <a href="excel.html"><b>SkanFact ou Excel ?</b><span>Ce qu’un classeur ne peut pas faire</span></a>
+          <a href="limites.html"><b>Ce que SkanFact ne fait pas</b><span>Les limites, avant l’achat</span></a>
           <a href="nouveautes.html"><b>Nouveautés</b><span>Ce qui a changé, version par version</span></a>
         </div>
       </div>
@@ -80,13 +80,14 @@
           <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="m2.5 4.5 3.5 3.5 3.5-3.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
         </button>
         <div class="panneau" id="menu-cabinet">
-          <a href="cabinet.html"><b>SkanFact Cabinet</b><span>Le logiciel de tenue : saisie, livres, liasse</span></a>
+          <a href="cabinet.html"><b>SkanFact Cabinet</b><span>Le logiciel de tenue : saisie, livres, liasse</span></a>
           <a href="comptables.html"><b>Le dossier qui arrive écrit</b><span>Ce que change un client sur SkanFact</span></a>
           <a href="pour-votre-client.html"><b>Le lien à remettre à un client</b><span>Une page courte, à envoyer telle quelle</span></a>
           <a href="guide-facture-electronique.html"><b>La facture électronique</b><span>Où en est son intégration</span></a>
         </div>
       </div>
       <a href="guides.html">Guides</a>
+      <a href="questions.html">Questions</a>
       <a href="tarifs.html">Tarifs</a>
       <a href="acheter.html">Acheter</a>
       <a href="contact.html">Contact</a>
@@ -102,7 +103,7 @@
       <p class="fil fil-clair"><a href="index.html">Accueil</a> <span aria-hidden="true">›</span> Contact</p>
       <p class="oeil">Contact</p>
       <h1 class="h1-page h1-clair">Parlons de votre entreprise.</h1>
-      <p class="chapeau">Une question, une démonstration, plusieurs postes à équiper : écrivez-nous,
+      <p class="chapeau">Une question, une démonstration, plusieurs postes à équiper : écrivez-nous,
         nous répondons sous un jour ouvré.</p>
 
       <div class="contact-duo">
@@ -115,6 +116,30 @@
               <label><input type="radio" name="profil" value="un cabinet comptable"> Un cabinet comptable</label>
             </div>
           </fieldset>
+
+          <div id="bloc-fondateur" hidden>
+            <label class="case"><input type="checkbox" name="fondateur" value="place de cabinet fondateur" id="opt-fondateur">
+              <span><b>Je demande une place de cabinet fondateur</b>
+              SkanFact Cabinet gratuit, tous dossiers compris, sans date de fin — pour les vingt
+              premiers cabinets inscrits avant le 31 décembre 2027.</span></label>
+            <div class="champ" style="margin-top: 14px;">
+              <label for="empreinte-cab">L’empreinte de votre cabinet</label>
+              <input type="text" id="empreinte-cab" name="empreinte" autocomplete="off" spellcheck="false"
+                     placeholder="3F9A-2C1E-7B04-D158-6A2F">
+              <p class="aide-form">Elle se lit dans SkanFact Cabinet, sous <em>Réglages › Mon
+                cabinet › Licence</em>. C’est elle qui signe votre clé&nbsp;: sans elle nous
+                devrons vous la redemander, et cela vous fait attendre un aller-retour. Si vous
+                n’avez pas encore installé l’application, laissez vide — nous vous l’expliquerons.</p>
+            </div>
+            <div class="champ">
+              <label for="dossiers-hors">Combien de dossiers hors SkanFact&nbsp;?</label>
+              <input type="text" id="dossiers-hors" name="dossiers" autocomplete="off"
+                     placeholder="Une quinzaine, par exemple">
+              <p class="aide-form">Pour savoir de quoi nous parlons. Cela ne change rien à la
+                place de fondateur, qui les couvre tous.</p>
+            </div>
+          </div>
+
           <div class="paire">
             <div class="champ">
               <label for="nom">Nom et prénom <span class="oblig" aria-hidden="true">*</span></label>
@@ -145,9 +170,10 @@
           </div>
           <button class="btn btn-safran" type="submit">Envoyer</button>
           <p class="dit-envoi" id="dit-envoi" role="status" hidden></p>
-          <p class="aide-form" id="aide-form">Votre message part directement, sans passer par un
-            service tiers. Vous préférez écrire vous-même ?
-            <a href="mailto:contact@skanfact.tn">contact@skanfact.tn</a></p>
+          <p class="aide-form" id="aide-form">Votre message nous arrive par email, par un relais
+            que nous opérons nous-mêmes&nbsp;: il ne passe par aucun service de formulaires, et
+            n’est conservé nulle part ailleurs que dans notre boîte. Vous préférez écrire
+            vous-même ? <a href="mailto:contact@skanfact.tn">contact@skanfact.tn</a></p>
         </form>
 
         <div class="infos">
@@ -159,13 +185,13 @@
           <div class="bloc-info">
             <div class="t">Au téléphone</div>
             <b>Sur rendez-vous</b>
-            <span>Demandez-le dans votre message avec un créneau : nous vous rappelons,
+            <span>Demandez-le dans votre message avec un créneau : nous vous rappelons,
               du lundi au vendredi, 9 h – 17 h.</span>
           </div>
           <div class="bloc-info">
             <div class="t">Éditeur</div>
             <b>SKANCYBER SECURITY SUARL</b>
-            <span>08 rue de l'Université, Manar 1, El Menzah, 2092 Tunis</span>
+            <span>08 rue de l’Université, Manar 1, El Menzah, 2092 Tunis</span>
             <span>Matricule fiscal 1998268D/A/M/000</span>
           </div>
           <div class="bloc-info">
@@ -180,11 +206,11 @@
 
   <section class="section">
     <div class="conteneur">
-      <h2>Avant d'écrire, peut-être que la réponse est déjà là.</h2>
+      <h2>Avant d’écrire, peut-être que la réponse est déjà là.</h2>
       <div class="cartes-mini" style="margin-top: 34px;">
-        <a class="mini" href="questions.html"><b>Questions fréquentes</b><span>Les données, l'essai, la TVA, le changement d'ordinateur.</span><span class="fleche" aria-hidden="true">→</span></a>
-        <a class="mini" href="tarifs.html"><b>Les tarifs</b><span>Ce que contient chaque offre, et ce qui se passe à l'échéance.</span><span class="fleche" aria-hidden="true">→</span></a>
-        <a class="mini" href="telecharger.html"><b>Télécharger</b><span>Mac et Windows, trente jours d'essai, sans compte à créer.</span><span class="fleche" aria-hidden="true">→</span></a>
+        <a class="mini" href="questions.html"><b>Questions fréquentes</b><span>Les données, l’essai, la TVA, le changement d’ordinateur.</span><span class="fleche" aria-hidden="true">→</span></a>
+        <a class="mini" href="tarifs.html"><b>Les tarifs</b><span>Ce que contient chaque offre, et ce qui se passe à l’échéance.</span><span class="fleche" aria-hidden="true">→</span></a>
+        <a class="mini" href="telecharger.html"><b>Télécharger</b><span>Mac et Windows, trente jours d’essai, sans compte à créer.</span><span class="fleche" aria-hidden="true">→</span></a>
       </div>
     </div>
   </section>
@@ -217,10 +243,11 @@
       </div>
       <div class="col">
         <h2 class="pied-titre">Vous aider</h2>
-        <a href="guides.html">Guides : facture, TVA, timbre</a>
-        <a href="excel.html">SkanFact ou Excel ?</a>
+        <a href="guides.html">Guides : facture, TVA, timbre</a>
+        <a href="excel.html">SkanFact ou Excel ?</a>
         <a href="limites.html">Ce que SkanFact ne fait pas</a>
         <a href="questions.html">Questions fréquentes</a>
+        <a href="verifier.html">Vérifier une clé</a>
         <a href="comptables.html">Pour les comptables</a>
         <a href="tarifs.html">Tarifs</a>
         <a href="acheter.html">Acheter une clé</a>
@@ -231,7 +258,7 @@
         <a href="contact.html">Nous écrire</a>
         <a href="mentions-legales.html">Mentions légales</a>
         <a href="confidentialite.html">Confidentialité</a>
-        <p class="pied-adresse">SKANCYBER SECURITY SUARL<br>08 rue de l'Université, Manar 1<br>El Menzah, 2092 Tunis<br>
+        <p class="pied-adresse">SKANCYBER SECURITY SUARL<br>08 rue de l’Université, Manar 1<br>El Menzah, 2092 Tunis<br>
           MF 1998268D/A/M/000</p>
       </div>
     </div>

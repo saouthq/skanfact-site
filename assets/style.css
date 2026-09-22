@@ -94,11 +94,21 @@ p { margin: 0; }
 h1, h2, h3, h4 { margin: 0; font-family: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif; font-weight: 800; letter-spacing: -.03em; line-height: 1.1; text-wrap: balance; }
 a { color: var(--vert); text-decoration: none; }
 a:hover { color: var(--safran-fonce); }
-a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
-  outline: 3px solid var(--safran);
+/* Le repère de focus est la SEULE chose qui dit à quelqu'un au clavier où il se trouve.
+   Mesuré : le safran à 2,16 sur blanc — sous le minimum de 3:1, et l'anneau est tracé 2 px
+   EN DEHORS du contrôle, donc c'est bien au fond de la page qu'il se compare. Le safran
+   foncé (#9a6410) est déjà dans la palette et donne 4,99 sur blanc. Sur le vert foncé, c'est
+   l'inverse : on garde le safran clair, qui s'y détache.
+   `summary` est ajouté à la liste : les 33 questions dépliables du site étaient le seul
+   endroit où le repère changeait d'apparence d'un contrôle à l'autre. */
+a:focus-visible, button:focus-visible, summary:focus-visible,
+input:focus-visible, textarea:focus-visible, select:focus-visible {
+  outline: 3px solid var(--safran-fonce);
   outline-offset: 2px;
   border-radius: 4px;
 }
+.section-vert :focus-visible, .bande-fin :focus-visible, .offre.phare :focus-visible,
+.formulaire :focus-visible { outline-color: var(--safran); }
 
 .conteneur { width: 100%; max-width: var(--large); margin-inline: auto; padding-inline: 22px; }
 
@@ -156,9 +166,15 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .btn-vert:hover { background: var(--vert2); color: #fff; transform: translateY(-1px); }
 .btn-safran { background: var(--safran); color: #40280a; }
 .btn-safran:hover { background: #d8933080; background: #d89330; color: #40280a; transform: translateY(-1px); }
-.btn-creux { border-color: var(--filet); color: var(--vert); background: #fff; }
+/* La LIMITE d'un bouton n'est pas un filet de carte. `--filet` donne 1,25 sur blanc, là où
+   WCAG demande 3:1 pour le contour d'un composant : le bouton secondaire — « Voir les
+   tarifs », « Demander une démonstration », « Copier le lien », dix-huit en tout — était un
+   rectangle qu'on devine. Son texte vert, lui, se lit parfaitement : c'est ce qui a fait
+   passer le défaut pendant des mois, et c'est ce qui le rend traître. #6f8f89 donne 3,52 sur
+   blanc et 3,26 sur crème, les deux fonds sur lesquels ce bouton se pose. */
+.btn-creux { border-color: #6f8f89; color: var(--vert); background: #fff; }
 .btn-creux:hover { border-color: var(--vert); color: var(--vert); }
-.btn-clair { background: rgba(255, 255, 255, .14); color: #fff; border-color: rgba(255, 255, 255, .28); }
+.btn-clair { background: rgba(255, 255, 255, .14); color: #fff; border-color: rgba(255, 255, 255, .55); }
 .btn-clair:hover { background: rgba(255, 255, 255, .22); color: #fff; }
 .btn-petit { font-size: 14.5px; padding: 10px 20px; min-height: 42px; }
 
@@ -269,6 +285,10 @@ h1 .surligne { background: linear-gradient(transparent 58%, rgba(232, 163, 61, .
 
 /* ------------------------------------------------------------------ blocs (règles) */
 .trio { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 46px; }
+/* Quatre blocs ne vont pas dans une grille de trois : le quatrième reste seul sur sa rangée,
+   et une tuile orpheline se lit comme un oubli. Deux par deux, ils se lisent par paires. */
+.quatuor { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 46px; }
+@media (max-width: 760px) { .quatuor { grid-template-columns: minmax(0, 1fr); } }
 .bloc { background: var(--vert2); border-radius: var(--rayon); padding: 30px; }
 .bloc .val { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: clamp(26px, 3vw, 34px); color: var(--safran); letter-spacing: -.035em; }
 .bloc h3 { color: #fff; font-size: 19px; margin-top: 14px; font-weight: 600; }
@@ -319,18 +339,30 @@ h1 .surligne { background: linear-gradient(transparent 58%, rgba(232, 163, 61, .
 .offre li { display: flex; gap: 11px; font-size: 15px; align-items: flex-start; }
 .offre li svg { flex: none; margin-top: 4px; }
 .offre .prendre { margin-top: 26px; width: 100%; }
-/* Les trois cartes menaient toutes au TÉLÉCHARGEMENT : depuis la grille des prix, personne
-   ne pouvait acheter. L'essai reste le geste principal — c'est par là qu'on commence — et
-   l'achat est le second, sous lui, pour qui a déjà essayé. */
-.prendre-deux {
-  display: block; text-align: center; margin-top: 12px; font-size: 14.5px;
-  color: var(--vert); text-decoration: underline; text-underline-offset: 3px;
-}
-.prendre-deux:hover { color: var(--safran-fonce); }
-/* La carte mise en avant est sur fond VERT : le lien vert y donnait du vert sur vert,
-   contraste 1,00 — parfaitement invisible, et c'est la carte qu'on veut faire acheter. */
-.offre.phare .prendre-deux { color: #f0bd6e; }
-.offre.phare .prendre-deux:hover { color: #fff; }
+/* Les trois cartes menaient toutes au TÉLÉCHARGEMENT : depuis la grille des prix, personne ne
+   pouvait acheter. L'essai reste le geste principal — c'est par là qu'on commence — et l'achat
+   est le second. Il a d'abord été un lien souligné sous le bouton plein : le propriétaire a
+   ouvert la page et ne l'a pas vu. Un lien souligné sous un bouton se lit comme une note de bas
+   de page, et « un bouton sans bordure ni couleur n'est pas un bouton » est une règle de ce
+   projet depuis la première version de l'app du cabinet. C'est donc un VRAI bouton, de poids
+   moindre mais de même nature. */
+.offre .prendre-deux { margin-top: 10px; width: 100%; }
+/* Mesuré : `.btn-creux` sur la carte blanche donnait une surface blanche sur fond blanc —
+   1,00 de contraste — contre 10,13 pour le bouton d'essai juste au-dessus. Le geste d'achat
+   se lisait comme un rectangle vide. Ce qui le fait exister, c'est sa BORDURE : elle doit se
+   détacher de la carte, pas s'y fondre. */
+.offre .prendre-deux { border-color: var(--vert); color: var(--vert); }
+.offre .prendre-deux:hover { background: var(--vert); color: #fff; }
+.offre.phare .prendre-deux { border-color: rgba(255, 255, 255, .55); color: #fff; }
+.offre.phare .prendre-deux:hover { background: rgba(255, 255, 255, .22); color: #fff; }
+
+/* Le prix affiché est HT ; celui qu'on réglera est TTC. Les annoncer tous les deux ici, c'est
+   ne pas faire découvrir 75 DT de plus au moment de payer — et c'est le même chiffre que le
+   décompte de la page d'achat, au millime. */
+.prix-ttc { font-size: 14px; color: var(--gris); margin-top: 8px; }
+.prix-ttc b { color: var(--encre); font-weight: 600; }
+.offre.phare .prix-ttc { color: #9fc3bd; }
+.offre.phare .prix-ttc b { color: #fff; }
 
 .note-prix {
   margin-top: 28px; border-radius: var(--rayon); background: var(--creme); padding: 26px 30px;
@@ -533,6 +565,14 @@ legend { font-size: 14px; color: #a8ccc6; padding: 0 0 10px; }
   background: var(--safran-clair); border-radius: 16px; padding: 20px 24px; margin-top: 28px;
   color: var(--safran-fonce); font-size: 15px;
 }
+/* Une clause qu'il reste à trancher se VOIT, et se compte : sans repère visuel, on publie
+   un jour une page dont trois points sont encore en attente sans que personne ne le remarque.
+   La classe est aussi ce que l'audit compte pour refuser de lier la page tant qu'il en reste. */
+.a-completer {
+  border-inline-start: 3px solid var(--safran); padding-inline-start: 14px;
+  color: var(--safran-fonce);
+}
+.a-completer b { color: var(--safran-fonce); }
 
 /* =============================================================================
    Tailles d'écran — rien ne doit déborder, jamais.
@@ -1482,6 +1522,11 @@ picture { display: block; }
    les offres au-dessus — même procédé, et il existait déjà. */
 .qui-empile { flex-direction: column; align-items: stretch; gap: 10px; }
 .qui-empile label { border-radius: 14px; padding: 13px 18px; }
-.qui-empile label b { flex: none; }
-.qui-empile label span { color: #a8ccc6; font-size: 14px; }
+/* `flex: none` empêche le titre de rétrécir : c'est ce qu'on veut sur un titre court — il ne
+   se coupe pas en deux — mais « Un renouvellement, ou un changement d'offre » ne tient pas sur
+   la largeur d'un téléphone, et la page débordait alors de 114 px. On l'autorise à passer à la
+   ligne sans le laisser se faire compresser par le texte voisin (`flex: 0 1 auto`). */
+.qui-empile label { flex-wrap: wrap; }
+.qui-empile label b { flex: 0 1 auto; }
+.qui-empile label span { color: #a8ccc6; font-size: 14px; min-width: 0; }
 .qui-empile label:has(input:checked) span { color: #f3e3cb; }

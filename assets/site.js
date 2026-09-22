@@ -64,8 +64,11 @@
      code n'en connaissait qu'un, par son identifiant. Recopier le bloc aurait garanti la
      divergence : le second menu aurait eu, six mois plus tard, une touche Échap et pas
      l'autre. On les branche donc tous, quel que soit leur nombre.
-     Sous 900 px ils sont dépliés dans le panneau du burger : la feuille de style s'en charge,
-     et ces boutons n'existent plus.
+     Sous 900 px ces mêmes boutons deviennent les bascules pleine largeur des volets pliés dans
+     le panneau du burger (style.css, @media 900) : le gestionnaire ci-dessous les pilote encore,
+     avec leur `aria-expanded` et la touche Échap. Le commentaire disait l'inverse, et le prochain
+     qui aurait retiré ce code aurait rendu les douze entrées des deux menus inatteignables au
+     téléphone.
      Ouvrir l'un FERME l'autre : deux panneaux ouverts se recouvrent, et le second se lit
      comme la suite du premier. */
   var sousMenus = [].slice.call(document.querySelectorAll('.sous'))
@@ -207,12 +210,7 @@
     };
 
     var champs = Array.prototype.slice.call(form.querySelectorAll('input[name], textarea[name]'))
-      .filter(function (c) {
-        /* Un champ dans un bloc MASQUÉ n'est pas dans la commande : le choix du règlement
-           n'existe pas tant que Konnect n'est pas branché, et le mail annonçait quand même
-           « par virement » comme si on l'avait choisi. */
-        return c.type !== 'radio' && c.type !== 'hidden' && c.name !== 'piege' && !c.closest('[hidden]');
-      });
+      .filter(function (c) { return c.type !== 'radio' && c.type !== 'hidden' && c.name !== 'piege'; });
     champs.forEach(function (c) { c.addEventListener('input', function () { laver(c); }); });
 
     /* L'intitulé d'un champ, pour l'email : son `<label>`, débarrassé de l'étoile. */
@@ -258,6 +256,18 @@
       });
       var valeurs = {};
       champs.forEach(function (c) {
+        /* Le champ MASQUÉ se juge à l'envoi, pas au chargement. Figée une fois pour toutes,
+           la liste excluait pour toujours la case « les écrans de tenue de livres
+           m'intéressent » : son bloc est masqué au chargement, et le seul instrument qui
+           doit servir à FIXER le prix de cette option collectait zéro, en silence. */
+        if (c.closest('[hidden]')) return;
+        /* Une case à cocher vaut sa valeur quand elle est cochée, et rien sinon : recopier
+           sa valeur décochée ferait entrer dans la commande une option qu'on a refusée. */
+        if (c.type === 'checkbox') {
+          if (c.checked) lignes.push(intitule(c) + ' : oui');
+          valeurs[c.name] = c.checked ? c.value : '';
+          return;
+        }
         valeurs[c.name] = c.value.trim();
         lignes.push(intitule(c) + ' : ' + (c.value.trim().replace(/\s+/g, ' ') || '—'));
       });
@@ -292,11 +302,15 @@
       var bouton = form.querySelector('button[type=submit]');
       var libelle = bouton ? bouton.textContent : '';
       var dit = form.querySelector('.dit-envoi');
+      /* On DÉMASQUE avant d'écrire, et on laisse passer un tour. Une région `role="status"`
+         remplie pendant qu'elle est encore `hidden` n'est pas dans l'arbre d'accessibilité au
+         moment où son contenu change : le lecteur d'écran n'annonce rien. « Message envoyé »,
+         « L'envoi a échoué » et « votre messagerie s'ouvre » étaient muets. */
       var annoncer = function (classe, texte) {
         if (!dit) return;
         dit.className = 'dit-envoi ' + classe;
-        dit.textContent = texte;
         dit.hidden = false;
+        requestAnimationFrame(function () { dit.textContent = texte; });
       };
       /* Le repli : on ouvre le logiciel de messagerie, et on le DIT. Ouvrir une fenêtre
          que le visiteur n'attend pas, sans un mot, se lit comme un bug. */
@@ -543,7 +557,10 @@
       var lien = copier.getAttribute('data-lien');
       var reussi = function () {
         copier.textContent = 'Lien copié';
-        if (ditCopie) ditCopie.textContent = lien;
+        /* La région annonce l'ÉTAT, pas la donnée : elle épelait l'adresse, et le mot
+           « copié » n'existait que sur le libellé du bouton — un lecteur d'écran n'apprenait
+           donc jamais que la copie avait réussi. Le lien reste lisible pour le repli. */
+        if (ditCopie) ditCopie.textContent = 'Lien copié : ' + lien;
         setTimeout(function () {
           copier.textContent = 'Copier le lien';
           if (ditCopie) ditCopie.textContent = motInitial;
@@ -551,7 +568,10 @@
       };
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(lien).then(reussi, function () {
-          if (ditCopie) ditCopie.textContent = lien;
+          /* La région annonce l'ÉTAT, pas la donnée : elle épelait l'adresse, et le mot
+           « copié » n'existait que sur le libellé du bouton — un lecteur d'écran n'apprenait
+           donc jamais que la copie avait réussi. Le lien reste lisible pour le repli. */
+        if (ditCopie) ditCopie.textContent = 'Lien copié : ' + lien;
         });
       } else if (ditCopie) {
         // On l'affiche et on le sélectionne : il ne reste qu'à faire Cmd+C.
@@ -664,6 +684,41 @@
     }
   }
 
+  /* Le PROFIL arrive par `?profil=`, comme l'offre. Les boutons « Demander une démonstration »
+     des pages cabinet menaient au formulaire de contact avec « une entreprise » déjà coché :
+     la demande d'un cabinet partait étiquetée entreprise, sur le canal dont dépend toute
+     l'acquisition, et c'est la seule information que ce formulaire capte pour les distinguer. */
+  var profilVoulu = (new URLSearchParams(location.search).get('profil') || '').toLowerCase();
+  if (profilVoulu) {
+    var radiosProfil = [].slice.call(document.querySelectorAll('input[name=profil]'));
+    var nu = function (t) { return t.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); };
+    var viseP = radiosProfil.filter(function (r) { return nu(r.value).indexOf(profilVoulu) >= 0; })[0];
+    if (viseP) { viseP.checked = true; }
+  }
+
+  /* Le bloc « place de cabinet fondateur » ne s'ouvre que pour un cabinet : le site promettait
+     cette place sur cinq pages et n'offrait NULLE PART où la demander. Sans JavaScript il reste
+     masqué, et les boutons mènent quand même au formulaire — on perd la case, pas la demande. */
+  var blocFond = document.getElementById('bloc-fondateur');
+  if (blocFond) {
+    var caseFond = document.getElementById('opt-fondateur');
+    var suitProfil = function () {
+      var cab = !!document.querySelector('input[name=profil][value*="cabinet"]:checked');
+      blocFond.hidden = !cab;
+      /* Une case qui disparaît de l'écran ne doit pas rester cochée dans la commande :
+         c'est la règle apprise sur la remise de parrainage, un écran plus loin. */
+      if (!cab && caseFond) caseFond.checked = false;
+    };
+    Array.prototype.forEach.call(document.querySelectorAll('input[name=profil]'), function (r) {
+      r.addEventListener('change', suitProfil);
+    });
+    suitProfil();
+    if (/(^|[?&])fondateur=1(&|$)/.test(location.search) && caseFond) {
+      caseFond.checked = true;
+      blocFond.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    }
+  }
+
   /* ------------------------------------------------- le paiement en ligne (Konnect)
      Tant que cette ligne est vide, RIEN ne change : le choix du règlement reste masqué, la
      page d'achat annonce le virement, et personne ne se voit promettre une carte qui n'existe
@@ -713,6 +768,25 @@
     return t[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ',' + t[1] + ' DT';
   };
 
+  /* Les montants écrits dans les pages se recalculent depuis les MÊMES constantes que le
+     décompte. Ils étaient retapés à la main à six endroits : le jour où le timbre passe à 2 DT
+     ou la TVA change, `calculer()` se met à jour toute seule et ces six-là deviennent faux —
+     et se contredisent pendant la même visite, la page Tarifs disant un chiffre et l'encadré
+     vivant de la page d'achat un autre. Un prix qui ne s'accorde pas avec lui-même est la
+     chose qui fait le plus douter d'une facture à venir.
+     Le HTML garde la valeur juste d'aujourd'hui : sans JavaScript, la page reste exacte. */
+  var FORMULES = {
+    ttc: function (ht) { return ht * (1 + TVA) + TIMBRE; },
+    tva: function (ht) { return ht * TVA; },
+    'mois-ht': function (ht) { return ht / 12; },
+    'mois-ttc': function (ht) { return (ht * (1 + TVA) + TIMBRE) / 12; }
+  };
+  Array.prototype.forEach.call(document.querySelectorAll('[data-prix]'), function (el) {
+    var m = /^([a-z-]+):(\d+(?:\.\d+)?)$/.exec(el.getAttribute('data-prix') || '');
+    if (!m || !FORMULES[m[1]]) return;
+    el.textContent = dinars(FORMULES[m[1]](Number(m[2])));
+  });
+
   var decompte = document.getElementById('decompte');
   if (decompte) {
     var lignesDc = document.getElementById('dc-lignes');
@@ -728,7 +802,11 @@
       /* La remise de parrainage ne s'applique QUE si un cabinet est nommé, et seulement la
          première année — c'est ce que la page Tarifs promet, et deux endroits qui promettent
          la même chose ne peuvent pas se contredire. */
-      var parrain = !!(champCabinet && champCabinet.value.trim());
+      /* Un champ MASQUÉ ne compte pas : passer à « Moi-même » cache le nom du cabinet sans
+         l'effacer — pour ne pas perdre ce qui a été tapé si l'on revient — et la remise de
+         78 DT restait appliquée à quelqu'un qui venait de déclarer n'avoir pas de cabinet. */
+      var parrain = !!(champCabinet && !champCabinet.closest('[hidden]') && champCabinet.value.trim());
+      var renouv = !!document.querySelector('[data-dem=renouv]:checked');
       var remise = parrain ? ht * REMISE_PARRAIN : 0;
       var net = ht - remise;
       var tva = net * TVA;
@@ -747,6 +825,12 @@
         + 'reconduit tout seul : à l’échéance, vous décidez.'
         + (parrain ? ' La remise s’applique parce que vous avez nommé un cabinet ; '
             + 'nous le vérifions avant d’établir la facture.' : '')
+        /* Un changement d'offre en cours d'année ne se repaie pas en entier : l'application
+           facture la différence au prorata des jours restants. Annoncer le plein tarif sans
+           le dire ferait renoncer quelqu'un qui aurait dû monter en gamme. */
+        + (renouv ? ' Pour un changement d’offre en cours d’année, nous ne facturons que la '
+            + 'différence sur les jours restants : le montant ci-dessus est celui d’une '
+            + 'année entière, et la facture fera le calcul exact.' : '')
         + ' Ce décompte est une annonce : c’est la facture qui fait foi.';
       /* Le bouton NOMME ce qu'on va débiter quand c'est la carte : « Payer 465,100 DT » dit
          ce qui se passe au clic, là où « Demander ma clé » laisse croire qu'on demande encore.
@@ -790,6 +874,11 @@
     var bloc = document.createElement('div');
     bloc.className = 'confirme';
     bloc.setAttribute('role', 'status');
+    /* Le formulaire qu'on remplace porte le bouton qui vient d'être actionné, donc le focus :
+       le retirer du document renvoie au <body>, et la tabulation suivante repart du haut de la
+       page — après huit champs et un matricule fiscal. La confirmation se rend focalisable et
+       prend le focus : son titre est alors lu, et on reste où l'on est. */
+    bloc.setAttribute('tabindex', '-1');
     bloc.innerHTML =
       '<h3>Demande enregistrée.</h3>'
       + '<p>Rien ne vous est prélevé aujourd’hui. Vous pouvez encore changer d’offre ou '
@@ -813,6 +902,7 @@
       + '<a href="mailto:contact@skanfact.tn">contact@skanfact.tn</a> en rappelant votre '
       + 'matricule : nous retrouvons la demande.</p>';
     form.parentNode.replaceChild(bloc, form);
+    bloc.focus();
     bloc.scrollIntoView({ block: 'center', behavior: 'smooth' });
   }
 
@@ -878,7 +968,12 @@
     var radios = [].slice.call(document.querySelectorAll('input[name=offre]'));
     var sansAccent = function (t) { return t.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); };
     var vise = radios.filter(function (r) { return sansAccent(r.value).indexOf(offreVoulue) === 0; })[0];
-    if (vise) { vise.checked = true; }
+    /* Cocher ne suffit pas : le décompte a déjà été calculé plus haut dans ce fichier, sur
+       l'offre cochée dans le HTML. Sans ce rappel, on cliquait « Acheter la licence » sur la
+       carte Entreprise — 822,100 DT annoncés — et on atterrissait sur un total de 465,100 DT
+       qui se corrigeait tout seul à la première frappe. Un prix qui bouge sans qu'on ait
+       touché à l'offre fait douter de la facture à venir. */
+    if (vise) { vise.checked = true; if (window.__decompte) window.__decompte(); }
   }
 
   /* ------------------------------------------------- la référence du paiement
@@ -931,6 +1026,11 @@
         boite.appendChild(d);
       }
       boite.hidden = false;
+      /* Même raison qu'`annoncer` : la région doit être dans le document avant d'être remplie,
+         sinon le verdict d'une licence n'est jamais annoncé. */
+      var contenu = boite.innerHTML;
+      boite.innerHTML = '';
+      requestAnimationFrame(function () { boite.innerHTML = contenu; });
     };
 
     /* Un état inconnu du site — parce que le serveur en aura ajouté un — ne doit pas produire
@@ -970,10 +1070,14 @@
         body: JSON.stringify({ empreinte: saisie })
       }).then(function (r) { return r.json(); }).then(function (j) {
         if (fini) return;
-        fini = true;
         clearTimeout(minuteur);
-        rendre();
+        /* `fini` se pose au moment où l'on AFFICHE quelque chose, jamais avant : posé ici,
+           il rendait `replier()` muet (il commence par `if (fini) return;`), donc une réponse
+           que le site ne sait pas lire donnait un bouton qui revient à « Vérifier » et rien
+           d'autre — ni verdict, ni lien de secours. Un clic qui ne fait rien. */
         if (!j || !j.etat) { replier(); return; }
+        fini = true;
+        rendre();
         /* La date arrive du serveur ; on ne la réécrit pas, on la présente seulement dans
            l'ordre où elle se lit ici quand elle est ISO. Toute autre forme passe telle quelle :
            deviner un format qu'on ne connaît pas, c'est afficher une date fausse. */

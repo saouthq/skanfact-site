@@ -66,7 +66,7 @@
     <nav class="nav-site" id="nav-site" aria-label="Navigation principale">
       <div class="sous" id="sous-entreprise">
         <button class="lien-menu" id="btn-entreprise" aria-expanded="false" aria-controls="menu-entreprise">
-          Pour l'entreprise
+          Pour l’entreprise
           <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="m2.5 4.5 3.5 3.5 3.5-3.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
         </button>
         <div class="panneau" id="menu-entreprise">
@@ -75,8 +75,8 @@
           <a href="gestion.html"><b>Achats, stock et trésorerie</b><span>Marges, immobilisations, paie</span></a>
           <a href="tunisie.html"><b>Les règles tunisiennes</b><span>Timbre, TVA, retenue à la source</span></a>
           <a href="vos-donnees.html"><b>Vos données</b><span>Où elles vivent, ce qui sort du poste</span></a>
-          <a href="excel.html"><b>SkanFact ou Excel ?</b><span>Ce qu'un classeur ne peut pas faire</span></a>
-          <a href="limites.html"><b>Ce que SkanFact ne fait pas</b><span>Les limites, avant l'achat</span></a>
+          <a href="excel.html"><b>SkanFact ou Excel ?</b><span>Ce qu’un classeur ne peut pas faire</span></a>
+          <a href="limites.html"><b>Ce que SkanFact ne fait pas</b><span>Les limites, avant l’achat</span></a>
           <a href="nouveautes.html"><b>Nouveautés</b><span>Ce qui a changé, version par version</span></a>
         </div>
       </div>
@@ -86,13 +86,14 @@
           <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="m2.5 4.5 3.5 3.5 3.5-3.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
         </button>
         <div class="panneau" id="menu-cabinet">
-          <a href="cabinet.html"><b>SkanFact Cabinet</b><span>Le logiciel de tenue : saisie, livres, liasse</span></a>
+          <a href="cabinet.html"><b>SkanFact Cabinet</b><span>Le logiciel de tenue : saisie, livres, liasse</span></a>
           <a href="comptables.html"><b>Le dossier qui arrive écrit</b><span>Ce que change un client sur SkanFact</span></a>
           <a href="pour-votre-client.html"><b>Le lien à remettre à un client</b><span>Une page courte, à envoyer telle quelle</span></a>
           <a href="guide-facture-electronique.html"><b>La facture électronique</b><span>Où en est son intégration</span></a>
         </div>
       </div>
       <a href="guides.html">Guides</a>
+      <a href="questions.html">Questions</a>
       <a href="tarifs.html">Tarifs</a>
       <a href="acheter.html">Acheter</a>
       <a href="contact.html">Contact</a>
@@ -120,13 +121,13 @@
         <li class="etape"><span class="n">1</span>
           <b>Vous dites qui vous êtes</b>
           <p>Le formulaire ci-dessous demande votre raison sociale, votre matricule fiscal et votre
-            adresse : ce sont les mentions qui doivent figurer sur la facture, et le matricule est
+            adresse : ce sont les mentions qui doivent figurer sur la facture, et le matricule est
             aussi ce à quoi la clé sera rattachée.</p>
         </li>
         <li class="etape"><span class="n">2</span>
           <b>Nous envoyons la facture</b>
           <p>Sous un jour ouvré, par email. Elle porte la TVA et le timbre fiscal, et les
-            coordonnées de paiement y figurent. C’est une facture en bonne et due forme :
+            coordonnées de paiement y figurent. C’est une facture en bonne et due forme :
             elle passe en charge dans votre comptabilité.</p>
         </li>
         <li class="etape"><span class="n">3</span>
@@ -140,8 +141,8 @@
         </li>
         <li class="etape"><span class="n">4</span>
           <b>Vous recevez votre clé</b>
-          <p>Une ligne de texte à coller dans <b>Paramètres › Licence</b>. L’application la
-            vérifie sur votre poste, sans connexion : elle marche même le jour où internet est
+          <p>Une ligne de texte à coller dans <b>Paramètres › L’application › Licence</b>. L’application la
+            vérifie sur votre poste, sans connexion : elle marche même le jour où internet est
             coupé, et même le jour où nous ne serions plus là.</p>
         </li>
       </ol>
@@ -171,9 +172,23 @@
             <label><input type="radio" name="offre" value="Entreprise — 690 DT HT/an" data-ht="690">
               <b>Entreprise</b> <span>690 DT HT / an</span></label>
           </div>
-          <p class="aide-form">Ce que contient chacune :
+          <p class="aide-form">Ce que contient chacune :
             <a href="tarifs.html">voir le détail des offres</a>. L’offre se change plus tard
             sans repartir de zéro — vous ne payez que la différence sur l’année restante.</p>
+        </fieldset>
+
+        <fieldset>
+          <legend>Votre demande <span class="oblig" aria-hidden="true">*</span></legend>
+          <div class="qui qui-empile">
+            <label><input type="radio" name="demande" value="une première licence" checked data-dem="neuve">
+              <b>Une première licence</b> <span>Vous découvrez SkanFact, ou votre essai se termine</span></label>
+            <label><input type="radio" name="demande" value="un renouvellement ou un changement d’offre" data-dem="renouv">
+              <b>Un renouvellement, ou un changement d’offre</b> <span>Vous avez déjà une clé — même matricule, et nous repartons de sa date de fin</span></label>
+          </div>
+          <p class="aide-form">Renouveler avant l’échéance ne vous fait rien perdre&nbsp;: la
+            nouvelle année part de la fin de l’ancienne. Et un changement d’offre en cours
+            d’année ne se repaie pas en entier — vous ne réglez que la différence sur les jours
+            restants, et la facture le détaille.</p>
         </fieldset>
 
         <div class="paire">
@@ -187,7 +202,7 @@
             <input type="text" id="matricule" name="matricule" placeholder="1234567X/A/M/000" required>
           </div>
         </div>
-        <p class="aide-form aide-mf">La clé est rattachée à ce matricule : elle
+        <p class="aide-form aide-mf">La clé est rattachée à ce matricule : elle
           s’active sur tous vos postes, et refuse de s’activer sur le dossier d’une autre
           société. Vérifiez-le avant d’envoyer — une clé se refait, mais cela vous fait attendre.</p>
 
@@ -218,7 +233,7 @@
           <legend>Qui tient votre comptabilité <span class="oblig" aria-hidden="true">*</span></legend>
           <div class="qui qui-empile">
             <label><input type="radio" name="tenue" value="un cabinet comptable" checked data-tenue="cabinet">
-              <b>Un cabinet comptable</b> <span>Rien à ajouter : c’est lui qui tient vos livres</span></label>
+              <b>Un cabinet comptable</b> <span>Rien à ajouter : c’est lui qui tient vos livres</span></label>
             <label><input type="radio" name="tenue" value="moi-même" data-tenue="soi">
               <b>Moi-même</b> <span>Vous tenez vos livres vous-même</span></label>
           </div>
@@ -226,7 +241,7 @@
           <div class="champ" id="bloc-cabinet" style="margin-top: 14px;">
             <label for="cabinet">Le nom de votre cabinet</label>
             <input type="text" id="cabinet" name="cabinet" placeholder="Nom du cabinet, si c’est lui qui vous envoie">
-            <p class="aide-form">C’est lui qui vous a parlé de SkanFact ? Nommez-le :
+            <p class="aide-form">C’est lui qui vous a parlé de SkanFact ? Nommez-le :
               vous avez <b>20 % la première année</b>, et il ne touche aucune commission —
               <a href="comptables.html">pourquoi</a>. Le dossier mensuel part chez lui dans les deux
               offres, sans rien ajouter.</p>
@@ -255,11 +270,11 @@
                     placeholder="Plusieurs sociétés à équiper, une durée autre qu’un an, une question sur la facture…"></textarea>
         </div>
 
-        <div class="decompte" id="decompte">
+        <div class="decompte" id="decompte" aria-live="polite" aria-atomic="true">
           <h3>Ce que vous allez régler</h3>
           <ul id="dc-lignes">
             <li><span>Licence SkanFact</span><b>390,000 DT</b></li>
-            <li><span>TVA 19 %</span><b>74,100 DT</b></li>
+            <li><span>TVA 19 %</span><b data-prix="tva:390">74,100 DT</b></li>
             <li><span>Timbre fiscal</span><b>1,000 DT</b></li>
           </ul>
           <p class="dc-total"><span>À régler</span><b id="dc-total">465,100 DT</b></p>
@@ -281,9 +296,9 @@
 
         <button class="btn btn-safran" type="submit">Demander ma clé</button>
         <p class="dit-envoi" id="dit-envoi" role="status" hidden></p>
-        <p class="aide-form">Envoyer cette demande ne vous engage pas : rien n’est
+        <p class="aide-form">Envoyer cette demande ne vous engage pas : rien n’est
           prélevé, et vous pouvez encore changer d’offre ou renoncer à réception de la
-          facture. Vous préférez écrire vous-même ?
+          facture. Vous préférez écrire vous-même ?
           <a href="mailto:contact@skanfact.tn">contact@skanfact.tn</a></p>
       </form>
     </div>
@@ -294,26 +309,26 @@
       <h2>Ce qu’il faut savoir avant de payer</h2>
       <div class="questions" style="margin-top: 30px;">
         <div class="qq">
-          <h3>Mon essai n’est pas fini. J’attends ?</h3>
-          <p class="rep">Non, et vous ne perdez rien : la licence part de la date d’activation, pas
+          <h3>Mon essai n’est pas fini. J’attends ?</h3>
+          <p class="rep">Non, et vous ne perdez rien : la licence part de la date d’activation, pas
             de la date d’achat. Acheter au dixième jour ne vous coupe pas les vingt qui restent.</p>
         </div>
         <div class="qq">
-          <h3>Et à l’échéance, si je ne renouvelle pas ?</h3>
+          <h3>Et à l’échéance, si je ne renouvelle pas ?</h3>
           <p class="rep">Seule la création de nouvelles pièces s’arrête. Lire, imprimer,
-            exporter, sauvegarder, envoyer le dossier à votre comptable : toujours, et sans limite de
+            exporter, sauvegarder, envoyer le dossier à votre comptable : toujours, et sans limite de
             durée. Vous payez la licence, jamais le droit d’ouvrir vos données.</p>
         </div>
         <div class="qq">
-          <h3>Sur combien d’ordinateurs ?</h3>
+          <h3>Sur combien d’ordinateurs ?</h3>
           <p class="rep">La clé tient au matricule fiscal de votre société, pas à une
-            machine : elle s’active sur vos postes. Travailler à deux sur le même dossier —
+            machine : elle s’active sur vos postes. Travailler à deux sur le même dossier —
             chacun son tour, par un dossier commun — relève de l’offre Entreprise.</p>
         </div>
         <div class="qq">
           <h3>Je veux payer deux ans, ou pour toujours.</h3>
           <p class="rep">L’application sait délivrer d’autres durées. Elles ne sont pas
-            encore tarifées publiquement : demandez-le dans le champ libre, nous vous répondons
+            encore tarifées publiquement : demandez-le dans le champ libre, nous vous répondons
             avec un prix ferme avant toute facture.</p>
         </div>
         <div class="qq">
@@ -322,7 +337,7 @@
             matériel, et il n’y a personne à prévenir.</p>
         </div>
         <div class="qq">
-          <h3>Vous disparaissez. Que deviennent mes factures ?</h3>
+          <h3>Vous disparaissez. Que deviennent mes factures ?</h3>
           <p class="rep">Elles restent lisibles. Les données sont un fichier sur votre disque, les
             journaux sortent en CSV, le dossier du comptable est un ZIP ordinaire, et la clé se
             vérifie sans réseau — rien de tout cela n’a besoin de nous.
@@ -334,7 +349,7 @@
 
   <section class="section section-creme">
     <div class="conteneur">
-      <h2>Pas encore décidé ?</h2>
+      <h2>Pas encore décidé ?</h2>
       <div class="cartes-mini" style="margin-top: 30px;">
         <a class="mini" href="telecharger.html"><b>Essayer trente jours</b><span>Toutes les fonctions, sans carte bancaire ni compte à créer.</span><span class="fleche" aria-hidden="true">→</span></a>
         <a class="mini" href="limites.html"><b>Ce que SkanFact ne fait pas</b><span>Les limites, écrites avant l’achat plutôt qu’après.</span><span class="fleche" aria-hidden="true">→</span></a>
@@ -369,10 +384,11 @@
       </div>
       <div class="col">
         <h2 class="pied-titre">Vous aider</h2>
-        <a href="guides.html">Guides : facture, TVA, timbre</a>
-        <a href="excel.html">SkanFact ou Excel ?</a>
+        <a href="guides.html">Guides : facture, TVA, timbre</a>
+        <a href="excel.html">SkanFact ou Excel ?</a>
         <a href="limites.html">Ce que SkanFact ne fait pas</a>
         <a href="questions.html">Questions fréquentes</a>
+        <a href="verifier.html">Vérifier une clé</a>
         <a href="comptables.html">Pour les comptables</a>
         <a href="tarifs.html">Tarifs</a>
         <a href="acheter.html">Acheter une clé</a>
@@ -383,7 +399,7 @@
         <a href="contact.html">Nous écrire</a>
         <a href="mentions-legales.html">Mentions légales</a>
         <a href="confidentialite.html">Confidentialité</a>
-        <p class="pied-adresse">SKANCYBER SECURITY SUARL<br>08 rue de l'Université, Manar 1<br>El Menzah, 2092 Tunis<br>
+        <p class="pied-adresse">SKANCYBER SECURITY SUARL<br>08 rue de l’Université, Manar 1<br>El Menzah, 2092 Tunis<br>
           MF 1998268D/A/M/000</p>
       </div>
     </div>
