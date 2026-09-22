@@ -18,21 +18,24 @@
 
   /* Le formulaire de contact est servi par le worker des MISES À JOUR (skanfact-maj), pas
      par celui de la console : deux workers, deux adresses, et c'est la confusion la plus
-     facile à faire ici. La route est `/contact`, l'adresse finit par .workers.dev.
-     Tant que cette ligne est vide, ou si le relais répond 503, le formulaire repasse par le
-     logiciel de messagerie du visiteur : on ne perd jamais un message parce qu'un service
-     est en panne.
+     facile à faire ici. Vérifié de bout en bout côté application le 22/09/2026 — OPTIONS
+     répond 204, un vrai POST a rendu {"ok":true} et le mail est arrivé.
+     Si le relais répond 503 ou ne répond pas, le formulaire repasse par le logiciel de
+     messagerie du visiteur : ce n'est plus le chemin normal, mais on ne perd jamais un
+     message parce qu'un service est en panne.
 
-     Le contrat, tenu au champ près — envoyer autre chose que ces quatre clés serait risqué :
-     le worker traite un champ inattendu comme un PIÈGE, et répondrait « reçu » sans rien
-     envoyer. C'est très exactement le défaut qu'on ne verrait jamais.
-       POST, Content-Type: application/json
-       { nom, email, message }  — le message fait de 10 à 5 000 caractères
-       + le champ piège, caché en CSS : rempli, la réponse est « reçu » et rien ne part.
-     Réponses : 200 {"ok":true} · 400 avec la raison · 503 service non configuré.
-     Origines autorisées : skanfact.tn, www.skanfact.tn, saouthq.github.io — une autre
-     reçoit un 404, donc un essai depuis un fichier local ne prouve rien. */
-  var RELAIS_CONTACT = ''; /* À REMPLIR : https://<worker-maj>.workers.dev/contact */
+     Le contrat : POST, Content-Type: application/json, { nom, email, message } — le relais
+     accepte `corps` comme `message`, indifféremment. Il ne valide que ce dont il a besoin
+     pour répondre : un nom, une adresse plausible, dix caractères de texte, et des longueurs
+     maximales (5 000 pour le message).
+     Le champ `piege`, caché en CSS : rempli, la réponse est « reçu » et rien ne part. C'est
+     le SEUL champ inconnu que le relais regarde — il n'en refuse aucun autre. On n'envoie
+     quand même que les champs du contrat, pour une autre raison : le corps du mail est
+     composé ICI, avec les intitulés que la page affiche, donc un champ ajouté demain arrive
+     tout seul dans le message sans qu'on redéploie le worker.
+     Origines autorisées : skanfact.tn, www.skanfact.tn, saouthq.github.io — une autre reçoit
+     un 404, donc un essai depuis un fichier local ne prouve rien. */
+  var RELAIS_CONTACT = 'https://skanfact-maj.skanbenamor10.workers.dev/contact';
 
   /* La mesure d'audience. Une seule ligne à remplir : le nom du compte GoatCounter (gratuit,
      sans cookie, sans traceur, sans donnée personnelle). Tant qu'elle est vide, AUCUNE requête
@@ -250,9 +253,11 @@
       var piege = form.querySelector('[name=piege]');
       var corps = sujet + '\n\n' + lignes.join('\n');
       var nom = valeurs.nom || valeurs.raison || '';
-      /* EXACTEMENT les champs du contrat, et rien d'autre : le worker traite un champ
-         inattendu comme un piège, répond « reçu », et n'envoie rien. Le genre du formulaire
-         (message ou commande) voyage donc DANS le corps, en première ligne, pas à côté. */
+      /* Les champs du contrat, et rien d'autre. Non pas parce qu'un champ en trop serait
+         refusé — le relais ne regarde que `piege` — mais parce que le corps du mail est
+         composé ICI, avec les intitulés que la page affiche : le genre du formulaire
+         (message ou commande) est donc sa première ligne, et un champ ajouté demain arrive
+         tout seul dans le message sans qu'on redéploie le worker. */
       var donnees = {
         nom: nom, email: valeurs.email || '', message: corps,
         piege: piege ? piege.value.trim() : ''
@@ -305,6 +310,13 @@
         clearTimeout(minuteur);
         rendreLeBouton();
         if (res.j && res.j.ok) {
+          /* La carte vient APRÈS la commande, jamais avant : si le paiement se lance et que
+             la commande ne part pas, quelqu'un paie sans que personne ne sache pourquoi.
+             Dans cet ordre, le pire cas est une commande sans paiement — c'est-à-dire le
+             chemin du virement, qui marche. On ne vide donc pas le formulaire tout de suite :
+             le paiement peut encore échouer, et on ne lui reprend pas ce qu'il a tapé. */
+          var carte = form.querySelector('[data-regl=carte]');
+          if (PAIEMENT && carte && carte.checked) { payerEnLigne(valeurs, annoncer, bouton, libelle); return; }
           form.reset();
           annoncer('ok', genre === 'commande'
             ? 'Demande envoyée. Votre facture part sous un jour ouvré, à ' + donnees.email + '.'
@@ -633,6 +645,85 @@
       }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
       blocs.forEach(function (b) { oeil.observe(b); });
     }
+  }
+
+  /* ------------------------------------------------- le paiement en ligne (Konnect)
+     Tant que cette ligne est vide, RIEN ne change : le choix du règlement reste masqué, la
+     page d'achat annonce le virement, et personne ne se voit promettre une carte qui n'existe
+     pas. Le compte marchand n'est pas encore validé au 22/09/2026.
+
+     Le site ne parle JAMAIS à Konnect directement : la clé d'API ne peut pas vivre dans une
+     page, et le MONTANT ne peut pas venir du navigateur — n'importe qui le modifierait. Le
+     site envoie qui achète et quelle offre ; le worker tient le barème, appelle Konnect et
+     renvoie l'adresse de paiement.
+       POST <PAIEMENT>, Content-Type: application/json
+       { offre, raison, matricule, adresse, nom, email, tel, cabinet }
+       -> 200 { payUrl, ref }   ·   400 avec la raison   ·   503 pas encore configuré */
+  var PAIEMENT = ''; /* À REMPLIR quand Konnect est validé : https://api.skanfact.tn/v1/commande/payer */
+
+  /* On n'envoie que QUI achète et QUELLE offre. Le montant, la TVA et le timbre sont
+     calculés par le worker, qui tient le barème : un prix qui vient du navigateur est un
+     prix que le navigateur peut changer. */
+  function payerEnLigne(valeurs, annoncer, bouton, libelle) {
+    var offre = (document.querySelector('input[name=offre]:checked') || {}).value || '';
+    annoncer('ok', 'Commande enregistrée. Ouverture de la page de paiement…');
+    if (bouton) { bouton.disabled = true; bouton.textContent = 'Paiement…'; }
+    var fini = false;
+    /* Le repli DIT ce qui est déjà acquis : la commande est partie, donc la facture suit de
+       toute façon. Sans cette phrase, un échec de paiement se lit comme « rien n'a marché »
+       et la personne recommence tout. */
+    var replier = function (pourquoi) {
+      if (fini) return;
+      fini = true;
+      if (bouton) { bouton.disabled = false; bouton.textContent = libelle; }
+      annoncer('rate', pourquoi + ' Votre commande, elle, est bien enregistrée : la facture '
+        + 'part sous un jour ouvré et vous réglerez par virement.');
+    };
+    var minuteur = setTimeout(function () { replier('La page de paiement ne répond pas.'); }, 15000);
+
+    fetch(PAIEMENT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        offre: offre, raison: valeurs.raison || '', matricule: valeurs.matricule || '',
+        adresse: valeurs.adresse || '', nom: valeurs.nom || '', email: valeurs.email || '',
+        tel: valeurs.tel || '', cabinet: valeurs.cabinet || ''
+      })
+    }).then(function (r) {
+      return r.json().catch(function () { return {}; })
+        .then(function (j) { return { code: r.status, j: j }; });
+    }).then(function (res) {
+      if (fini) return;
+      clearTimeout(minuteur);
+      if (res.j && res.j.payUrl) { fini = true; window.location.href = res.j.payUrl; return; }
+      replier(res.code === 400 && res.j && res.j.erreur ? res.j.erreur
+        : 'Le paiement par carte n’a pas pu s’ouvrir.');
+    }).catch(function () { clearTimeout(minuteur); replier('Le paiement par carte n’a pas pu s’ouvrir.'); });
+  }
+
+  if (PAIEMENT) {
+    var blocRegl = document.getElementById('bloc-reglement');
+    if (blocRegl) blocRegl.hidden = false;
+    /* La phrase de l'étape 3 suit le réglage : une phrase qu'un réglage peut rendre fausse
+       est un défaut, pas une imprécision. */
+    Array.prototype.forEach.call(document.querySelectorAll('[data-paiement]'), function (el) {
+      el.hidden = el.getAttribute('data-paiement') !== 'oui';
+    });
+  }
+
+  /* ------------------------------------------------- l'offre choisie sur la page Tarifs
+     Les trois cartes de Tarifs menaient toutes au téléchargement : depuis la grille des prix,
+     personne ne pouvait acheter. Elles portent maintenant « Acheter cette offre », et l'offre
+     arrive ici par `?offre=` — sinon on la choisirait deux fois, et la seconde fois on se
+     demanderait si la première a été perdue.
+     Le lien fonctionne sans JavaScript : il mène à la page d'achat, simplement sans la case
+     déjà cochée. */
+  var offreVoulue = (new URLSearchParams(location.search).get('offre') || '').toLowerCase();
+  if (offreVoulue) {
+    var radios = [].slice.call(document.querySelectorAll('input[name=offre]'));
+    var sansAccent = function (t) { return t.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); };
+    var vise = radios.filter(function (r) { return sansAccent(r.value).indexOf(offreVoulue) === 0; })[0];
+    if (vise) { vise.checked = true; }
   }
 
   /* ------------------------------------------------- vérifier une licence

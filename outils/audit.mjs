@@ -488,7 +488,9 @@ for (const largeur of LARGEURS) {
         try { JSON.parse(j); } catch (e) { dit('grave', f, '—', 'balisage JSON-LD invalide : ' + e.message); }
       }
       for (const l of releve.liens) {
-        let cible = l.split('#')[0];
+        // On retire l'ancre ET la chaîne de requête : `acheter.html?offre=independant` désigne
+        // bien un fichier qui existe. Les garder faisait passer trois liens justes pour morts.
+        let cible = l.split('#')[0].split('?')[0];
         if (!cible) continue;
         // La page 404 vise en ABSOLU (`/skanfact-site/…`) : elle peut être servie depuis
         // n'importe quelle adresse du site, donc un chemin relatif y serait faux. On retire le

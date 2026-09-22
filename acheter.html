@@ -94,6 +94,7 @@
       </div>
       <a href="guides.html">Guides</a>
       <a href="tarifs.html">Tarifs</a>
+      <a href="acheter.html">Acheter</a>
       <a href="contact.html">Contact</a>
       <a class="btn btn-vert btn-petit" href="telecharger.html">Essayer 30 jours</a>
     </nav>
@@ -130,9 +131,12 @@
         </li>
         <li class="etape"><span class="n">3</span>
           <b>Vous réglez</b>
-          <p>Par virement, chèque ou espèces — nous convenons du mode ensemble.
-            Le paiement en ligne par carte n’est pas encore en place, et nous ne le
+          <p data-paiement="non">Par virement, chèque ou espèces — nous convenons du mode
+            ensemble. Le paiement en ligne par carte n’est pas encore en place, et nous ne le
             prétendons pas.</p>
+          <p data-paiement="oui" hidden>Par carte bancaire tout de suite, ou par virement,
+            chèque ou espèces. La carte passe par Konnect&nbsp;: vos coordonnées bancaires ne
+            transitent jamais par nous, et nous ne les conservons pas.</p>
         </li>
         <li class="etape"><span class="n">4</span>
           <b>Vous recevez votre clé</b>
@@ -250,6 +254,18 @@
           <textarea id="message" name="message" rows="3"
                     placeholder="Plusieurs sociétés à équiper, une durée autre qu’un an, une question sur la facture…"></textarea>
         </div>
+
+        <fieldset id="bloc-reglement" hidden>
+          <legend>Comment réglez-vous <span class="oblig" aria-hidden="true">*</span></legend>
+          <div class="qui qui-empile">
+            <label><input type="radio" name="reglement" value="par carte bancaire, en ligne" data-regl="carte">
+              <b>Par carte bancaire, maintenant</b> <span>Vous êtes redirigé vers Konnect, puis la clé part dès le paiement constaté</span></label>
+            <label><input type="radio" name="reglement" value="par virement, chèque ou espèces" checked data-regl="virement">
+              <b>Par virement, chèque ou espèces</b> <span>Nous envoyons la facture, vous réglez, puis la clé part</span></label>
+          </div>
+          <p class="aide-form">La facture est la même dans les deux cas, avec la TVA et le
+            timbre fiscal. Par carte, elle vous suit une fois le paiement constaté.</p>
+        </fieldset>
 
         <button class="btn btn-safran" type="submit">Demander ma clé</button>
         <p class="dit-envoi" id="dit-envoi" role="status" hidden></p>

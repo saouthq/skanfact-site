@@ -3,18 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Vérifier une licence SkanFact</title>
-<meta name="description" content="Vérifier qu'une licence SkanFact est valable, en collant son empreinte. La page ne dit jamais à qui une licence appartient.">
+<title>Paiement reçu — SkanFact</title>
+<meta name="description" content="Votre paiement est passé : la clé d'activation part par email dès qu'il est constaté.">
 <meta name="theme-color" content="#0a4a43">
 <meta name="robots" content="noindex">
 <link rel="icon" href="img/icone.png" type="image/png">
 <link rel="apple-touch-icon" href="img/icone.png">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Vérifier une licence SkanFact">
-<meta property="og:description" content="Vérifier qu'une licence SkanFact est valable, en collant son empreinte.">
+<meta property="og:title" content="Paiement reçu — SkanFact">
+<meta property="og:description" content="Votre paiement est passé : la clé d'activation part par email dès qu'il est constaté.">
 <meta property="og:image" content="https://skanfact.tn/img/accueil.jpg">
 <meta property="og:locale" content="fr_TN">
-<meta property="og:url" content="https://skanfact.tn/verifier.html">
+<meta property="og:url" content="https://skanfact.tn/paiement-ok.html">
 <meta property="og:site_name" content="SkanFact">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="assets/style.css">
@@ -78,36 +78,24 @@
 <main id="contenu">
   <section class="section">
     <div class="conteneur" style="max-width: 720px;">
-      <p class="oeil">Licence</p>
-      <h1>Vérifier une licence SkanFact</h1>
-      <p class="chapeau">Collez l’empreinte d’une licence, et l’outil vous dit si elle est valable,
-        expirée, révoquée ou inconnue. Il ne dit <b>jamais</b> à qui elle appartient.</p>
-      <form class="form-verif" id="form-verif" novalidate>
-        <div class="champ">
-          <label for="empreinte">Empreinte de la licence <span class="oblig" aria-hidden="true">*</span></label>
-          <input type="text" id="empreinte" name="empreinte" autocomplete="off" spellcheck="false"
-            placeholder="3F9A-2C1E-7B04-D158-6A2F" required>
-        </div>
-        <button class="btn btn-vert" type="submit">Vérifier</button>
-      </form>
-      <div class="verdict" id="verdict" role="status" hidden></div>
-      <p class="sous-actions">Vous trouvez l’empreinte dans SkanFact, sous
-        <em>Paramètres › L’application › Licence</em>. Avec ou sans tirets, en majuscules ou
-        en minuscules&nbsp;: nous la lisons telle que vous la collez.</p>
-      <p class="sous-actions" id="verif-secours" hidden>La vérification en ligne ne répond pas.
-        <a href="https://api.skanfact.tn/verifier" rel="noopener">Ouvrir l’outil de vérification</a>
-        sur notre serveur.</p>
-      <noscript>
-        <p class="sous-actions"><a href="https://api.skanfact.tn/verifier" rel="noopener">Ouvrir
-          l’outil de vérification</a> — cette page a besoin de JavaScript pour interroger le
-          serveur sans vous faire quitter le site.</p>
-      </noscript>
-      <div class="preuve" style="margin-top: 34px;">
-        <b>Une licence se vérifie d’abord hors ligne.</b>
-        <p>SkanFact contrôle votre licence sur votre propre ordinateur, sans rien demander à
-          personne&nbsp;: elle survit à une coupure de connexion, et à la disparition de son éditeur.
-          Cette page n’est qu’une commodité — pour montrer une licence à quelqu’un, ou lever un
-          doute. Ce n’est pas la source de vérité.</p>
+      <p class="oeil">Paiement</p>
+      <h1>Merci, votre paiement est passé.</h1>
+      <p class="chapeau">Votre clé d’activation part par email dès que le paiement est
+        constaté&nbsp;: comptez quelques minutes, pas un jour ouvré. La facture suit, avec la
+        TVA et le timbre fiscal.</p>
+      <div class="preuve" style="margin-top: 30px;">
+        <b>Ce qu’il vous reste à faire.</b>
+        <p>Ouvrir SkanFact, aller dans <em>Paramètres › L’application › Licence</em>, et coller
+          la ligne reçue par email. L’application la vérifie sur votre poste, sans connexion.
+          Vous n’avez rien à réinstaller&nbsp;: l’essai devient la licence, et tout ce que vous
+          avez saisi pendant l’essai reste en place.</p>
+      </div>
+      <p class="sous-actions">Rien n’est arrivé dans l’heure&nbsp;? Regardez vos indésirables,
+        puis écrivez-nous à <a href="mailto:contact@skanfact.tn">contact@skanfact.tn</a> — nous
+        retrouvons le paiement et renvoyons la clé.</p>
+      <div class="actions" style="margin-top: 26px;">
+        <a class="btn btn-vert" href="telecharger.html">Télécharger SkanFact</a>
+        <a class="btn btn-creux" href="guides.html">Lire les guides</a>
       </div>
     </div>
   </section>

@@ -319,6 +319,18 @@ h1 .surligne { background: linear-gradient(transparent 58%, rgba(232, 163, 61, .
 .offre li { display: flex; gap: 11px; font-size: 15px; align-items: flex-start; }
 .offre li svg { flex: none; margin-top: 4px; }
 .offre .prendre { margin-top: 26px; width: 100%; }
+/* Les trois cartes menaient toutes au TÉLÉCHARGEMENT : depuis la grille des prix, personne
+   ne pouvait acheter. L'essai reste le geste principal — c'est par là qu'on commence — et
+   l'achat est le second, sous lui, pour qui a déjà essayé. */
+.prendre-deux {
+  display: block; text-align: center; margin-top: 12px; font-size: 14.5px;
+  color: var(--vert); text-decoration: underline; text-underline-offset: 3px;
+}
+.prendre-deux:hover { color: var(--safran-fonce); }
+/* La carte mise en avant est sur fond VERT : le lien vert y donnait du vert sur vert,
+   contraste 1,00 — parfaitement invisible, et c'est la carte qu'on veut faire acheter. */
+.offre.phare .prendre-deux { color: #f0bd6e; }
+.offre.phare .prendre-deux:hover { color: #fff; }
 
 .note-prix {
   margin-top: 28px; border-radius: var(--rayon); background: var(--creme); padding: 26px 30px;
@@ -384,6 +396,11 @@ legend { font-size: 14px; color: #a8ccc6; padding: 0 0 10px; }
 .section-vert .champ textarea::placeholder { color: #9fc3bd; }
 .section-vert .champ input:focus, .section-vert .champ textarea:focus { outline-color: var(--safran); }
 .champ textarea { min-height: 116px; resize: vertical; }
+/* Deux champs côte à côte dans un formulaire. À ne pas confondre avec `.paire-app`, le
+   couple de captures de l'accueil : la seconde a longtemps porté le MÊME nom et redéfinissait
+   celle-ci pour tout le site — trois colonnes au lieu de deux (donc le second champ dans une
+   colonne `auto` et une colonne vide à droite) et 54 px de marge au-dessus de chaque rangée.
+   Les deux formulaires du site étaient troués, et rien en console ne le disait. */
 .paire { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 /* L'étoile qui désigne un champ obligatoire doit se voir, c'est toute sa fonction — et elle
    n'a pas la même couleur selon le fond : le safran ordinaire tombe à 3,97 sur le vert du
@@ -1294,7 +1311,7 @@ legend { font-size: 14px; color: #a8ccc6; padding: 0 0 10px; }
    Les deux cadres ne font PAS la même hauteur (une facture est haute, un extrait de
    journal est large) : on les aligne en haut, pas au centre, sinon le plus court
    flotte au milieu de son vide. */
-.paire {
+.paire-app {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   gap: clamp(14px, 2.4vw, 26px);
@@ -1324,7 +1341,7 @@ legend { font-size: 14px; color: #a8ccc6; padding: 0 0 10px; }
   color: var(--safran-fonce); max-width: 11ch; line-height: 1.3;
 }
 @media (max-width: 900px) {
-  .paire { grid-template-columns: minmax(0, 1fr); }
+  .paire-app { grid-template-columns: minmax(0, 1fr); }
   /* Empilée, la flèche ne relie plus deux colonnes : elle descend. */
   .paire-fleche { padding-top: 0; }
   .paire-fleche .rond svg { transform: rotate(90deg); }
@@ -1337,14 +1354,14 @@ legend { font-size: 14px; color: #a8ccc6; padding: 0 0 10px; }
 .hero-centre { text-align: center; }
 .hero-centre .chapeau { margin-inline: auto; }
 .hero-centre .actions { justify-content: center; }
-.hero-centre .paire { text-align: left; }
+.hero-centre .paire-app { text-align: left; }
 
 /* Les deux cadres de la paire ne font pas la même hauteur — une liste de factures
    est haute, un extrait de journal est large — et leurs légendes se retrouvaient
    à soixante pixels d'écart. On étire les deux colonnes à la même hauteur et on
    pousse la légende en bas : elles se lisent alors comme une seule ligne. */
-.paire { align-items: stretch; }
-.paire > div { display: flex; flex-direction: column; }
+.paire-app { align-items: stretch; }
+.paire-app > div { display: flex; flex-direction: column; }
 .paire-legende { margin-top: auto; padding-top: 14px; }
 
 /* Une capture d'écran entière porte souvent un bas vide : l'application occupe la fenêtre,
@@ -1388,7 +1405,7 @@ picture { display: block; }
    l'une finissait 44 px plus haut que l'autre, et la paire paraissait bancale. On leur impose
    la même proportion, et on rogne PAR LE BAS : rogner par le côté couperait les colonnes Débit
    et Crédit, c'est-à-dire ce que l'image est là pour montrer. */
-.paire .cadre-app img { aspect-ratio: 1267 / 416; object-fit: cover; object-position: top left; }
+.paire-app .cadre-app img { aspect-ratio: 1267 / 416; object-fit: cover; object-position: top left; }
 
 /* La case à cocher du formulaire de commande. Elle vit sur le fond vert, comme `.qui` — mais
    elle porte DEUX lignes (le titre de l'option et ce qu'elle contient), donc elle ne peut pas
