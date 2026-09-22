@@ -16,23 +16,23 @@
   var DEPOT = 'saouthq/skanfact';
   var RELEASES = 'https://github.com/' + DEPOT + '/releases';
 
-  /* L'adresse du relais qui remet les messages du formulaire — le MÊME worker Cloudflare que
-     celui des mises à jour, avec une route `/contact` en plus. Tant que cette ligne est vide,
-     ou si le relais ne répond pas, le formulaire repasse par le logiciel de messagerie du
-     visiteur : on ne perd jamais un message parce qu'un service est en panne.
-     Une seule ligne à remplir : voir worker/README.md dans le dépôt de l'application.
+  /* Le formulaire de contact est servi par le worker des MISES À JOUR (skanfact-maj), pas
+     par celui de la console : deux workers, deux adresses, et c'est la confusion la plus
+     facile à faire ici. La route est `/contact`, l'adresse finit par .workers.dev.
+     Tant que cette ligne est vide, ou si le relais répond 503, le formulaire repasse par le
+     logiciel de messagerie du visiteur : on ne perd jamais un message parce qu'un service
+     est en panne.
 
-     Branchée le 22/09/2026 sur api.skanfact.tn — le domaine de Skander, pas le .workers.dev.
-     CE QUE LE WORKER DOIT RENDRE, et c'est la moitié qu'on oublie : la requête part de
-     skanfact.tn vers api.skanfact.tn, donc elle est CROISÉE, et son en-tête JSON déclenche un
-     appel OPTIONS avant le POST. Si le worker ne répond pas à celui-là, le navigateur abandonne
-     AVANT d'atteindre la route — le formulaire retomberait sur la messagerie sans qu'on sache
-     pourquoi. Il faut donc :
-       OPTIONS /contact -> 204, Access-Control-Allow-Origin: https://skanfact.tn
-                               Access-Control-Allow-Methods: POST, OPTIONS
-                               Access-Control-Allow-Headers: Content-Type
-       POST    /contact -> {"ok":true}, avec le même Access-Control-Allow-Origin. */
-  var RELAIS_CONTACT = 'https://api.skanfact.tn/contact';
+     Le contrat, tenu au champ près — envoyer autre chose que ces quatre clés serait risqué :
+     le worker traite un champ inattendu comme un PIÈGE, et répondrait « reçu » sans rien
+     envoyer. C'est très exactement le défaut qu'on ne verrait jamais.
+       POST, Content-Type: application/json
+       { nom, email, message }  — le message fait de 10 à 5 000 caractères
+       + le champ piège, caché en CSS : rempli, la réponse est « reçu » et rien ne part.
+     Réponses : 200 {"ok":true} · 400 avec la raison · 503 service non configuré.
+     Origines autorisées : skanfact.tn, www.skanfact.tn, saouthq.github.io — une autre
+     reçoit un 404, donc un essai depuis un fichier local ne prouve rien. */
+  var RELAIS_CONTACT = ''; /* À REMPLIR : https://<worker-maj>.workers.dev/contact */
 
   /* La mesure d'audience. Une seule ligne à remplir : le nom du compte GoatCounter (gratuit,
      sans cookie, sans traceur, sans donnée personnelle). Tant qu'elle est vide, AUCUNE requête
@@ -248,12 +248,23 @@
         lignes.push(intitule(c) + ' : ' + (c.value.trim() || '—'));
       });
       var piege = form.querySelector('[name=piege]');
-      var corps = lignes.join('\n');
+      var corps = sujet + '\n\n' + lignes.join('\n');
       var nom = valeurs.nom || valeurs.raison || '';
+      /* EXACTEMENT les champs du contrat, et rien d'autre : le worker traite un champ
+         inattendu comme un piège, répond « reçu », et n'envoie rien. Le genre du formulaire
+         (message ou commande) voyage donc DANS le corps, en première ligne, pas à côté. */
       var donnees = {
-        genre: genre, nom: nom, email: valeurs.email || '',
-        corps: corps, piege: piege ? piege.value.trim() : ''
+        nom: nom, email: valeurs.email || '', message: corps,
+        piege: piege ? piege.value.trim() : ''
       };
+
+      /* Le relais refuse au-delà de 5 000 caractères et en deçà de 10. On le dit ICI, sur le
+         champ, plutôt que de laisser partir une requête dont on connaît déjà la réponse. */
+      if (corps.length > 5000) {
+        marquer(form.querySelector('textarea') || champs[champs.length - 1],
+          'Ce message dépasse 5 000 caractères. Raccourcissez-le, ou écrivez-nous directement.');
+        return;
+      }
 
       var bouton = form.querySelector('button[type=submit]');
       var libelle = bouton ? bouton.textContent : '';
@@ -302,7 +313,9 @@
         }
         // 400 : c'est nous qui avons mal rempli. On le dit, on n'ouvre pas la messagerie.
         if (res.code === 400 && res.j && res.j.erreur) { annoncer('rate', res.j.erreur); return; }
-        parMessagerie(res.j && res.j.configurer ? 'Le formulaire n\u2019est pas encore branché.' : 'L\u2019envoi a échoué.');
+        // 503 : le service n'est pas configuré. On ne perd pas le message du visiteur.
+        parMessagerie(res.code === 503 ? 'Le formulaire n\u2019est pas encore branché.'
+          : 'L\u2019envoi a échoué.');
       }).catch(function () {
         clearTimeout(minuteur);
         rendreLeBouton();
@@ -620,5 +633,98 @@
       }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
       blocs.forEach(function (b) { oeil.observe(b); });
     }
+  }
+
+  /* ------------------------------------------------- vérifier une licence
+     Elle se fait DANS la page. Le bouton renvoyait sur api.skanfact.tn : ça marchait, mais le
+     visiteur quittait le site pour une page nue, sans en-tête, sans menu et sans retour — au
+     moment précis où il cherche à se rassurer sur une clé qu'on vient de lui vendre.
+
+     Ce que la route NE DIT JAMAIS, et c'est voulu : à qui la licence appartient. Pas de nom,
+     pas de matricule, pas d'adresse. Ils n'arrivent pas, et on n'essaie pas de les afficher.
+
+     La phrase affichée est celle que le serveur RENVOIE (`phrase`), jamais une phrase réécrite
+     ici : c'est elle qui sera corrigée le jour où la formulation doit changer, et deux
+     formulations pour le même verdict finiraient par se contredire.
+
+     L'empreinte part telle que le visiteur la colle — avec ou sans tirets, dans la casse qu'il
+     veut. La nettoyer ici, c'est décider à la place du serveur de ce qui est lisible, et se
+     tromper le jour où le format évolue. */
+  var formVerif = document.getElementById('form-verif');
+  if (formVerif) {
+    var VERIF = 'https://api.skanfact.tn/v1/verif/licence';
+    var SECOURS = document.getElementById('verif-secours');
+    var champVerif = document.getElementById('empreinte');
+    var boite = document.getElementById('verdict');
+    var btnVerif = formVerif.querySelector('button[type=submit]');
+    var libelleVerif = btnVerif ? btnVerif.textContent : 'Vérifier';
+
+    var poser = function (classe, titre, phrase, detail) {
+      boite.className = 'verdict ' + classe;
+      boite.innerHTML = '';
+      var b = document.createElement('b'); b.textContent = titre; boite.appendChild(b);
+      var p = document.createElement('p'); p.textContent = phrase; boite.appendChild(p);
+      if (detail) {
+        var d = document.createElement('p'); d.className = 'detail'; d.textContent = detail;
+        boite.appendChild(d);
+      }
+      boite.hidden = false;
+    };
+
+    /* Un état inconnu du site — parce que le serveur en aura ajouté un — ne doit pas produire
+       une boîte vide : on retombe sur le titre neutre, et la phrase du serveur suffit. */
+    var TITRES = {
+      valable: 'Licence valable', expiree: 'Licence expirée', revoquee: 'Licence révoquée',
+      remplacee: 'Licence remplacée', inconnue: 'Licence inconnue', illisible: 'Empreinte illisible'
+    };
+
+    formVerif.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var saisie = champVerif.value.trim();
+      if (!saisie) {
+        poser('non', 'Empreinte manquante', 'Collez l’empreinte que SkanFact affiche sous Paramètres › L’application › Licence.');
+        champVerif.focus();
+        return;
+      }
+      if (SECOURS) SECOURS.hidden = true;
+      if (btnVerif) { btnVerif.disabled = true; btnVerif.textContent = 'Vérification…'; }
+      var rendre = function () {
+        if (btnVerif) { btnVerif.disabled = false; btnVerif.textContent = libelleVerif; }
+      };
+      /* Sans limite de temps, on reste devant « Vérification… » pour toujours. */
+      var fini = false;
+      var replier = function () {
+        if (fini) return;
+        fini = true;
+        rendre();
+        boite.hidden = true;
+        if (SECOURS) SECOURS.hidden = false;
+      };
+      var minuteur = setTimeout(replier, 12000);
+
+      fetch(VERIF, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ empreinte: saisie })
+      }).then(function (r) { return r.json(); }).then(function (j) {
+        if (fini) return;
+        fini = true;
+        clearTimeout(minuteur);
+        rendre();
+        if (!j || !j.etat) { replier(); return; }
+        /* La date arrive du serveur ; on ne la réécrit pas, on la présente seulement dans
+           l'ordre où elle se lit ici quand elle est ISO. Toute autre forme passe telle quelle :
+           deviner un format qu'on ne connaît pas, c'est afficher une date fausse. */
+        var jour = function (v) {
+          var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(v));
+          return m ? m[3] + '/' + m[2] + '/' + m[1] : String(v);
+        };
+        var lignes = [];
+        if (j.offre) lignes.push('Offre : ' + j.offre);
+        if (j.fin) lignes.push('Fin : ' + jour(j.fin));
+        poser(j.ok ? 'oui' : 'non', TITRES[j.etat] || 'Réponse du serveur',
+          j.phrase || '', lignes.join(' · '));
+      }).catch(function () { clearTimeout(minuteur); replier(); });
+    });
   }
 })();

@@ -81,11 +81,26 @@
       <h1>Vérifier une licence SkanFact</h1>
       <p class="chapeau">Collez l’empreinte d’une licence, et l’outil vous dit si elle est valable,
         expirée, révoquée ou inconnue. Il ne dit <b>jamais</b> à qui elle appartient.</p>
-      <div class="actions" style="margin-top: 26px;">
-        <a class="btn btn-vert" href="https://api.skanfact.tn/verifier">Ouvrir l’outil de vérification</a>
-      </div>
+      <form class="form-verif" id="form-verif" novalidate>
+        <div class="champ">
+          <label for="empreinte">Empreinte de la licence <span class="oblig" aria-hidden="true">*</span></label>
+          <input type="text" id="empreinte" name="empreinte" autocomplete="off" spellcheck="false"
+            placeholder="3F9A-2C1E-7B04-D158-6A2F" required>
+        </div>
+        <button class="btn btn-vert" type="submit">Vérifier</button>
+      </form>
+      <div class="verdict" id="verdict" role="status" hidden></div>
       <p class="sous-actions">Vous trouvez l’empreinte dans SkanFact, sous
-        <em>Paramètres › L’application › Licence</em>.</p>
+        <em>Paramètres › L’application › Licence</em>. Avec ou sans tirets, en majuscules ou
+        en minuscules&nbsp;: nous la lisons telle que vous la collez.</p>
+      <p class="sous-actions" id="verif-secours" hidden>La vérification en ligne ne répond pas.
+        <a href="https://api.skanfact.tn/verifier" rel="noopener">Ouvrir l’outil de vérification</a>
+        sur notre serveur.</p>
+      <noscript>
+        <p class="sous-actions"><a href="https://api.skanfact.tn/verifier" rel="noopener">Ouvrir
+          l’outil de vérification</a> — cette page a besoin de JavaScript pour interroger le
+          serveur sans vous faire quitter le site.</p>
+      </noscript>
       <div class="preuve" style="margin-top: 34px;">
         <b>Une licence se vérifie d’abord hors ligne.</b>
         <p>SkanFact contrôle votre licence sur votre propre ordinateur, sans rien demander à
@@ -117,7 +132,6 @@
         <a href="gestion.html">Achats, stock, trésorerie</a>
         <a href="tunisie.html">Les règles tunisiennes</a>
         <a href="vos-donnees.html">Vos données</a>
-        <a href="vos-donnees.html">Vos données</a>
         <a href="telecharger.html">Télécharger</a>
       </div>
       <div class="col">
@@ -125,11 +139,9 @@
         <a href="guides.html">Guides : facture, TVA, timbre</a>
         <a href="excel.html">SkanFact ou Excel ?</a>
         <a href="limites.html">Ce que SkanFact ne fait pas</a>
-        <a href="limites.html">Ce que SkanFact ne fait pas</a>
         <a href="questions.html">Questions fréquentes</a>
         <a href="comptables.html">Pour les comptables</a>
         <a href="tarifs.html">Tarifs</a>
-        <a href="acheter.html">Acheter une clé</a>
         <a href="acheter.html">Acheter une clé</a>
         <a href="nouveautes.html">Nouveautés</a>
       </div>

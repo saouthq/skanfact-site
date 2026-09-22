@@ -218,6 +218,25 @@ for (const largeur of LARGEURS) {
         });
       });
 
+      // Un CHAMP de saisie invisible. Tout le système de champs du site a longtemps été écrit
+      // pour le vert foncé — texte blanc, fond blanc à 7 % — parce que tous les formulaires y
+      // vivaient. Le premier posé sur un fond clair donnait du BLANC SUR BLANC : on ne voyait
+      // ni le champ, ni ce qu'on y tapait. Rien en console, et relire la feuille ne le montre
+      // pas : il faut mesurer le champ là où il est réellement dessiné.
+      const champs = [];
+      document.querySelectorAll('input, textarea, select').forEach(el => {
+        if (!visible(el) || el.closest('.piege')) return;
+        if (['hidden', 'radio', 'checkbox', 'submit', 'button'].indexOf(el.type) >= 0) return;
+        const s = getComputedStyle(el);
+        const bord = ['Top', 'Right', 'Bottom', 'Left']
+          .some(c => parseFloat(s['border' + c + 'Width']) > 0.4 && !/rgba\(0, 0, 0, 0\)/.test(s['border' + c + 'Color']));
+        champs.push({
+          nom: el.name || el.id || el.tagName.toLowerCase(),
+          texte: s.color, sien: fond(el), autour: fond(el.parentElement),
+          bordCouleur: s.borderTopColor, bord
+        });
+      });
+
       // Ce qui déborde par la droite. Les tableaux et les figures qui défilent portent la
       // classe `.scroll-x` : c'est le marqueur explicite du projet, on l'exclut lui, pas tout
       // ce qui se trouve dans un conteneur défilant (une exclusion trop large désarme le
@@ -299,7 +318,7 @@ for (const largeur of LARGEURS) {
                      txt: (e.textContent || '').trim().slice(0, 40) }));
 
       return {
-        textes, boutons, debordent, liens, images, jsonld, grilles, promesses, enligne,
+        textes, boutons, debordent, liens, images, jsonld, grilles, promesses, enligne, champs,
         titre: (document.querySelector('title') || {}).textContent || '',
         desc: (document.querySelector('meta[name=description]') || {}).content || '',
         canonique: (document.querySelector('link[rel=canonical]') || {}).href || '',
@@ -397,6 +416,21 @@ for (const largeur of LARGEURS) {
       if (!s || !a || s.a < 0.95) continue;
       if (!b.bord && contraste(s.c, a.c) < 1.25) {
         dit('grave', f, largeur.nom, `bouton invisible (fond confondu, sans bordure) — « ${b.texte} »`);
+      }
+    }
+    for (const c of releve.champs) {
+      const t = rgb(c.texte), s2 = rgb(c.sien), a = rgb(c.autour), bd = rgb(c.bordCouleur);
+      if (!t || !s2 || !a) continue;
+      // Ce qu'on tape doit se lire DANS le champ.
+      if (t.a >= 0.95 && contraste(t.c, s2.c) < 4.5) {
+        dit('grave', f, largeur.nom,
+          `champ « ${c.nom} » : ce qu'on y tape est à ${contraste(t.c, s2.c).toFixed(2)} de contraste`);
+      }
+      // Et le champ doit se voir : son fond, ou sa bordure, doit se détacher de la page.
+      const fondVu = contraste(s2.c, a.c) >= 1.12;
+      const bordVu = c.bord && bd && contraste(bd.c, a.c) >= 1.12;
+      if (!fondVu && !bordVu) {
+        dit('grave', f, largeur.nom, `champ « ${c.nom} » invisible (fond et bordure confondus avec la page)`);
       }
     }
     for (const g of releve.grilles) {

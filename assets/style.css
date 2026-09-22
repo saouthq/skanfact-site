@@ -203,6 +203,26 @@ h1 .surligne { background: linear-gradient(transparent 58%, rgba(232, 163, 61, .
 .actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 30px; }
 .sous-actions { color: var(--gris); font-size: 14px; margin-top: 16px; max-width: 72ch; }
 
+/* ------------------------------------------------- vérifier une licence
+   Elle se fait DANS la page. Envoyer le visiteur sur un autre domaine, sur un écran nu
+   sans en-tête, sans menu et sans retour, au moment précis où il cherche à se rassurer
+   sur une clé qu'on vient de lui vendre, est le pire moment pour le faire sortir du site.
+   Le verdict est un <div> et non un <p> : son titre est un <b> en bloc, et un <b> passé
+   en bloc DANS une phrase est très exactement ce que l'audit interdit depuis ce jour. */
+.form-verif { display: flex; gap: 14px; align-items: flex-end; flex-wrap: wrap; margin-top: 26px; }
+.form-verif .champ { flex: 1 1 320px; margin: 0; }
+.form-verif input { font-variant-numeric: tabular-nums; letter-spacing: .04em; }
+.verdict {
+  margin-top: 18px; border-radius: 14px; padding: 16px 20px; font-size: 15.5px;
+  border: 1px solid var(--filet); background: var(--creme); color: var(--gris);
+}
+.verdict > b { display: block; color: var(--encre); font-size: 17px; font-weight: 600; margin-bottom: 4px; }
+.verdict p { margin-top: 6px; }
+.verdict .detail { font-size: 14px; margin-top: 10px; }
+.verdict.oui { background: rgba(10, 74, 67, .07); border-color: rgba(10, 74, 67, .22); }
+.verdict.non { background: var(--safran-clair); border-color: rgba(232, 163, 61, .40); }
+.verdict.non > b { color: var(--safran-fonce); }
+
 .cadre-hero { position: relative; }
 .bulle {
   position: absolute; left: -34px; bottom: -130px; max-width: 290px;
@@ -343,17 +363,33 @@ legend { font-size: 14px; color: #a8ccc6; padding: 0 0 10px; }
 .qui input { accent-color: var(--safran); width: 17px; height: 17px; }
 .qui label:has(input:checked) { border-color: var(--safran); background: rgba(232, 163, 61, .14); color: #fff; }
 .champ { margin-bottom: 18px; }
-.champ label { display: block; font-size: 14px; color: #a8ccc6; margin-bottom: 8px; }
+/* Le système de champs n'a longtemps existé QUE sur le vert foncé — texte blanc, fond blanc
+   à 7 %, étiquette en #a8ccc6 — parce que tous les formulaires du site y vivaient. Posé sur
+   un fond clair, il donne du BLANC SUR BLANC : le champ est invisible, sa bordure à 14 %
+   aussi, et l'étiquette tombe à 1,9 de contraste. C'est le défaut de la 7.30.0 côté
+   application, à l'identique, et il ne se voit qu'en mesurant. La version CLAIRE est donc la
+   règle générale, et le vert foncé l'exception qui se nomme. */
+.champ label { display: block; font-size: 14px; color: var(--gris); margin-bottom: 8px; }
 .champ input, .champ textarea {
-  width: 100%; background: rgba(255, 255, 255, .07); border: 1px solid rgba(255, 255, 255, .14);
-  border-radius: 12px; padding: 13px 16px; color: #fff; font: inherit; font-size: 15px;
+  width: 100%; background: var(--creme); border: 1px solid #cfdedb;
+  border-radius: 12px; padding: 13px 16px; color: var(--encre); font: inherit; font-size: 15px;
 }
-.champ input::placeholder, .champ textarea::placeholder { color: #9fc3bd; }
+.champ input::placeholder, .champ textarea::placeholder { color: var(--gris-clair); }
+.champ input:focus, .champ textarea:focus { outline: 2px solid var(--vert); outline-offset: 1px; }
+.section-vert .champ label { color: #a8ccc6; }
+.section-vert .champ input, .section-vert .champ textarea {
+  background: rgba(255, 255, 255, .07); border-color: rgba(255, 255, 255, .14); color: #fff;
+}
+.section-vert .champ input::placeholder,
+.section-vert .champ textarea::placeholder { color: #9fc3bd; }
+.section-vert .champ input:focus, .section-vert .champ textarea:focus { outline-color: var(--safran); }
 .champ textarea { min-height: 116px; resize: vertical; }
 .paire { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-/* Le safran ordinaire tombe à 3,97 sur le fond du formulaire : l'étoile qui désigne un champ
-   obligatoire doit se voir, c'est toute sa fonction. */
-.oblig { color: #f0bd6e; }
+/* L'étoile qui désigne un champ obligatoire doit se voir, c'est toute sa fonction — et elle
+   n'a pas la même couleur selon le fond : le safran ordinaire tombe à 3,97 sur le vert du
+   formulaire, et le safran clair serait illisible sur du blanc. */
+.oblig { color: var(--safran-fonce); }
+.section-vert .oblig { color: #f0bd6e; }
 .aide-form { color: #a8ccc6; font-size: 13.5px; margin-top: 14px; }
 /* Le refus se LIT, il ne se devine pas à la couleur d'une bordure : un daltonien,
    et un lecteur d'écran, n'ont que cette phrase. */
