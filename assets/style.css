@@ -318,6 +318,37 @@ h1 .surligne { background: linear-gradient(transparent 58%, rgba(232, 163, 61, .
 .module span { display: block; color: var(--gris); font-size: 14px; margin-top: 4px; line-height: 1.5; }
 
 /* ------------------------------------------------------------------ tarifs */
+
+/* L'appel aux cabinets fondateurs. Les vingt places gratuites à vie sont l'offre la plus
+   forte de la page, et elles vivaient au milieu de 8 400 px, sous trois pavés de prose :
+   personne ne descendait jusque-là. Cette bande les met JUSTE sous les prix. Les couleurs
+   sont mesurées sur le fond crème safran : #9a6410 donne 4,55 et #6b5526 donne 6,47. */
+.offre-cabinet {
+  margin-top: 42px; background: var(--safran-clair); border: 1px solid #f0d8a8;
+  border-radius: var(--rayon); padding: 26px 30px;
+  display: flex; gap: 26px; align-items: center; flex-wrap: wrap;
+}
+.offre-cabinet .gros {
+  font-family: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif; font-weight: 800;
+  font-size: clamp(30px, 4vw, 42px); color: var(--safran-fonce); letter-spacing: -.035em;
+  line-height: 1; flex: none;
+}
+.offre-cabinet .dit { flex: 1; min-width: 250px; }
+.offre-cabinet .dit b {
+  display: block; font-family: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(18px, 2.1vw, 22px); letter-spacing: -.02em; color: var(--encre); line-height: 1.25;
+}
+.offre-cabinet .dit p { color: #6b5526; font-size: 15px; margin-top: 7px; max-width: 60ch; }
+/* `.actions` porte un `margin-top` qui décalerait les boutons vers le bas dans une bande
+   alignée au centre. `flex: none` garde les deux boutons côte à côte tant qu'il y a la
+   place — mais sur un téléphone il les empêchait de rétrécir, et la page débordait de
+   15 px : sous 620 px la barre prend une rangée à elle et ses boutons s'étirent. */
+.offre-cabinet .actions { margin-top: 0; flex: none; }
+@media (max-width: 620px) {
+  .offre-cabinet { padding: 24px 22px; gap: 18px; }
+  .offre-cabinet .actions { flex: 1 1 100%; min-width: 0; }
+  .offre-cabinet .actions .btn { flex: 1 1 auto; justify-content: center; }
+}
 .grille-prix { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 48px; }
 .offre {
   border: 1.5px solid var(--filet); border-radius: 24px; padding: 32px; background: #fff;
