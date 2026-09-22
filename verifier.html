@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vérifier une licence SkanFact</title>
+<meta name="description" content="Vérifier qu'une licence SkanFact est valable, en collant son empreinte. La page ne dit jamais à qui une licence appartient.">
+<meta name="theme-color" content="#0a4a43">
+<meta name="robots" content="noindex">
+<link rel="icon" href="img/icone.png" type="image/png">
+<link rel="apple-touch-icon" href="img/icone.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Vérifier une licence SkanFact">
+<meta property="og:description" content="Vérifier qu'une licence SkanFact est valable, en collant son empreinte.">
+<meta property="og:image" content="https://skanfact.tn/img/accueil.jpg">
+<meta property="og:locale" content="fr_TN">
+<meta property="og:url" content="https://skanfact.tn/verifier.html">
+<meta property="og:site_name" content="SkanFact">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="preload" href="assets/polices/lexend-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/polices/bricolage-latin.woff2" as="font" type="font/woff2" crossorigin>
+</head>
+<body>
+
+<a class="saut-contenu" href="#contenu">Aller au contenu</a>
+
+<header class="entete" id="entete">
+  <div class="conteneur">
+    <a class="marque" href="index.html" aria-label="SkanFact, accueil">
+      <svg width="30" height="30" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="26" height="26" rx="9" fill="#0a4a43"></rect>
+        <path d="M8 10.5h12M8 14h12M8 17.5h7" stroke="#e8a33d" stroke-width="2.1" stroke-linecap="round"></path>
+      </svg>
+      <span class="mot">SkanFact</span>
+    </a>
+    <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-site">
+      <span></span>
+    </button>
+    <nav class="nav-site" id="nav-site" aria-label="Navigation principale">
+      <div class="sous" id="sous-entreprise">
+        <button class="lien-menu" id="btn-entreprise" aria-expanded="false" aria-controls="menu-entreprise">
+          Pour l'entreprise
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="m2.5 4.5 3.5 3.5 3.5-3.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </button>
+        <div class="panneau" id="menu-entreprise">
+          <a href="visite.html"><b>Voir SkanFact en images</b><span>La visite guidée, sans rien installer</span></a>
+          <a href="facturation.html"><b>Devis et factures</b><span>Clients, relances, contrats récurrents</span></a>
+          <a href="gestion.html"><b>Achats, stock et trésorerie</b><span>Marges, immobilisations, paie</span></a>
+          <a href="tunisie.html"><b>Les règles tunisiennes</b><span>Timbre, TVA, retenue à la source</span></a>
+          <a href="vos-donnees.html"><b>Vos données</b><span>Où elles vivent, ce qui sort du poste</span></a>
+          <a href="excel.html"><b>SkanFact ou Excel ?</b><span>Ce qu'un classeur ne peut pas faire</span></a>
+          <a href="limites.html"><b>Ce que SkanFact ne fait pas</b><span>Les limites, avant l'achat</span></a>
+          <a href="nouveautes.html"><b>Nouveautés</b><span>Ce qui a changé, version par version</span></a>
+        </div>
+      </div>
+      <div class="sous" id="sous-cabinet">
+        <button class="lien-menu" id="btn-cabinet" aria-expanded="false" aria-controls="menu-cabinet">
+          Pour les cabinets
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="m2.5 4.5 3.5 3.5 3.5-3.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </button>
+        <div class="panneau" id="menu-cabinet">
+          <a href="cabinet.html"><b>SkanFact Cabinet</b><span>Le logiciel de tenue : saisie, livres, liasse</span></a>
+          <a href="comptables.html"><b>Le dossier qui arrive écrit</b><span>Ce que change un client sur SkanFact</span></a>
+          <a href="pour-votre-client.html"><b>Le lien à remettre à un client</b><span>Une page courte, à envoyer telle quelle</span></a>
+          <a href="guide-facture-electronique.html"><b>La facture électronique</b><span>Où en est son intégration</span></a>
+        </div>
+      </div>
+      <a href="guides.html">Guides</a>
+      <a href="tarifs.html">Tarifs</a>
+      <a href="contact.html">Contact</a>
+      <a class="btn btn-vert btn-petit" href="telecharger.html">Essayer 30 jours</a>
+    </nav>
+  </div>
+</header>
+
+<main id="contenu">
+  <section class="section">
+    <div class="conteneur" style="max-width: 720px;">
+      <p class="oeil">Licence</p>
+      <h1>Vérifier une licence SkanFact</h1>
+      <p class="chapeau">Collez l’empreinte d’une licence, et l’outil vous dit si elle est valable,
+        expirée, révoquée ou inconnue. Il ne dit <b>jamais</b> à qui elle appartient.</p>
+      <div class="actions" style="margin-top: 26px;">
+        <a class="btn btn-vert" href="https://api.skanfact.tn/verifier">Ouvrir l’outil de vérification</a>
+      </div>
+      <p class="sous-actions">Vous trouvez l’empreinte dans SkanFact, sous
+        <em>Paramètres › L’application › Licence</em>.</p>
+      <div class="preuve" style="margin-top: 34px;">
+        <b>Une licence se vérifie d’abord hors ligne.</b>
+        <p>SkanFact contrôle votre licence sur votre propre ordinateur, sans rien demander à
+          personne&nbsp;: elle survit à une coupure de connexion, et à la disparition de son éditeur.
+          Cette page n’est qu’une commodité — pour montrer une licence à quelqu’un, ou lever un
+          doute. Ce n’est pas la source de vérité.</p>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="pied">
+  <div class="conteneur">
+    <div class="pied-grille">
+      <div>
+        <a class="marque" href="index.html" style="margin-bottom: 14px;">
+          <svg width="26" height="26" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="26" height="26" rx="9" fill="#0a4a43"></rect>
+        <path d="M8 10.5h12M8 14h12M8 17.5h7" stroke="#e8a33d" stroke-width="2.1" stroke-linecap="round"></path>
+      </svg>
+          <span class="mot">SkanFact</span>
+        </a>
+        <p class="pied-mot">Devis, factures et gestion pour les petites entreprises tunisiennes.
+          Édité en Tunisie par SKANCYBER SECURITY SUARL.</p>
+      </div>
+      <div class="col">
+        <h2 class="pied-titre">Le logiciel</h2>
+        <a href="visite.html">Visite guidée</a>
+        <a href="facturation.html">Devis et factures</a>
+        <a href="gestion.html">Achats, stock, trésorerie</a>
+        <a href="tunisie.html">Les règles tunisiennes</a>
+        <a href="vos-donnees.html">Vos données</a>
+        <a href="vos-donnees.html">Vos données</a>
+        <a href="telecharger.html">Télécharger</a>
+      </div>
+      <div class="col">
+        <h2 class="pied-titre">Vous aider</h2>
+        <a href="guides.html">Guides : facture, TVA, timbre</a>
+        <a href="excel.html">SkanFact ou Excel ?</a>
+        <a href="limites.html">Ce que SkanFact ne fait pas</a>
+        <a href="limites.html">Ce que SkanFact ne fait pas</a>
+        <a href="questions.html">Questions fréquentes</a>
+        <a href="comptables.html">Pour les comptables</a>
+        <a href="tarifs.html">Tarifs</a>
+        <a href="acheter.html">Acheter une clé</a>
+        <a href="acheter.html">Acheter une clé</a>
+        <a href="nouveautes.html">Nouveautés</a>
+      </div>
+      <div class="col">
+        <h2 class="pied-titre">La société</h2>
+        <a href="contact.html">Nous écrire</a>
+        <a href="mentions-legales.html">Mentions légales</a>
+        <a href="confidentialite.html">Confidentialité</a>
+        <p class="pied-adresse">SKANCYBER SECURITY SUARL<br>08 rue de l'Université, Manar 1<br>El Menzah, 2092 Tunis<br>
+          MF 1998268D/A/M/000</p>
+      </div>
+    </div>
+    <div class="bas">
+      <span>© 2026 SKANCYBER SECURITY SUARL — tous droits réservés</span>
+      <span>SkanFact <span data-version>10.0.0</span> · macOS et Windows</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/site.js" defer></script>
+</body>
+</html>

@@ -20,8 +20,19 @@
      celui des mises à jour, avec une route `/contact` en plus. Tant que cette ligne est vide,
      ou si le relais ne répond pas, le formulaire repasse par le logiciel de messagerie du
      visiteur : on ne perd jamais un message parce qu'un service est en panne.
-     Une seule ligne à remplir : voir worker/README.md dans le dépôt de l'application. */
-  var RELAIS_CONTACT = '';
+     Une seule ligne à remplir : voir worker/README.md dans le dépôt de l'application.
+
+     Branchée le 22/09/2026 sur api.skanfact.tn — le domaine de Skander, pas le .workers.dev.
+     CE QUE LE WORKER DOIT RENDRE, et c'est la moitié qu'on oublie : la requête part de
+     skanfact.tn vers api.skanfact.tn, donc elle est CROISÉE, et son en-tête JSON déclenche un
+     appel OPTIONS avant le POST. Si le worker ne répond pas à celui-là, le navigateur abandonne
+     AVANT d'atteindre la route — le formulaire retomberait sur la messagerie sans qu'on sache
+     pourquoi. Il faut donc :
+       OPTIONS /contact -> 204, Access-Control-Allow-Origin: https://skanfact.tn
+                               Access-Control-Allow-Methods: POST, OPTIONS
+                               Access-Control-Allow-Headers: Content-Type
+       POST    /contact -> {"ok":true}, avec le même Access-Control-Allow-Origin. */
+  var RELAIS_CONTACT = 'https://api.skanfact.tn/contact';
 
   /* La mesure d'audience. Une seule ligne à remplir : le nom du compte GoatCounter (gratuit,
      sans cookie, sans traceur, sans donnée personnelle). Tant qu'elle est vide, AUCUNE requête
