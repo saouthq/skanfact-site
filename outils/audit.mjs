@@ -285,8 +285,21 @@ for (const largeur of LARGEURS) {
         });
       }
 
+      // Une regle generale qui vise un ELEMENT avale l'exception posee a l'interieur d'une
+      // phrase : « .etape b { display: block } » visait le titre de l'etape et passait aussi en
+      // bloc le <b> ecrit dans le paragraphe — la suite de la phrase tombait a la ligne suivante,
+      // ponctuation en tete. Rien en console, et relire le HTML ne peut pas le montrer.
+      // Un parent en flex ou en grille BLOQUIFIE ses enfants : c'est la mise en page voulue
+      // (le bandeau « Derniere version », la legende d'une paire), pas un defaut. Sans cette
+      // exception la sonde accusait six elements parfaitement justes.
+      const enligne = [...document.querySelectorAll('p > b, p > strong, p > em, p > a')]
+        .filter(e => getComputedStyle(e).display !== 'inline'
+          && !/flex|grid/.test(getComputedStyle(e.parentElement).display))
+        .map(e => ({ balise: e.tagName.toLowerCase(), aff: getComputedStyle(e).display,
+                     txt: (e.textContent || '').trim().slice(0, 40) }));
+
       return {
-        textes, boutons, debordent, liens, images, jsonld, grilles, promesses,
+        textes, boutons, debordent, liens, images, jsonld, grilles, promesses, enligne,
         titre: (document.querySelector('title') || {}).textContent || '',
         desc: (document.querySelector('meta[name=description]') || {}).content || '',
         canonique: (document.querySelector('link[rel=canonical]') || {}).href || '',
@@ -397,6 +410,10 @@ for (const largeur of LARGEURS) {
     }
     if (releve.largeurDoc > releve.vue + 1) {
       dit('grave', f, largeur.nom, `la page déborde de ${releve.largeurDoc - releve.vue} px`);
+    }
+    for (const e of releve.enligne.slice(0, 3)) {
+      dit('grave', f, largeur.nom,
+        `<${e.balise}> dans une phrase passé en « ${e.aff} » : la phrase se casse — « ${e.txt} »`);
     }
     for (const d of releve.debordent.slice(0, 3)) {
       dit('moyen', f, largeur.nom, 'sort par la droite : ' + d);

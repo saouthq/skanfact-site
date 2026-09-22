@@ -227,7 +227,12 @@ h1 .surligne { background: linear-gradient(transparent 58%, rgba(232, 163, 61, .
   background: var(--vert); color: #fff; display: flex; align-items: center; justify-content: center;
   font-family: "Bricolage Grotesque", sans-serif; font-weight: 600; font-size: 14px;
 }
-.etape b { display: block; font-weight: 600; font-size: 17px; font-family: "Bricolage Grotesque", sans-serif; letter-spacing: -.02em; }
+/* Le TITRE de l'etape, et lui seul : sans le « > », la regle avalait le <b> pose
+   dans la phrase (un chemin de l'application, une mise en relief) et le passait en
+   bloc de 17 px — la suite de la phrase tombait a la ligne suivante, ponctuation en
+   tete. Deux pages en portaient un. */
+.etape > b { display: block; font-weight: 600; font-size: 17px; font-family: "Bricolage Grotesque", sans-serif; letter-spacing: -.02em; }
+.etape p b { color: var(--encre); font-weight: 600; }
 .etape p { color: var(--gris); font-size: 14.5px; margin-top: 6px; }
 
 /* ------------------------------------------------------------------ puces */
@@ -266,7 +271,10 @@ h1 .surligne { background: linear-gradient(transparent 58%, rgba(232, 163, 61, .
 /* ------------------------------------------------------------------ modules */
 .modules { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 14px; margin-top: 40px; }
 .module { border: 1px solid var(--filet); border-radius: 16px; padding: 18px 20px; background: #fff; }
-.module b { display: block; font-weight: 600; font-size: 16px; }
+/* Le TITRE du module, et lui seul (meme piege que .etape) : sans le « > », trois <b>
+   ecrits dans une phrase de « Vos donnees » passaient en bloc de 16 px. */
+.module > b { display: block; font-weight: 600; font-size: 16px; }
+.module p b { color: var(--encre); font-weight: 600; }
 .module span { display: block; color: var(--gris); font-size: 14px; margin-top: 4px; line-height: 1.5; }
 
 /* ------------------------------------------------------------------ tarifs */
@@ -316,6 +324,11 @@ h1 .surligne { background: linear-gradient(transparent 58%, rgba(232, 163, 61, .
 }
 .qq[open] summary::after { transform: rotate(-135deg); }
 .qq .rep { padding: 0 26px 24px; color: var(--gris); font-size: 15px; }
+/* Une question qu'il faut lire AVANT de payer ne se replie pas : la page d'achat
+   pose des .qq ouvertes (h3 + réponse) au lieu du details/summary des autres pages.
+   Le titre prend donc le retrait de summary — sans cette règle il touchait le bord
+   de la carte pendant que la réponse, elle, était en retrait de 26 px. */
+.qq > h3 { padding: 22px 26px 10px; font-weight: 600; font-size: 17.5px; letter-spacing: -.02em; }
 
 /* ------------------------------------------------------------------ contact */
 .contact-duo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 400px); gap: clamp(32px, 5vw, 60px); margin-top: 42px; }
@@ -470,6 +483,7 @@ legend { font-size: 14px; color: #a8ccc6; padding: 0 0 10px; }
   .rassure { flex-direction: column; gap: 12px; }
   .qq summary { padding: 18px 20px; font-size: 16.5px; }
   .qq .rep { padding: 0 20px 20px; }
+  .qq > h3 { padding: 18px 20px 8px; font-size: 16.5px; }
 }
 
 /* =============================================================================
