@@ -166,9 +166,9 @@
         <fieldset>
           <legend>L’offre <span class="oblig" aria-hidden="true">*</span></legend>
           <div class="qui qui-offres">
-            <label><input type="radio" name="offre" value="Indépendant — 390 DT HT/an" checked>
+            <label><input type="radio" name="offre" value="Indépendant — 390 DT HT/an" data-ht="390" checked>
               <b>Indépendant</b> <span>390 DT HT / an</span></label>
-            <label><input type="radio" name="offre" value="Entreprise — 690 DT HT/an">
+            <label><input type="radio" name="offre" value="Entreprise — 690 DT HT/an" data-ht="690">
               <b>Entreprise</b> <span>690 DT HT / an</span></label>
           </div>
           <p class="aide-form">Ce que contient chacune :
@@ -253,6 +253,18 @@
           <label for="message">Autre chose à nous dire</label>
           <textarea id="message" name="message" rows="3"
                     placeholder="Plusieurs sociétés à équiper, une durée autre qu’un an, une question sur la facture…"></textarea>
+        </div>
+
+        <div class="decompte" id="decompte">
+          <h3>Ce que vous allez régler</h3>
+          <ul id="dc-lignes">
+            <li><span>Licence SkanFact</span><b>390,000 DT</b></li>
+            <li><span>TVA 19 %</span><b>74,100 DT</b></li>
+            <li><span>Timbre fiscal</span><b>1,000 DT</b></li>
+          </ul>
+          <p class="dc-total"><span>À régler</span><b id="dc-total">465,100 DT</b></p>
+          <p class="aide-form" id="dc-mot">Pour une année, réglée en une fois. Aucun prélèvement
+            ne se reconduit tout seul&nbsp;: à l’échéance, vous décidez.</p>
         </div>
 
         <fieldset id="bloc-reglement" hidden>

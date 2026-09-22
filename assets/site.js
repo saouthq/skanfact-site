@@ -207,13 +207,23 @@
     };
 
     var champs = Array.prototype.slice.call(form.querySelectorAll('input[name], textarea[name]'))
-      .filter(function (c) { return c.type !== 'radio' && c.type !== 'hidden' && c.name !== 'piege'; });
+      .filter(function (c) {
+        /* Un champ dans un bloc MASQUÉ n'est pas dans la commande : le choix du règlement
+           n'existe pas tant que Konnect n'est pas branché, et le mail annonçait quand même
+           « par virement » comme si on l'avait choisi. */
+        return c.type !== 'radio' && c.type !== 'hidden' && c.name !== 'piege' && !c.closest('[hidden]');
+      });
     champs.forEach(function (c) { c.addEventListener('input', function () { laver(c); }); });
 
     /* L'intitulé d'un champ, pour l'email : son `<label>`, débarrassé de l'étoile. */
     var intitule = function (c) {
       var l = form.querySelector('label[for="' + c.id + '"]') || c.closest('label');
-      var t = l ? l.textContent : c.name;
+      /* Un libellé de case à cocher porte son TITRE dans un <b> et sa description à côté :
+         recopié en entier, le mail reçoit une phrase de deux lignes là où trois mots
+         suffisent. Le titre d'abord ; à défaut, le libellé aplati — recopié tel quel, il
+         s'étalait sur trois lignes indentées dans le mail. */
+      var titre = l && l.querySelector('b');
+      var t = ((titre ? titre.textContent : (l ? l.textContent : c.name)) || '').replace(/\s+/g, ' ');
       return t.replace(/\s*\*\s*$/, '').trim();
     };
 
@@ -240,6 +250,7 @@
          arrive tout seul dans l'email sans qu'on redéploie quoi que ce soit. */
       var lignes = [];
       Array.prototype.forEach.call(form.querySelectorAll('fieldset'), function (fs) {
+        if (fs.hidden || fs.closest('[hidden]')) return;
         var coche = fs.querySelector('input[type=radio]:checked');
         var lg = fs.querySelector('legend');
         // Un bouton radio porte son intitulé sur la LÉGENDE du groupe, pas sur le champ.
@@ -248,8 +259,15 @@
       var valeurs = {};
       champs.forEach(function (c) {
         valeurs[c.name] = c.value.trim();
-        lignes.push(intitule(c) + ' : ' + (c.value.trim() || '—'));
+        lignes.push(intitule(c) + ' : ' + (c.value.trim().replace(/\s+/g, ' ') || '—'));
       });
+      /* Le montant annoncé au visiteur voyage avec la commande. Sans lui, la facture se
+         referait de tête à l'autre bout, et une remise de parrainage promise à l'écran
+         pourrait ne pas s'y retrouver. */
+      var compte = window.__decompte ? window.__decompte() : null;
+      if (compte && compte.texte) {
+        lignes.push('Montant annoncé : ' + compte.texte + (compte.parrain ? ' (remise parrainage appliquée)' : ''));
+      }
       var piege = form.querySelector('[name=piege]');
       var corps = sujet + '\n\n' + lignes.join('\n');
       var nom = valeurs.nom || valeurs.raison || '';
@@ -316,11 +334,10 @@
              chemin du virement, qui marche. On ne vide donc pas le formulaire tout de suite :
              le paiement peut encore échouer, et on ne lui reprend pas ce qu'il a tapé. */
           var carte = form.querySelector('[data-regl=carte]');
-          if (PAIEMENT && carte && carte.checked) { payerEnLigne(valeurs, annoncer, bouton, libelle); return; }
+          if ((PAIEMENT || APERCU_PAIEMENT) && carte && carte.checked) { payerEnLigne(valeurs, annoncer, bouton, libelle); return; }
+          if (genre === 'commande') { confirmerCommande(form, valeurs); return; }
           form.reset();
-          annoncer('ok', genre === 'commande'
-            ? 'Demande envoyée. Votre facture part sous un jour ouvré, à ' + donnees.email + '.'
-            : 'Message envoyé. Nous répondons sous un jour ouvré, à ' + donnees.email + '.');
+          annoncer('ok', 'Message envoyé. Nous répondons sous un jour ouvré, à ' + donnees.email + '.');
           return;
         }
         // 400 : c'est nous qui avons mal rempli. On le dit, on n'ouvre pas la messagerie.
@@ -661,6 +678,144 @@
        -> 200 { payUrl, ref }   ·   400 avec la raison   ·   503 pas encore configuré */
   var PAIEMENT = ''; /* À REMPLIR quand Konnect est validé : https://api.skanfact.tn/v1/commande/payer */
 
+  /* L'aperçu : `?apercu-paiement=1` allume tous les écrans du paiement pour CE chargement de
+     page, sans rien changer pour les visiteurs. Il fallait pouvoir relire le parcours entier
+     avant de brancher Konnect — et l'allumer pour de bon en attendant aurait proposé une carte
+     qui ne peut pas aboutir, c'est-à-dire la pire façon de préparer une vente.
+     Il ne fabrique aucun faux paiement : sans adresse, l'appel échoue et le repli s'affiche,
+     ce qui est précisément l'écran qu'on veut pouvoir relire aussi. */
+  var APERCU_PAIEMENT = /(^|[?&])apercu-paiement=1(&|$)/.test(location.search);
+  /* L'aperçu vise l'adresse FUTURE : le parcours s'exerce en entier, et comme la route
+     n'existe pas encore, un clic réel y montre l'écran de repli — celui qu'il faut justement
+     pouvoir relire. Le jour où `PAIEMENT` est rempli, c'est lui qui gagne, ici et nulle part
+     ailleurs. */
+  var CIBLE_PAIEMENT = PAIEMENT || (APERCU_PAIEMENT ? 'https://api.skanfact.tn/v1/commande/payer' : '');
+
+  /* ------------------------------------------------- ce que vous allez régler
+     Tout le parcours d'achat se faisait sans qu'un seul MONTANT s'affiche : on cochait une
+     offre, on remplissait huit champs, et on découvrait le total sur la facture, le lendemain.
+     Choisir sans voir ce qu'on paie n'est pas choisir.
+
+     Le prix HT vit sur le bouton radio (`data-ht`), à côté du libellé que le visiteur lit :
+     une seule vérité par offre, et le jour où un prix change, il change à un seul endroit.
+     Le taux de TVA et le timbre sont ceux de la loi tunisienne au 22/09/2026 — À VÉRIFIER à
+     chaque loi de finances. Le timbre est un montant FIXE en dinars, ajouté après la TVA :
+     il n'y entre pas.
+
+     Ce décompte est une ANNONCE, pas la facture : c'est la facture émise par SkanFact qui
+     fait foi, et le texte le dit. */
+  var TVA = 0.19;
+  var TIMBRE = 1;
+  var REMISE_PARRAIN = 0.20;
+
+  var dinars = function (n) {
+    var t = (Math.round(n * 1000) / 1000).toFixed(3).split('.');
+    return t[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ',' + t[1] + ' DT';
+  };
+
+  var decompte = document.getElementById('decompte');
+  if (decompte) {
+    var lignesDc = document.getElementById('dc-lignes');
+    var totalDc = document.getElementById('dc-total');
+    var motDc = document.getElementById('dc-mot');
+    var champCabinet = document.getElementById('cabinet');
+
+    var calculer = function () {
+      var choisie = document.querySelector('input[name=offre]:checked');
+      var ht = choisie ? Number(choisie.getAttribute('data-ht')) : 0;
+      if (!ht) { decompte.hidden = true; return { total: 0 }; }
+      decompte.hidden = false;
+      /* La remise de parrainage ne s'applique QUE si un cabinet est nommé, et seulement la
+         première année — c'est ce que la page Tarifs promet, et deux endroits qui promettent
+         la même chose ne peuvent pas se contredire. */
+      var parrain = !!(champCabinet && champCabinet.value.trim());
+      var remise = parrain ? ht * REMISE_PARRAIN : 0;
+      var net = ht - remise;
+      var tva = net * TVA;
+      var total = net + tva + TIMBRE;
+
+      var l = '<li><span>Licence SkanFact</span><b>' + dinars(ht) + '</b></li>';
+      if (parrain) {
+        l += '<li class="dc-remise"><span>Remise parrainage — 20 % la première année</span><b>− '
+          + dinars(remise) + '</b></li>';
+      }
+      l += '<li><span>TVA 19 %</span><b>' + dinars(tva) + '</b></li>'
+        + '<li><span>Timbre fiscal</span><b>' + dinars(TIMBRE) + '</b></li>';
+      lignesDc.innerHTML = l;
+      totalDc.textContent = dinars(total);
+      motDc.innerHTML = 'Pour une année, réglée en une fois. Aucun prélèvement ne se '
+        + 'reconduit tout seul : à l’échéance, vous décidez.'
+        + (parrain ? ' La remise s’applique parce que vous avez nommé un cabinet ; '
+            + 'nous le vérifions avant d’établir la facture.' : '')
+        + ' Ce décompte est une annonce : c’est la facture qui fait foi.';
+      /* Le bouton NOMME ce qu'on va débiter quand c'est la carte : « Payer 465,100 DT » dit
+         ce qui se passe au clic, là où « Demander ma clé » laisse croire qu'on demande encore.
+         Par virement rien n'est prélevé, et le libellé le garde. */
+      var btn = document.querySelector('#form-cle button[type=submit]');
+      var parCarte = document.querySelector('[data-regl=carte]');
+      if (btn && !btn.disabled) {
+        btn.textContent = (parCarte && parCarte.checked && !parCarte.closest('[hidden]'))
+          ? 'Payer ' + dinars(total) : 'Demander ma clé';
+      }
+      return { total: total, texte: dinars(total), parrain: parrain };
+    };
+
+    var formCle = document.getElementById('form-cle');
+    if (formCle) {
+      formCle.addEventListener('change', calculer);
+      formCle.addEventListener('input', calculer);
+    }
+    calculer();
+    window.__decompte = calculer;
+  }
+
+  /* Une commande qui se termine par une ligne grise au bas d'un formulaire de huit champs ne
+     RESSEMBLE pas à une commande : on vient de donner son matricule et son adresse de
+     facturation, et on se demande si quelque chose s'est passé. La confirmation REMPLACE donc
+     le formulaire, redit ce qui a été demandé — l'offre, le matricule, l'adresse où part la
+     facture — et nomme les trois étapes qui restent, avec leur délai.
+     Elle nomme aussi le recours : sans lui, quelqu'un qui ne reçoit rien n'a qu'à attendre. */
+  function confirmerCommande(form, valeurs) {
+    var offre = (document.querySelector('input[name=offre]:checked') || {}).value || '';
+    var lu = window.__decompte ? window.__decompte() : null;
+    var montant = lu && lu.texte ? lu.texte : '';
+    var esc = function (t) {
+      return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    };
+    var ligne = function (quoi, valeur) {
+      return valeur ? '<li><span>' + esc(quoi) + '</span><b>' + esc(valeur) + '</b></li>' : '';
+    };
+    var bloc = document.createElement('div');
+    bloc.className = 'confirme';
+    bloc.setAttribute('role', 'status');
+    bloc.innerHTML =
+      '<h3>Demande enregistrée.</h3>'
+      + '<p>Rien ne vous est prélevé aujourd’hui. Vous pouvez encore changer d’offre ou '
+      + 'renoncer à réception de la facture.</p>'
+      + '<ul class="recap">'
+      + ligne('Offre', offre)
+      + ligne('Société', valeurs.raison)
+      + ligne('Matricule fiscal', valeurs.matricule)
+      + ligne('Facture envoyée à', valeurs.email)
+      + ligne('À régler', montant)
+      + '</ul>'
+      + '<ol class="suite">'
+      + '<li><b>Sous un jour ouvré</b> — nous vous envoyons la facture par email, '
+      + 'avec la TVA, le timbre fiscal et les coordonnées de paiement.</li>'
+      + '<li><b>Vous réglez</b> — par virement, chèque ou espèces.</li>'
+      + '<li><b>Vous recevez votre clé</b> — une ligne à coller dans '
+      + '<em>Paramètres › L’application › Licence</em>.</li>'
+      + '</ol>'
+      + '<p class="aide-form">Rien reçu sous deux jours ouvrés ? Regardez vos '
+      + 'indésirables, puis écrivez-nous à '
+      + '<a href="mailto:contact@skanfact.tn">contact@skanfact.tn</a> en rappelant votre '
+      + 'matricule : nous retrouvons la demande.</p>';
+    form.parentNode.replaceChild(bloc, form);
+    bloc.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  }
+
   /* On n'envoie que QUI achète et QUELLE offre. Le montant, la TVA et le timbre sont
      calculés par le worker, qui tient le barème : un prix qui vient du navigateur est un
      prix que le navigateur peut changer. */
@@ -681,7 +836,7 @@
     };
     var minuteur = setTimeout(function () { replier('La page de paiement ne répond pas.'); }, 15000);
 
-    fetch(PAIEMENT, {
+    fetch(CIBLE_PAIEMENT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -701,7 +856,7 @@
     }).catch(function () { clearTimeout(minuteur); replier('Le paiement par carte n’a pas pu s’ouvrir.'); });
   }
 
-  if (PAIEMENT) {
+  if (PAIEMENT || APERCU_PAIEMENT) {
     var blocRegl = document.getElementById('bloc-reglement');
     if (blocRegl) blocRegl.hidden = false;
     /* La phrase de l'étape 3 suit le réglage : une phrase qu'un réglage peut rendre fausse
@@ -724,6 +879,22 @@
     var sansAccent = function (t) { return t.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); };
     var vise = radios.filter(function (r) { return sansAccent(r.value).indexOf(offreVoulue) === 0; })[0];
     if (vise) { vise.checked = true; }
+  }
+
+  /* ------------------------------------------------- la référence du paiement
+     Konnect ramène sa référence dans l'adresse de retour. C'est la SEULE chose que la page de
+     succès sait du paiement — elle n'interroge rien, elle ne décide rien — et c'est ce qu'on
+     demande à quelqu'un qui écrit parce que sa clé n'est pas arrivée. Absente, la ligne ne
+     s'affiche pas : mieux vaut pas de référence qu'une case vide. */
+  var boiteRef = document.getElementById('ref-paiement');
+  if (boiteRef) {
+    var q = new URLSearchParams(location.search);
+    var ref = q.get('payment_ref') || q.get('paymentRef') || q.get('ref') || '';
+    if (/^[A-Za-z0-9_-]{6,64}$/.test(ref)) {
+      boiteRef.innerHTML = 'Référence du paiement&nbsp;: <b class="mono"></b>';
+      boiteRef.querySelector('b').textContent = ref;
+      boiteRef.hidden = false;
+    }
   }
 
   /* ------------------------------------------------- vérifier une licence

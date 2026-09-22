@@ -415,6 +415,61 @@ legend { font-size: 14px; color: #a8ccc6; padding: 0 0 10px; }
    ainsi masqués, justement parce que c'est le piège le plus connu. Il est hors de l'écran,
    hors du parcours au clavier (`tabindex=-1`) et hors du parcours vocal (`aria-hidden`). */
 .piege { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+/* Une référence de paiement se relit caractère par caractère quand on la recopie dans un
+   mail : la chasse fixe est ce qui distingue un 0 d'un O. */
+.mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; letter-spacing: .02em; }
+.ref-paiement {
+  margin-top: 22px; padding: 12px 16px; border-radius: 12px;
+  background: var(--creme); color: var(--gris); font-size: 14.5px;
+}
+.ref-paiement b { color: var(--encre); font-weight: 600; }
+
+/* Le décompte : ce que le visiteur va régler, à l'endroit où il s'engage. Tout le parcours
+   d'achat se faisait sans qu'un seul montant s'affiche — on découvrait le total le lendemain,
+   sur la facture. */
+.decompte {
+  margin: 26px 0; padding: 22px 24px; border-radius: 18px;
+  background: rgba(255, 255, 255, .07); border: 1px solid rgba(255, 255, 255, .14);
+}
+.decompte h3 { font-size: 16px; color: #fff; font-weight: 600; }
+.decompte ul { list-style: none; padding: 0; margin: 16px 0 0; }
+/* Le décompte est une carte DANS une carte : son fond est deux fois éclairci, et le gris-vert
+   ordinaire (#a8ccc6) y tombe à 4,10 — sous le seuil, mesuré, sur le seul bloc de la page qui
+   porte des montants. Un ton plus clair, et lui seul : ailleurs le fond est plus sombre et le
+   gris ordinaire passe à 4,94. */
+.decompte li {
+  display: flex; justify-content: space-between; gap: 18px; padding: 7px 0;
+  font-size: 15px; color: #bcdbd6;
+}
+.decompte .aide-form { color: #bcdbd6; }
+.decompte li b { color: #fff; font-weight: 500; font-variant-numeric: tabular-nums; }
+.decompte .dc-remise, .decompte .dc-remise b { color: #f0bd6e; }
+.dc-total {
+  display: flex; justify-content: space-between; gap: 18px; align-items: baseline;
+  margin-top: 12px; padding-top: 14px; border-top: 1px solid rgba(255, 255, 255, .18);
+  font-size: 15px; color: #bcdbd6;
+}
+.dc-total b {
+  color: #fff; font-family: "Bricolage Grotesque", sans-serif; font-weight: 700;
+  font-size: 24px; letter-spacing: -.02em; font-variant-numeric: tabular-nums;
+}
+
+/* La confirmation d'une commande REMPLACE le formulaire : après huit champs, une ligne grise
+   au bas de la page ne ressemble pas à une commande. Elle redit ce qui a été demandé et nomme
+   les trois étapes qui restent, avec leur délai. */
+.confirme { background: rgba(255, 255, 255, .06); border-radius: 24px; padding: clamp(24px, 3vw, 32px); }
+.confirme h3 { font-size: 24px; color: #fff; }
+.confirme > p { color: #a8ccc6; font-size: 15px; margin-top: 10px; }
+.confirme .recap { list-style: none; padding: 0; margin: 22px 0 0; border-top: 1px solid rgba(255, 255, 255, .14); }
+.confirme .recap li {
+  display: flex; justify-content: space-between; gap: 18px; padding: 11px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, .14); font-size: 15px; color: #a8ccc6;
+}
+.confirme .recap b { color: #fff; font-weight: 600; text-align: end; }
+.confirme .suite { margin: 24px 0 0; padding-inline-start: 20px; color: #a8ccc6; font-size: 15px; }
+.confirme .suite li { margin-bottom: 10px; }
+.confirme .suite b { color: #fff; font-weight: 600; }
+.confirme .suite em { color: #fff; font-style: normal; font-weight: 600; }
 .dit-envoi { margin-top: 14px; font-size: 15px; border-radius: 12px; padding: 12px 16px; }
 .dit-envoi.ok { background: rgba(255, 255, 255, .12); color: #fff; }
 .dit-envoi.rate { background: rgba(232, 163, 61, .16); color: #fbe3bd; }
