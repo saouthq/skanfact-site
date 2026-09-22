@@ -307,22 +307,22 @@
  "d-relances.jpg": {
   "w": 884,
   "h": 263,
-  "octets": 43464
+  "octets": 43468
  },
  "d-relances.webp": {
   "w": 884,
   "h": 263,
-  "octets": 21756
+  "octets": 21764
  },
  "d-relances@small.jpg": {
   "w": 620,
   "h": 184,
-  "octets": 21107
+  "octets": 21104
  },
  "d-relances@small.webp": {
   "w": 620,
   "h": 184,
-  "octets": 11926
+  "octets": 11910
  },
  "d-stock.jpg": {
   "w": 884,
@@ -407,12 +407,12 @@
  "editeur.jpg": {
   "w": 1400,
   "h": 875,
-  "octets": 115558
+  "octets": 115559
  },
  "editeur.webp": {
   "w": 1400,
   "h": 875,
-  "octets": 57136
+  "octets": 57124
  },
  "editeur@small.jpg": {
   "w": 720,
@@ -422,7 +422,7 @@
  "editeur@small.webp": {
   "w": 720,
   "h": 450,
-  "octets": 19950
+  "octets": 19944
  },
  "factures.jpg": {
   "w": 1400,
@@ -497,22 +497,22 @@
  "seq-04.jpg": {
   "w": 1400,
   "h": 875,
-  "octets": 96130
+  "octets": 96107
  },
  "seq-04.webp": {
   "w": 1400,
   "h": 875,
-  "octets": 54004
+  "octets": 54084
  },
  "seq-04@small.jpg": {
   "w": 720,
   "h": 450,
-  "octets": 31522
+  "octets": 31530
  },
  "seq-04@small.webp": {
   "w": 720,
   "h": 450,
-  "octets": 19676
+  "octets": 19718
  },
  "seq-05.jpg": {
   "w": 1400,
@@ -577,17 +577,17 @@
  "seq-08.jpg": {
   "w": 1400,
   "h": 875,
-  "octets": 97419
+  "octets": 97391
  },
  "seq-08.webp": {
   "w": 1400,
   "h": 875,
-  "octets": 55734
+  "octets": 55736
  },
  "seq-08@small.jpg": {
   "w": 720,
   "h": 450,
-  "octets": 32033
+  "octets": 32032
  },
  "seq-08@small.webp": {
   "w": 720,

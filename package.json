@@ -4,7 +4,11 @@
   "description": "Le site public skanfact.tn. Aucune dépendance pour SERVIR le site : il est en HTML, CSS et JavaScript nus, et c'est voulu. Les deux dépendances ci-dessous ne servent qu'aux OUTILS du dossier outils/ — l'audit ouvre un vrai navigateur, le traitement des images passe par libvips.",
   "scripts": {
     "audit": "node outils/audit.mjs",
-    "images": "node outils/images.mjs"
+    "images": "node outils/images.mjs",
+    "captures": "xvfb-run -a node outils/captures/captures-site.js",
+    "captures:cabinet": "xvfb-run -a node outils/captures/captures-cabinet-site.js",
+    "captures:sequence": "xvfb-run -a node outils/captures/sequence-site.js",
+    "picture": "node outils/picture.mjs"
   },
   "devDependencies": {
     "sharp": "^0.35.4"
