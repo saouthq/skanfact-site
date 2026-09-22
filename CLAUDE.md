@@ -35,7 +35,11 @@ pas.
 **Automatique :** GitHub Pages sert directement la branche `main`. Un push met le site à jour tout
 seul en une minute environ. Il n'y a aucun workflow, aucune étape de construction, rien à lancer.
 
-**Pas automatique :** le sitemap (ci-dessus). C'est la seule chose.
+**Pas automatique :** le sitemap (ci-dessus), et **la liste des versions écrite dans
+`nouveautes.html`** — `node outils/nouveautes.mjs` après chaque publication stable de l'application,
+puis `node outils/typo.mjs`. Le numéro du pied et de Téléchargement, lui, vient de l'API GitHub et n'a
+rien à faire ; la liste de repli, si. Une liste écrite à la main a affiché 10.0.0 pendant huit
+versions (voir README, « L'audit commercial du 23/09/2026 »).
 
 ## Le domaine
 
@@ -66,6 +70,15 @@ trace de ce qui a été touché, pas comme outil.
   l'application.
 - **Ne jamais réintroduire « SKANCYBER » ni le matricule dans le contenu des pages** au-delà des
   mentions légales, où l'éditeur doit légalement figurer.
+- **Toute phrase qui nomme le mode de règlement vit en DEUX jumelles** `data-paiement="non"` et
+  `data-paiement="oui" hidden` (`acheter.html`, `tarifs.html`) : c'est `site.js` qui montre la bonne,
+  d'après ce que répond l'API. Une phrase écrite en dur sur le virement ment le jour où la carte
+  s'ouvre. Même règle pour `data-mesure` (GoatCounter) et `data-regl-aide` (sous le bouton d'achat).
+  Et `[hidden] { display: none !important }` est global dans `style.css` : un `display` posé un jour
+  sur `.chapeau` ferait sinon réapparaître les deux jumelles, en silence.
+- **Rien d'absolu qu'on ne peut pas prouver** : pas de « le plus pris » sans chiffre, pas de « nulle
+  part ailleurs », pas de témoignage ni de compteur inventé. Un audit extérieur l'a reproché le
+  23/09/2026, et il avait raison.
 - **Les prix affichés sur `tarifs.html` doivent correspondre à ceux de l'application** (offres
   Indépendant et Entreprise). Deux endroits qui annoncent deux prix, c'est le genre de
   contradiction qu'un client voit avant nous.

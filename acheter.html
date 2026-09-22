@@ -110,8 +110,12 @@
         <a href="tarifs.html">Tarifs</a> <span aria-hidden="true">›</span> Acheter</p>
       <p class="oeil">Acheter</p>
       <h1 class="h1-page h1-clair">Votre clé d’activation, en quatre étapes.</h1>
-      <p class="chapeau">Vous remplissez le formulaire, nous vous envoyons la facture, vous réglez,
-        vous recevez votre clé. Pas de compte à créer, pas de prélèvement qui se reconduit tout seul.</p>
+      <p class="chapeau" data-paiement="non">Vous remplissez le formulaire, nous vous envoyons la
+        facture, vous réglez, vous recevez votre clé. Pas de compte à créer, pas de prélèvement qui
+        se reconduit tout seul.</p>
+      <p class="chapeau" data-paiement="oui" hidden>Vous remplissez le formulaire, vous réglez par
+        carte, et votre clé part par email dès que le paiement est constaté — ou par virement, avec la facture d’abord. Pas de
+        compte à créer, pas de prélèvement qui se reconduit tout seul.</p>
     </div>
   </section>
 
@@ -295,9 +299,13 @@
             timbre fiscal. Par carte, elle vous suit une fois le paiement constaté.</p>
         </fieldset>
 
-        <button class="btn btn-safran" type="submit">Demander ma clé</button>
+        <button class="btn btn-safran" type="submit" id="bouton-commande">Demander ma clé</button>
         <p class="dit-envoi" id="dit-envoi" role="status" hidden></p>
-        <p class="aide-form">Envoyer cette demande ne vous engage pas : rien n’est
+        <p class="aide-form" data-regl-aide="carte" hidden>Vous serez redirigé vers la page de
+          paiement de Konnect. Rien n’est prélevé tant que vous n’y avez pas validé, et la clé part
+          par email dès que le paiement est constaté. Vous préférez écrire vous-même ?
+          <a href="mailto:contact@skanfact.tn">contact@skanfact.tn</a></p>
+        <p class="aide-form" data-regl-aide="virement">Envoyer cette demande ne vous engage pas : rien n’est
           prélevé, et vous pouvez encore changer d’offre ou renoncer à réception de la
           facture. Vous préférez écrire vous-même ?
           <a href="mailto:contact@skanfact.tn">contact@skanfact.tn</a></p>
@@ -354,7 +362,7 @@
       <div class="cartes-mini" style="margin-top: 30px;">
         <a class="mini" href="telecharger.html"><b>Essayer trente jours</b><span>Toutes les fonctions, sans carte bancaire ni compte à créer.</span><span class="fleche" aria-hidden="true">→</span></a>
         <a class="mini" href="limites.html"><b>Ce que SkanFact ne fait pas</b><span>Les limites, écrites avant l’achat plutôt qu’après.</span><span class="fleche" aria-hidden="true">→</span></a>
-        <a class="mini" href="contact.html"><b>Nous poser la question</b><span>Une réponse sous un jour ouvré, en français.</span><span class="fleche" aria-hidden="true">→</span></a>
+        <a class="mini" href="contact.html?demo=1"><b>Voir une démonstration</b><span>En visio ou au téléphone, sur vos propres cas — ou juste une question, réponse sous un jour ouvré.</span><span class="fleche" aria-hidden="true">→</span></a>
       </div>
     </div>
   </section>

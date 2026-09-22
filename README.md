@@ -13,7 +13,7 @@ navigateur et on voit le site — c'est la même philosophie que l'application.
 
 ```
 index.html              l'accueil : la promesse, les quatre portes, les prix
-visite.html             la visite guidée : sept écrans, du devis à la déclaration
+visite.html             la visite guidée : sept étapes, du devis à la déclaration
 excel.html              « SkanFact ou Excel ? » — la page qu'on cherche quand on hésite
 nouveautes.html         ce qui a changé, version par version (API GitHub + repli écrit)
 guides.html             le sommaire des guides
@@ -56,7 +56,7 @@ voisines) puis par un rappel de l'essai.
 Trois pages ont été ajoutées en septembre 2026, pour trois manques précis :
 
 - **`visite.html`** — le seul moyen de voir SkanFact était d'installer 220 Mo d'application non
-  signée, en passant outre un avertissement de sécurité. Beaucoup s'arrêtaient là. Sept écrans réels
+  signée, en passant outre un avertissement de sécurité. Beaucoup s'arrêtaient là. Sept étapes, sur des écrans réels,
   dans l'ordre d'une affaire : le devis, la facture, la relance, la trésorerie, la TVA, le dossier du
   comptable, le panneau du matin. Pas une liste de fonctions — il y en a déjà trois pages — mais
   l'**enchaînement**, qui ne se voit nulle part ailleurs.
@@ -72,6 +72,12 @@ Trois pages ont été ajoutées en septembre 2026, pour trois manques précis :
   quota atteint, liste vide, et des notes contenant du HTML et une URL crue.
   ⚠️ **Conséquence à connaître : le titre d'une entrée du `CHANGELOG.md` devient du texte public.**
   La première phrase en gras de chaque version s'affiche ici telle quelle.
+  **Les versions écrites en dur se RÉGÉNÈRENT** : `node outils/nouveautes.mjs` (puis
+  `node outils/typo.mjs`) après chaque publication stable. Écrites à la main, elles périmaient à
+  chaque publication — le 23/09/2026 un audit extérieur a lu « 10.0.0 » sur un site dont
+  l'application était en 10.8.0. Le script applique la même règle de titre que `site.js`, et il
+  est idempotent. *(Depuis une session Claude : `NODE_USE_ENV_PROXY=1 node outils/nouveautes.mjs`,
+  sinon le `fetch` de Node ne passe pas le mandataire.)*
 - **`pour-votre-client.html`** — tout le reste du site s'adresse au comptable ; rien ne lui donnait
   de quoi parler à **son** client. C'est pourtant toute la stratégie : le cabinet est le canal, pas
   la cible. Page courte exprès — elle s'ouvre depuis un lien WhatsApp, sur un téléphone. La page
@@ -404,6 +410,66 @@ grep -rn "poste\|Lecture seule\|data-version" *.html | head
 
 Règle apprise : **le site est une promesse, le code est la vérité.** Quand l'application change de
 modèle commercial, la page Tarifs ment jusqu'à ce que quelqu'un aille lire `src/licence.js`.
+
+## L'audit commercial du 23/09/2026 — ce qui était vrai, et ce qui ne l'était pas
+
+Skander a donné le site à une IA en lui demandant de le lire en visiteur ordinaire. Quarante-sept
+sections. Chaque constat a été relu dans le code AVANT d'être retenu (règle du dépôt de
+l'application : *un audit qui invente une qualité peut inventer un défaut*).
+
+**Faux — l'IA a lu le HTML brut, sans JavaScript :**
+
+- « contradiction carte bancaire / Konnect » : les deux paragraphes `data-paiement="non|oui"` sont
+  dans la page, et `site.js` n'en montre qu'un selon ce que répond `GET /v1/achat/tarifs`. Un
+  visiteur n'en voit jamais deux. Même mécanisme que `data-mesure` pour GoatCounter, que l'IA a
+  aussi pris pour une contradiction.
+- « version 10.0.0 » : le numéro vient de l'API GitHub. Seule la liste de repli de `nouveautes.html`
+  était périmée — vrai à moitié, donc, et c'est ce qui a fait écrire `outils/nouveautes.mjs`.
+- « placeholders dans les mentions légales » : il n'y en a pas. Les quatre `À COMPLÉTER` sont dans
+  `conditions-vente.html`, en `noindex` et liée nulle part, et ils attendent Skander (`A-FAIRE.md`
+  du dépôt de l'application).
+
+**Vrai, et corrigé :**
+
+- « Le plus pris » sur l'offre Indépendant sans un seul chiffre pour le prouver → « Pour facturer
+  seul ». **Un ruban affirme ; il se démontre ou il se retire.**
+- « Ce qui n'existe nulle part ailleurs », « qu'aucun autre logiciel ne fait » → des phrases
+  vérifiables (« Notre différence », « le lien entre les deux applications »). Un absolu qu'on ne
+  peut pas prouver coûte plus qu'il ne vend.
+- « Sept écrans » et « dix écrans » sur la même page : la visite compte sept ÉTAPES, la séquence
+  filmée dix écrans. Les deux mots vivent désormais chacun à sa place, sur les huit pages qui les
+  citent.
+- Les phrases de `tarifs.html` sur le règlement étaient écrites en dur sur le virement, pendant
+  qu'`acheter.html` avait déjà ses jumelles : le jour où la carte s'ouvre, Tarifs aurait menti.
+  Les jumelles sont posées partout où le mode de règlement est nommé — et la phrase sous le bouton
+  d'achat suit le mode choisi (`data-regl-aide`), parce que « rien n'est prélevé » est vrai par
+  virement et faux au clic qui ouvre Konnect.
+- Le héros vendait le mécanisme (« un fichier chiffré part chez votre cabinet ») avant le
+  bénéfice. Il dit maintenant ce qu'on fait avec, l'étiquette porte « 30 jours gratuits » au-dessus
+  de la ligne de flottaison, le second bouton montre le logiciel, et la bande sous le héros porte
+  quatre BÉNÉFICES au lieu de quatre faits. Une section « Avant, et avec SkanFact » suit les
+  quatre cartes — six lignes, chacune un écran réel.
+- Le prix mensuel et le TTC : Tarifs les avait ; l'accueil ne montrait que le HT.
+- L'avertissement Windows/macOS était expliqué en petit SOUS les étapes d'installation ; il est
+  expliqué AVANT, dans un encadré — un avertissement se lit avant le geste (règle 9.4.2 de
+  l'application).
+- La FAQ répondait aux questions qu'on se pose ; elle répond maintenant aussi à celles qui font
+  renoncer : récupérer ses données, la fin de la licence, changer d'offre, imprimer et envoyer,
+  démarrer depuis Excel (sans promettre un import qui n'existe pas), et comment on est accompagné.
+- Chaque guide propose une fois, au milieu, après avoir répondu (`.guide-cta`) — jamais avant.
+- « Demander une démonstration » existait pour les cabinets seulement ; `contact.html?demo=1`
+  coche la case pour tout le monde.
+
+**Vrai, et pas à nous :** témoignages et chiffres réels (on n'en invente pas), la signature des
+exécutables, GoatCounter, le RNE et le capital, un lien de parrainage par cabinet mesurable — tout
+est dans `A-FAIRE.md`, côté application. **Refusé :** une page « Pourquoi SkanFact ? » de plus (la
+bande et « Avant / avec » font ce travail sur l'accueil, et une page neuve, c'est un sitemap et
+quarante en-têtes de plus).
+
+Règle apprise : **une IA qui lit le site le lit sans JavaScript**, comme un robot. Ce que le
+script cache reste dans la page, et un lecteur de ce genre y voit deux vérités. Les jumelles
+restent le bon mécanisme (la page se tient sans script) — mais on sait maintenant qui les lira
+toutes les deux, et on ne s'étonne plus du constat.
 
 ## Audit UI/UX de septembre 2026
 

@@ -125,7 +125,7 @@
         </div>
 
         <div class="offre phare" data-offre="independant">
-          <div class="haut"><span class="nom">Indépendant</span><span class="ruban">Le plus pris</span></div>
+          <div class="haut"><span class="nom">Indépendant</span><span class="ruban">Pour facturer seul</span></div>
           <p class="prix"><span class="v">390</span><span class="u">DT HT / an</span></p>
           <p class="prix-ttc">soit <b data-prix="ttc:390">465,100 DT</b> TTC — TVA 19 % et timbre fiscal compris</p>
           <p class="pour">Artisan, consultant, profession libérale : vous facturez seul.</p>
@@ -284,8 +284,11 @@
     <div class="conteneur">
       <p class="oeil">Passer à la licence</p>
       <h2>Comment on achète, en quatre étapes.</h2>
-      <p class="chapeau">Pas de formulaire de paiement&nbsp;: vous recevez une facture en bonne et
-        due forme, timbre compris — celle que votre comptable attend.</p>
+      <p class="chapeau" data-paiement="non">Pas de formulaire de paiement&nbsp;: vous recevez une
+        facture en bonne et due forme, timbre compris — celle que votre comptable attend.</p>
+      <p class="chapeau" data-paiement="oui" hidden>Par carte bancaire, la clé part par email dès
+        que le paiement est constaté. Par virement, vous recevez d’abord la facture. Dans les deux cas, la
+        facture est en bonne et due forme, timbre compris — celle que votre comptable attend.</p>
       <ol class="etapes achat">
         <li class="etape"><span class="n">1</span><b>Vous essayez</b>
           <p>Trente jours, toutes les fonctions ouvertes. C’est là que vous voyez de quelle offre
@@ -294,8 +297,12 @@
           <p>Depuis l’application — Paramètres → L’application → Licence → « Demander une licence », qui remplit le
             message avec votre raison sociale et votre matricule — ou depuis
             <a href="acheter.html">le formulaire du site</a> si vous n’avez pas encore installé.</p></li>
-        <li class="etape"><span class="n">3</span><b>Vous recevez la facture</b>
-          <p>Réglable par virement, chèque ou espèces. Nous convenons du mode ensemble.</p></li>
+        <li class="etape"><span class="n">3</span><b>Vous réglez</b>
+          <p data-paiement="non">Vous recevez la facture, réglable par virement, chèque ou espèces.
+            Nous convenons du mode ensemble.</p>
+          <p data-paiement="oui" hidden>Par carte bancaire tout de suite — la carte passe par
+            Konnect, jamais par nous — ou par virement, chèque ou espèces après réception de la
+            facture.</p></li>
         <li class="etape"><span class="n">4</span><b>Vous collez la clé</b>
           <p>Elle arrive par email. Paramètres → L’application → Licence, et c’est fait — sans connexion, sur le
             poste.</p></li>
@@ -307,7 +314,7 @@
         </div>
       </div>
       <div class="actions" style="margin-top: 28px;">
-        <a class="btn btn-vert" href="acheter.html">Demander ma clé d’activation</a>
+        <a class="btn btn-vert" href="acheter.html">Acheter ma licence</a>
         <a class="btn btn-creux" href="telecharger.html">Commencer par l’essai</a>
       </div>
     </div>
@@ -378,8 +385,12 @@
   <section class="bande-fin">
     <div class="conteneur">
       <h2>Prêt à prendre votre licence&nbsp;?</h2>
-      <p class="chapeau">Vous remplissez le formulaire, nous envoyons la facture, vous réglez, vous
-        recevez votre clé. Et si vous n’avez pas encore essayé, l’essai reste ouvert trente jours.</p>
+      <p class="chapeau" data-paiement="non">Vous remplissez le formulaire, nous envoyons la
+        facture, vous réglez, vous recevez votre clé. Et si vous n’avez pas encore essayé, l’essai
+        reste ouvert trente jours.</p>
+      <p class="chapeau" data-paiement="oui" hidden>Vous remplissez le formulaire, vous réglez par
+        carte, votre clé part par email dès que le paiement est constaté — ou par virement, avec la facture d’abord. Et si vous
+        n’avez pas encore essayé, l’essai reste ouvert trente jours.</p>
       <div class="actions">
         <a class="btn btn-safran" href="acheter.html">Acheter une licence</a>
         <a class="btn btn-clair" href="telecharger.html">Commencer par l’essai</a>

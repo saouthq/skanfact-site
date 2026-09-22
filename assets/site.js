@@ -724,6 +724,15 @@
     }
   }
 
+  /* « Voir une démonstration » depuis une autre page arrive avec `?demo=1` : la case est
+     cochée, et la demande part étiquetée comme telle. Sans JavaScript, le lien mène quand même
+     au formulaire — on perd la coche, pas la demande. */
+  var caseDemo = document.getElementById('opt-demo');
+  if (caseDemo && /(^|[?&])demo=1(&|$)/.test(location.search)) {
+    caseDemo.checked = true;
+    caseDemo.closest('label').scrollIntoView({ block: 'center', behavior: 'smooth' });
+  }
+
   /* ------------------------------------------------- le paiement en ligne (Konnect)
      Le site ne parle JAMAIS à Konnect directement : la clé d'API ne peut pas vivre dans une
      page, et le MONTANT ne peut pas venir du navigateur — n'importe qui le modifierait. Le
@@ -850,10 +859,15 @@
          Par virement rien n'est prélevé, et le libellé le garde. */
       var btn = document.querySelector('#form-cle button[type=submit]');
       var parCarte = document.querySelector('[data-regl=carte]');
+      var carteChoisie = !!(parCarte && parCarte.checked && !parCarte.closest('[hidden]'));
       if (btn && !btn.disabled) {
-        btn.textContent = (parCarte && parCarte.checked && !parCarte.closest('[hidden]'))
-          ? 'Payer ' + dinars(total) : 'Demander ma clé';
+        btn.textContent = carteChoisie ? 'Payer ' + dinars(total) : 'Demander ma clé';
       }
+      /* Et la phrase sous le bouton suit : « rien n'est prélevé » est vrai par virement, faux
+         au clic qui ouvre Konnect. Les deux jumelles sont dans la page, on montre la bonne. */
+      Array.prototype.forEach.call(document.querySelectorAll('[data-regl-aide]'), function (el) {
+        el.hidden = el.getAttribute('data-regl-aide') !== (carteChoisie ? 'carte' : 'virement');
+      });
       return { total: total, texte: dinars(total), parrain: parrain };
     };
 

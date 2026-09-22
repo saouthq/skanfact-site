@@ -716,6 +716,30 @@ legend { font-size: 14px; color: #a8ccc6; padding: 0 0 10px; }
 }
 .bande-grille span { font-size: 14.5px; color: #9fc3bd; }
 
+/* ------------------------------------------------- avant / avec SkanFact (accueil)
+   Un vrai tableau : deux colonnes qui se lisent ligne à ligne, et un lecteur d'écran y trouve
+   ses en-têtes. Sur un téléphone les deux colonnes restent côte à côte — elles font 170 px
+   chacune, et du texte de 15 px y tient sur trois lignes — plutôt que d'empiler l'« avant »
+   sous l'« avec », où l'on ne compare plus rien. */
+.avant-apres { width: 100%; border-collapse: collapse; margin-top: 34px; background: #fff; border: 1px solid var(--filet); border-radius: var(--rayon); overflow: hidden; }
+.avant-apres th, .avant-apres td { padding: 15px 22px; text-align: start; vertical-align: top; font-size: 15.5px; border-top: 1px solid var(--filet); }
+.avant-apres thead th { border-top: none; font-family: "Bricolage Grotesque", sans-serif; font-weight: 600; font-size: 14px; letter-spacing: .05em; text-transform: uppercase; }
+.avant-apres thead th:first-child { color: var(--gris); }
+.avant-apres thead th:last-child { color: var(--vert); }
+.avant-apres td:first-child { color: var(--gris); background: var(--creme); width: 44%; }
+.avant-apres td:last-child { color: var(--encre); }
+.avant-apres td b { color: var(--vert); font-weight: 600; }
+@media (max-width: 620px) {
+  .avant-apres th, .avant-apres td { padding: 12px 14px; font-size: 14.5px; }
+  .avant-apres td:first-child { width: 46%; }
+}
+
+/* ------------------------------------------------- le CTA d'un guide, au milieu
+   Un guide répond d'abord, et propose ensuite — une seule ligne, après la première section,
+   là où la question vient d'être réglée. Le bloc « Et dans SkanFact » reste à la fin. */
+.guide-cta { margin: 26px 0 8px; padding: 14px 18px; border-inline-start: 3px solid var(--safran); background: var(--safran-clair); border-radius: 0 12px 12px 0; font-size: 15px !important; color: var(--encre); }
+.guide-cta a { font-weight: 600; }
+
 /* --------------------------------------------- les quatre cartes de l'accueil
    Une carte entière est cliquable : le titre seul serait une cible minuscule. */
 .cartes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 44px; }
@@ -1178,6 +1202,11 @@ legend { font-size: 14px; color: #a8ccc6; padding: 0 0 10px; }
    la page ne saute pas d'un écran à l'autre. */
 .film-lecteur { display: block; margin-bottom: 0; cursor: pointer; }
 .film-lecteur .film-vue[hidden] { display: none; }
+/* `hidden` est une promesse : les phrases jumelles (`data-paiement`, `data-mesure`,
+   `data-regl-aide`) ne tiennent que par lui. Un `display` posé un jour sur `.chapeau` les ferait
+   réapparaître toutes les deux, en silence. Règle apprise dans l'application : [hidden] est
+   global, et il gagne. */
+[hidden] { display: none !important; }
 .film-lecteur img { aspect-ratio: 1440 / 900; object-fit: cover; object-position: top left; }
 .film-lecteur figcaption { min-height: 46px; }
 
