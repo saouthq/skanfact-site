@@ -348,7 +348,7 @@
              chemin du virement, qui marche. On ne vide donc pas le formulaire tout de suite :
              le paiement peut encore échouer, et on ne lui reprend pas ce qu'il a tapé. */
           var carte = form.querySelector('[data-regl=carte]');
-          if ((PAIEMENT || APERCU_PAIEMENT) && carte && carte.checked) { payerEnLigne(valeurs, annoncer, bouton, libelle); return; }
+          if (PAIEMENT_OUVERT && carte && carte.checked) { payerEnLigne(valeurs, annoncer, bouton, libelle); return; }
           if (genre === 'commande') { confirmerCommande(form, valeurs); return; }
           form.reset();
           annoncer('ok', 'Message envoyé. Nous répondons sous un jour ouvré, à ' + donnees.email + '.');
@@ -720,31 +720,30 @@
   }
 
   /* ------------------------------------------------- le paiement en ligne (Konnect)
-     Tant que cette ligne est vide, RIEN ne change : le choix du règlement reste masqué, la
-     page d'achat annonce le virement, et personne ne se voit promettre une carte qui n'existe
-     pas. Le compte marchand n'est pas encore validé au 22/09/2026.
-
      Le site ne parle JAMAIS à Konnect directement : la clé d'API ne peut pas vivre dans une
      page, et le MONTANT ne peut pas venir du navigateur — n'importe qui le modifierait. Le
-     site envoie qui achète et quelle offre ; le worker tient le barème, appelle Konnect et
-     renvoie l'adresse de paiement.
-       POST <PAIEMENT>, Content-Type: application/json
-       { offre, raison, matricule, adresse, nom, email, tel, cabinet }
-       -> 200 { payUrl, ref }   ·   400 avec la raison   ·   503 pas encore configuré */
-  var PAIEMENT = ''; /* À REMPLIR quand Konnect est validé : https://api.skanfact.tn/v1/commande/payer */
+     site envoie qui achète et quelle offre ; l'API tient le barème, appelle Konnect et renvoie
+     l'adresse de paiement. Quatre routes publiques, aucun secret, CORS ouvert pour skanfact.tn :
 
-  /* L'aperçu : `?apercu-paiement=1` allume tous les écrans du paiement pour CE chargement de
-     page, sans rien changer pour les visiteurs. Il fallait pouvoir relire le parcours entier
-     avant de brancher Konnect — et l'allumer pour de bon en attendant aurait proposé une carte
-     qui ne peut pas aboutir, c'est-à-dire la pire façon de préparer une vente.
-     Il ne fabrique aucun faux paiement : sans adresse, l'appel échoue et le repli s'affiche,
-     ce qui est précisément l'écran qu'on veut pouvoir relire aussi. */
-  var APERCU_PAIEMENT = /(^|[?&])apercu-paiement=1(&|$)/.test(location.search);
-  /* L'aperçu vise l'adresse FUTURE : le parcours s'exerce en entier, et comme la route
-     n'existe pas encore, un clic réel y montre l'écran de repli — celui qu'il faut justement
-     pouvoir relire. Le jour où `PAIEMENT` est rempli, c'est lui qui gagne, ici et nulle part
-     ailleurs. */
-  var CIBLE_PAIEMENT = PAIEMENT || (APERCU_PAIEMENT ? 'https://api.skanfact.tn/v1/commande/payer' : '');
+       GET  /v1/achat/tarifs
+         -> { ouvert, raison, devise, offres: [{ id, label, ht, ttc }], tva, timbre,
+              remiseParrainage }
+       POST /v1/achat/commander   { offre, nom, email, matricule?, tel?, cabinet? }
+         -> { commande, payUrl, montant, devise, parraine }
+       GET  /v1/achat/etat/<commande>
+         -> { etat, phrase, offre, montant, devise }   etat : ouverte | payee | en_cours |
+            abandonnee | inconnue
+       POST /v1/achat/webhook     Konnect seul, le site n'y touche pas.
+
+     C'est `ouvert` qui décide d'allumer la carte bancaire, plus un réglage écrit ici : le jour
+     où le compte marchand est suspendu, la page cesse de promettre une carte sans qu'on ait à
+     repousser le site. Fermé, on affiche `raison` et le formulaire de demande reste celui
+     d'avant — la vente ne s'arrête pas parce que la carte s'arrête. */
+  var API_ACHAT = 'https://api.skanfact.tn/v1/achat';
+  /* Faux tant que l'API n'a pas dit `ouvert`. Le formulaire d'achat le lit bien avant que
+     la réponse arrive : sans cette valeur de départ, un envoi très rapide partirait sur la
+     carte alors que personne n'a encore dit qu'elle marche. */
+  var PAIEMENT_OUVERT = false;
 
   /* ------------------------------------------------- ce que vous allez régler
      Tout le parcours d'achat se faisait sans qu'un seul MONTANT s'affiche : on cochait une
@@ -781,11 +780,17 @@
     'mois-ht': function (ht) { return ht / 12; },
     'mois-ttc': function (ht) { return (ht * (1 + TVA) + TIMBRE) / 12; }
   };
-  Array.prototype.forEach.call(document.querySelectorAll('[data-prix]'), function (el) {
-    var m = /^([a-z-]+):(\d+(?:\.\d+)?)$/.exec(el.getAttribute('data-prix') || '');
-    if (!m || !FORMULES[m[1]]) return;
-    el.textContent = dinars(FORMULES[m[1]](Number(m[2])));
-  });
+  /* Nommée et rejouable : le barème peut arriver de l'API APRÈS ce premier passage, et il
+     faut alors que les six montants se refassent avec les nouvelles valeurs. Une passe qu'on
+     ne sait lancer qu'une fois laisserait la page afficher l'ancien prix à côté du nouveau. */
+  function recalculerPrix() {
+    Array.prototype.forEach.call(document.querySelectorAll('[data-prix]'), function (el) {
+      var m = /^([a-z-]+):(\d+(?:\.\d+)?)$/.exec(el.getAttribute('data-prix') || '');
+      if (!m || !FORMULES[m[1]]) return;
+      el.textContent = dinars(FORMULES[m[1]](Number(m[2])));
+    });
+  }
+  recalculerPrix();
 
   var decompte = document.getElementById('decompte');
   if (decompte) {
@@ -910,7 +915,11 @@
      calculés par le worker, qui tient le barème : un prix qui vient du navigateur est un
      prix que le navigateur peut changer. */
   function payerEnLigne(valeurs, annoncer, bouton, libelle) {
-    var offre = (document.querySelector('input[name=offre]:checked') || {}).value || '';
+    /* L'API veut l'IDENTIFIANT de l'offre, pas le libellé que lit le visiteur : « Indépendant
+       — 390 DT HT/an » porte un prix, et un libellé qui porte un prix se périme. La
+       confirmation à l'écran, elle, garde le libellé — c'est ce qui se lit. */
+    var coche = document.querySelector('input[name=offre]:checked');
+    var offre = coche ? (coche.getAttribute('data-offre') || coche.value || '') : '';
     annoncer('ok', 'Commande enregistrée. Ouverture de la page de paiement…');
     if (bouton) { bouton.disabled = true; bouton.textContent = 'Paiement…'; }
     var fini = false;
@@ -926,13 +935,18 @@
     };
     var minuteur = setTimeout(function () { replier('La page de paiement ne répond pas.'); }, 15000);
 
-    fetch(CIBLE_PAIEMENT, {
+    fetch(API_ACHAT + '/commander', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      /* Le contrat tient en six champs. On n'envoie NI prix NI remise : le serveur les
+         ignore, et c'est la seule façon qu'un montant ne puisse pas venir du navigateur.
+         `raison` et `adresse` voyagent en plus — ils ne portent aucune autorité, et c'est
+         ce qu'il faut pour établir la facture. */
       body: JSON.stringify({
-        offre: offre, raison: valeurs.raison || '', matricule: valeurs.matricule || '',
-        adresse: valeurs.adresse || '', nom: valeurs.nom || '', email: valeurs.email || '',
-        tel: valeurs.tel || '', cabinet: valeurs.cabinet || ''
+        offre: offre, nom: valeurs.nom || '', email: valeurs.email || '',
+        matricule: valeurs.matricule || '', tel: valeurs.tel || '',
+        cabinet: valeurs.cabinet || '',
+        raison: valeurs.raison || '', adresse: valeurs.adresse || ''
       })
     }).then(function (r) {
       return r.json().catch(function () { return {}; })
@@ -946,14 +960,69 @@
     }).catch(function () { clearTimeout(minuteur); replier('Le paiement par carte n’a pas pu s’ouvrir.'); });
   }
 
-  if (PAIEMENT || APERCU_PAIEMENT) {
-    var blocRegl = document.getElementById('bloc-reglement');
-    if (blocRegl) blocRegl.hidden = false;
-    /* La phrase de l'étape 3 suit le réglage : une phrase qu'un réglage peut rendre fausse
-       est un défaut, pas une imprécision. */
-    Array.prototype.forEach.call(document.querySelectorAll('[data-paiement]'), function (el) {
-      el.hidden = el.getAttribute('data-paiement') !== 'oui';
+  /* ------------------------------------------------- le barème vient du serveur
+     Les prix étaient écrits en dur dans quatre pages. Le jour où 390 devient 420, il faut
+     retrouver les quatre — et entre-temps deux pages du même site annoncent deux chiffres.
+     Le HTML garde le dernier prix connu : sans JavaScript la page reste juste, et c'est lui
+     que lisent les moteurs de recherche. L'API, quand elle répond, a le dernier mot.
+     Si l'appel échoue, RIEN ne change : une panne de l'API ne doit pas vider une grille de
+     tarifs ni faire disparaître un prix. */
+  function appliquerBareme(t) {
+    if (!t || !t.offres || !t.offres.length) return;
+    /* Le serveur peut dire 19 ou 0.19 ; les deux se lisent. */
+    if (typeof t.tva === 'number') TVA = t.tva > 1 ? t.tva / 100 : t.tva;
+    if (typeof t.timbre === 'number') TIMBRE = t.timbre;
+    if (typeof t.remiseParrainage === 'number') {
+      REMISE_PARRAIN = t.remiseParrainage > 1 ? t.remiseParrainage / 100 : t.remiseParrainage;
+    }
+    t.offres.forEach(function (o) {
+      if (!o || !o.id || typeof o.ht !== 'number') return;
+      Array.prototype.forEach.call(
+        document.querySelectorAll('[data-offre="' + o.id + '"]'), function (racine) {
+          var v = racine.querySelector('.v');            /* le nombre qu'on lit */
+          if (v) v.textContent = String(o.ht);
+          /* `data-ht` porte le prix que lit le décompte de la page d'achat. Il vit sur le
+             bouton radio lui-même, qui EST parfois la racine. */
+          if (racine.hasAttribute('data-ht')) racine.setAttribute('data-ht', String(o.ht));
+          var r = racine.querySelector('[data-ht]');
+          if (r) r.setAttribute('data-ht', String(o.ht));
+          /* Une marque `ttc:390` porte l'ancien prix DANS son attribut : sans la réécrire,
+             elle recalculerait fidèlement le prix d'hier, juste à côté de celui d'aujourd'hui. */
+          Array.prototype.forEach.call(racine.querySelectorAll('[data-prix]'), function (el) {
+            el.setAttribute('data-prix', (el.getAttribute('data-prix') || '')
+              .replace(/:(\d+(?:\.\d+)?)$/, ':' + o.ht));
+          });
+        });
     });
+    recalculerPrix();
+    if (window.__decompte) window.__decompte();
+  }
+
+  /* C'est `ouvert` qui allume la carte bancaire, jamais une ligne écrite ici : le jour où le
+     compte marchand est suspendu, la page cesse de la promettre sans qu'on republie le site. */
+  function ouvrirPaiement(ouvert, raison) {
+    PAIEMENT_OUVERT = !!ouvert;
+    var blocRegl = document.getElementById('bloc-reglement');
+    if (blocRegl) blocRegl.hidden = !PAIEMENT_OUVERT;
+    /* Les deux jumelles de l'étape 3 : une phrase qu'un état peut rendre fausse est un
+       défaut, pas une imprécision. */
+    Array.prototype.forEach.call(document.querySelectorAll('[data-paiement]'), function (el) {
+      el.hidden = el.getAttribute('data-paiement') !== (PAIEMENT_OUVERT ? 'oui' : 'non');
+    });
+    /* Fermé, on DIT pourquoi, avec la phrase du serveur. Sans elle, quelqu'un qui a vu la
+       carte hier ne comprend pas ce qui a changé — et croit que c'est son navigateur. */
+    var dit = document.getElementById('paiement-ferme');
+    if (dit) {
+      if (!PAIEMENT_OUVERT && raison) { dit.textContent = raison; dit.hidden = false; }
+      else { dit.hidden = true; }
+    }
+  }
+
+  if (document.querySelector('[data-offre]') || document.getElementById('bloc-reglement')) {
+    fetch(API_ACHAT + '/tarifs', { headers: { Accept: 'application/json' } })
+      .then(function (r) { return r.json(); })
+      .then(function (t) { if (!t) return; appliquerBareme(t); ouvrirPaiement(t.ouvert, t.raison); })
+      .catch(function () { /* L'API ne répond pas : la page garde les prix qu'elle affiche. */ });
   }
 
   /* ------------------------------------------------- l'offre choisie sur la page Tarifs
@@ -976,19 +1045,56 @@
     if (vise) { vise.checked = true; if (window.__decompte) window.__decompte(); }
   }
 
-  /* ------------------------------------------------- la référence du paiement
-     Konnect ramène sa référence dans l'adresse de retour. C'est la SEULE chose que la page de
-     succès sait du paiement — elle n'interroge rien, elle ne décide rien — et c'est ce qu'on
-     demande à quelqu'un qui écrit parce que sa clé n'est pas arrivée. Absente, la ligne ne
-     s'affiche pas : mieux vaut pas de référence qu'une case vide. */
+  /* ------------------------------------------------- le retour de Konnect
+     Konnect ramène `?commande=…&r=ok|echec`. Le `r` décide seulement sur QUELLE page on
+     atterrit ; il ne dit pas si l'argent est arrivé — il vient du navigateur, et le navigateur
+     n'est pas la banque. C'est `GET /v1/achat/etat/<commande>` qui sait, et sa `phrase` est
+     déjà écrite en français : on l'affiche telle quelle, sans la reformuler.
+
+     Le titre suit l'état, parce qu'une page qui titre « votre paiement est passé » au-dessus
+     d'une phrase qui dit le contraire est pire que pas de page du tout. Tant que l'API n'a pas
+     répondu, la page garde le texte qu'elle porte : c'est le pari le plus raisonnable, et il
+     ne dure qu'un instant.
+
+     Cette route ne rend JAMAIS la clé : elle voyage dans une adresse qui se copie. La clé
+     part par mail, et l'adresse y est masquée. */
+  var boiteEtat = document.getElementById('etat-commande');
   var boiteRef = document.getElementById('ref-paiement');
-  if (boiteRef) {
+  if (boiteEtat || boiteRef) {
     var q = new URLSearchParams(location.search);
-    var ref = q.get('payment_ref') || q.get('paymentRef') || q.get('ref') || '';
-    if (/^[A-Za-z0-9_-]{6,64}$/.test(ref)) {
-      boiteRef.innerHTML = 'Référence du paiement&nbsp;: <b class="mono"></b>';
-      boiteRef.querySelector('b').textContent = ref;
-      boiteRef.hidden = false;
+    var commande = q.get('commande') || q.get('payment_ref') || q.get('paymentRef') || q.get('ref') || '';
+    if (/^[A-Za-z0-9_-]{6,64}$/.test(commande)) {
+      if (boiteRef) {
+        boiteRef.innerHTML = 'Référence de votre commande&nbsp;: <b class="mono"></b>';
+        boiteRef.querySelector('b').textContent = commande;
+        boiteRef.hidden = false;
+      }
+      var TITRES = {
+        payee: 'Merci, votre paiement est passé.',
+        ouverte: 'Votre commande est enregistrée.',
+        en_cours: 'Votre paiement est en cours de confirmation.',
+        abandonnee: 'Le paiement n’est pas allé au bout.',
+        inconnue: 'Nous ne retrouvons pas cette commande.'
+      };
+      fetch(API_ACHAT + '/etat/' + encodeURIComponent(commande), {
+        headers: { Accept: 'application/json' }
+      }).then(function (r) { return r.json(); }).then(function (j) {
+        if (!j || !j.etat) return;
+        var h1 = document.querySelector('main h1');
+        if (h1 && TITRES[j.etat]) h1.textContent = TITRES[j.etat];
+        if (boiteEtat && j.phrase) {
+          boiteEtat.textContent = j.phrase;      /* telle quelle : elle est déjà en français */
+          boiteEtat.hidden = false;
+          /* Le chapeau écrit d'avance était une SUPPOSITION. Le serveur vient de répondre :
+             deux phrases sur le même écran, dont une devinée, font douter des deux.
+             `:not(#etat-commande)` n'est pas un détail : la phrase du serveur porte la MÊME
+             classe pour avoir la même allure, elle vient en premier dans la page, et sans
+             cette exclusion c'est elle qu'on masquait — on remplissait un élément pour le
+             cacher aussitôt, en laissant la supposition seule à l'écran. */
+          var chapeau = document.querySelector('main .chapeau:not(#etat-commande)');
+          if (chapeau) chapeau.hidden = true;
+        }
+      }).catch(function () { /* L'API ne répond pas : la page garde ce qu'elle dit déjà. */ });
     }
   }
 

@@ -138,6 +138,7 @@
           <p data-paiement="oui" hidden>Par carte bancaire tout de suite, ou par virement,
             chèque ou espèces. La carte passe par Konnect&nbsp;: vos coordonnées bancaires ne
             transitent jamais par nous, et nous ne les conservons pas.</p>
+          <p class="aide-form" id="paiement-ferme" hidden></p>
         </li>
         <li class="etape"><span class="n">4</span>
           <b>Vous recevez votre clé</b>
@@ -167,10 +168,10 @@
         <fieldset>
           <legend>L’offre <span class="oblig" aria-hidden="true">*</span></legend>
           <div class="qui qui-offres">
-            <label><input type="radio" name="offre" value="Indépendant — 390 DT HT/an" data-ht="390" checked>
-              <b>Indépendant</b> <span>390 DT HT / an</span></label>
-            <label><input type="radio" name="offre" value="Entreprise — 690 DT HT/an" data-ht="690">
-              <b>Entreprise</b> <span>690 DT HT / an</span></label>
+            <label data-offre="independant"><input type="radio" name="offre" value="Indépendant — 390 DT HT/an" data-offre="independant" data-ht="390" checked>
+              <b>Indépendant</b> <span><span class="v">390</span> DT HT / an</span></label>
+            <label data-offre="entreprise"><input type="radio" name="offre" value="Entreprise — 690 DT HT/an" data-offre="entreprise" data-ht="690">
+              <b>Entreprise</b> <span><span class="v">690</span> DT HT / an</span></label>
           </div>
           <p class="aide-form">Ce que contient chacune :
             <a href="tarifs.html">voir le détail des offres</a>. L’offre se change plus tard
