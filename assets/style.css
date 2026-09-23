@@ -300,6 +300,9 @@ h1 .surligne { background: linear-gradient(transparent 58%, rgba(232, 163, 61, .
 .rassure svg { flex: none; }
 .rassure p { color: #cfe3df; font-size: 15.5px; max-width: 70ch; }
 .rassure b { color: #fff; font-weight: 600; }
+/* Un lien dans ce bandeau sombre garde la couleur du texte clair : à la couleur des liens par
+   défaut, il tombait à 1,22 de contraste — mesuré par outils/audit.mjs, jamais vu à l'œil. */
+.rassure a { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
 
 /* ------------------------------------------------------------------ comptable */
 .liste-cab { margin-top: 26px; display: flex; flex-direction: column; gap: 14px; }
@@ -445,20 +448,23 @@ legend { font-size: 14px; color: #a8ccc6; padding: 0 0 10px; }
    application, à l'identique, et il ne se voit qu'en mesurant. La version CLAIRE est donc la
    règle générale, et le vert foncé l'exception qui se nomme. */
 .champ label { display: block; font-size: 14px; color: var(--gris); margin-bottom: 8px; }
-.champ input, .champ textarea {
+.champ input, .champ textarea, .champ select {
   width: 100%; background: var(--creme); border: 1px solid #cfdedb;
   border-radius: 12px; padding: 13px 16px; color: var(--encre); font: inherit; font-size: 15px;
 }
 .champ input::placeholder, .champ textarea::placeholder { color: var(--gris-clair); }
-.champ input:focus, .champ textarea:focus { outline: 2px solid var(--vert); outline-offset: 1px; }
+.champ input:focus, .champ textarea:focus, .champ select:focus { outline: 2px solid var(--vert); outline-offset: 1px; }
 .section-vert .champ label { color: #a8ccc6; }
-.section-vert .champ input, .section-vert .champ textarea {
+.section-vert .champ input, .section-vert .champ textarea, .section-vert .champ select {
   background: rgba(255, 255, 255, .07); border-color: rgba(255, 255, 255, .14); color: #fff;
 }
 .section-vert .champ input::placeholder,
 .section-vert .champ textarea::placeholder { color: #9fc3bd; }
 .section-vert .champ input:focus, .section-vert .champ textarea:focus { outline-color: var(--safran); }
 .champ textarea { min-height: 116px; resize: vertical; }
+/* La liste déroulante d'un fond vert s'ouvre sur le fond du système : ses options gardent
+   donc l'encre, sinon elles s'écriraient en blanc sur blanc. */
+.champ select option { color: var(--encre); background: #fff; }
 /* Deux champs côte à côte dans un formulaire. À ne pas confondre avec `.paire-app`, le
    couple de captures de l'accueil : la seconde a longtemps porté le MÊME nom et redéfinissait
    celle-ci pour tout le site — trois colonnes au lieu de deux (donc le second champ dans une
@@ -1015,6 +1021,16 @@ legend { font-size: 14px; color: #a8ccc6; padding: 0 0 10px; }
    seule la création y attend l'offre du dessus. La peindre en gris comme un « — » redirait le
    défaut qu'on vient de corriger — que le client n'a pas la fonction. */
 .compare .lecture { color: var(--safran-fonce); font-size: 14px; font-weight: 500; }
+/* Sur un téléphone, le tableau défilait de côté sans le dire, et on ne voyait que la colonne
+   « Essai », toute en « Oui » : le visiteur concluait que tout était inclus partout. La colonne
+   Essai part (le chapeau dit déjà que tout est ouvert pendant l'essai) et les deux offres
+   payantes tiennent dans l'écran. */
+@media (max-width: 640px) {
+  .compare { min-width: 0; }
+  .compare th:nth-child(2), .compare td:nth-child(2) { display: none; }
+  .compare th, .compare td { padding: 12px 10px; font-size: 14px; }
+  .compare thead th { font-size: 15.5px; }
+}
 
 @media (max-width: 760px) {
   .cas-duo { grid-template-columns: minmax(0, 1fr); gap: 12px; }

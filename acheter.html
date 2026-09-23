@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Acheter une clé d’activation SkanFact</title>
-<meta name="description" content="Demander votre clé d'activation SkanFact : l'offre, le matricule fiscal, la facture, puis la clé à coller dans l'application. Sans compte ni abonnement reconduit.">
+<meta name="description" content="Votre clé d'activation SkanFact en quatre étapes : l'offre, le matricule, la facture, la clé. Sans compte, sans reconduction automatique.">
 <meta name="theme-color" content="#0a4a43">
 <link rel="canonical" href="https://skanfact.tn/acheter.html">
 <link rel="icon" href="img/icone.png" type="image/png">
 <link rel="apple-touch-icon" href="img/icone.png">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Acheter une clé d’activation SkanFact">
-<meta property="og:description" content="Demander votre clé d'activation SkanFact : l'offre, le matricule fiscal, la facture, puis la clé à coller dans l'application. Sans compte ni abonnement reconduit.">
+<meta property="og:description" content="Votre clé d'activation SkanFact en quatre étapes : l'offre, le matricule, la facture, la clé. Sans compte, sans reconduction automatique.">
 <meta property="og:image" content="https://skanfact.tn/img/factures.jpg">
 <meta property="og:locale" content="fr_TN">
 <meta property="og:url" content="https://skanfact.tn/acheter.html">
@@ -270,6 +270,17 @@
         </div>
 
         <div class="champ">
+          <label for="source">Comment nous avez-vous connus&nbsp;? (facultatif)</label>
+          <select id="source" name="source">
+          <option value="">—</option>
+          <option>Par mon comptable</option>
+          <option>Par une recherche sur internet</option>
+          <option>Par un proche ou un collègue</option>
+          <option>Par les réseaux sociaux</option>
+          <option>Autrement</option>
+          </select>
+        </div>
+        <div class="champ">
           <label for="message">Autre chose à nous dire</label>
           <textarea id="message" name="message" rows="3"
                     placeholder="Plusieurs sociétés à équiper, une durée autre qu’un an, une question sur la facture…"></textarea>
@@ -319,8 +330,7 @@
       <div class="questions" style="margin-top: 30px;">
         <div class="qq">
           <h3>Mon essai n’est pas fini. J’attends ?</h3>
-          <p class="rep">Non, et vous ne perdez rien : la licence part de la date d’activation, pas
-            de la date d’achat. Acheter au dixième jour ne vous coupe pas les vingt qui restent.</p>
+          <p class="rep">Ce n’est pas obligatoire, mais c’est plus avantageux&nbsp;: les douze mois de la licence partent du jour où elle est émise, pas du jour où vous la collez dans l’application. L’essai, lui, continue jusqu’à son terme. Acheter dans les derniers jours de l’essai ne vous fait perdre aucun jour.</p>
         </div>
         <div class="qq">
           <h3>Et à l’échéance, si je ne renouvelle pas ?</h3>
@@ -348,8 +358,7 @@
         <div class="qq">
           <h3>Vous disparaissez. Que deviennent mes factures ?</h3>
           <p class="rep">Elles restent lisibles. Les données sont un fichier sur votre disque, les
-            journaux sortent en CSV, le dossier du comptable est un ZIP ordinaire, et la clé se
-            vérifie sans réseau — rien de tout cela n’a besoin de nous.
+            journaux sortent en CSV, le dossier du comptable est un ZIP ordinaire — chiffré pour son cabinet s’il est appairé, et ouvert alors par SkanFact&nbsp;Cabinet, qui fonctionne hors ligne — et la clé se vérifie sans réseau. Rien de tout cela n’a besoin de nous.
             <a href="vos-donnees.html">Comment vos données sont rangées</a>.</p>
         </div>
       </div>

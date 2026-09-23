@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Vos données : où elles vivent, ce qui sort, ce qui vous reste</title>
-<meta name="description" content="SkanFact garde vos factures sur votre ordinateur : aucun compte, aucun serveur, chiffrement optionnel, sauvegardes quotidiennes, et des formats que vous emportez.">
+<meta name="description" content="SkanFact garde vos factures sur votre ordinateur : aucun compte, aucune pièce sur un serveur, chiffrement, sauvegardes, formats ouverts.">
 <meta name="theme-color" content="#0a4a43">
 <link rel="canonical" href="https://skanfact.tn/vos-donnees.html">
 <link rel="icon" href="img/icone.png" type="image/png">
 <link rel="apple-touch-icon" href="img/icone.png">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Vos données : où elles vivent, ce qui sort, ce qui vous reste">
-<meta property="og:description" content="SkanFact garde vos factures sur votre ordinateur : aucun compte, aucun serveur, chiffrement optionnel, sauvegardes quotidiennes, et des formats que vous emportez.">
+<meta property="og:description" content="SkanFact garde vos factures sur votre ordinateur : aucun compte, aucune pièce sur un serveur, chiffrement, sauvegardes, formats ouverts.">
 <meta property="og:image" content="https://skanfact.tn/img/accueil.jpg">
 <meta property="og:locale" content="fr_TN">
 <meta property="og:url" content="https://skanfact.tn/vos-donnees.html">
@@ -104,8 +104,9 @@
       <p class="oeil">Vos données</p>
       <h1 class="h1-page h1-clair">Vos factures ne quittent pas votre ordinateur.</h1>
       <p class="chapeau">Ce n’est pas une promesse commerciale&nbsp;: c’est la
-        conséquence d’un choix technique. SkanFact n’a pas de serveur, donc il n’a
-        nulle part où envoyer quoi que ce soit.</p>
+        conséquence d’un choix technique. Vos pièces vivent dans un fichier sur votre disque,
+        et aucune fonction de SkanFact ne les envoie ailleurs — sauf à votre comptable, quand
+        vous le décidez. Ce qui sort malgré tout est listé plus bas, en entier.</p>
     </div>
   </section>
 
@@ -122,7 +123,7 @@
         </div>
         <div class="module">
           <h3>Écrit d’un seul bloc</h3>
-          <p>Chaque enregistrement est atomique&nbsp;: une coupure de courant au mauvais moment ne
+          <p>Chaque enregistrement s’écrit d’un seul coup&nbsp;: une coupure de courant au mauvais moment ne
             laisse pas un fichier à moitié écrit. Un fichier devenu illisible est mis
             de côté intact, jamais écrasé.</p>
         </div>
@@ -140,26 +141,41 @@
     <div class="conteneur">
       <h2>Ce qui sort de votre ordinateur</h2>
       <p class="chapeau">La liste entière. Il n’y a rien d’autre.</p>
-      <div class="duo" style="margin-top: 34px;">
+      <div class="trio" style="margin-top: 34px;">
         <div class="module">
           <h3>La vérification des mises à jour</h3>
           <p>L’application demande s’il existe une version plus récente, et
             télécharge le programme le cas échéant. Elle n’emporte <b>aucune pièce</b>&nbsp;:
             ni vos factures, ni vos clients, ni vos chiffres. Si vous avez une licence, elle
             présente votre clé — c’est elle qui autorise le téléchargement, et elle porte le nom
-            et le matricule inscrits dessus. Pendant l’essai, rien de tout cela ne part.</p>
+            et le matricule inscrits dessus. Pendant l’essai, il n’y a pas de clé à présenter.</p>
+        </div>
+        <div class="module" id="signal-presence">
+          <h3>Un signal de présence, toutes les quatre heures</h3>
+          <p>Vingt secondes après l’ouverture, puis toutes les quatre heures tant qu’elle
+            reste ouverte, l’application signale à notre serveur qu’elle est installée —
+            <b>pendant l’essai aussi</b>. Elle envoie cinq choses&nbsp;: votre clé de licence
+            s’il y en a une, un identifiant tiré au hasard pour cet ordinateur, le nom de
+            l’ordinateur tel que le système l’affiche, le système (Mac ou Windows) et la
+            version installée.</p>
+          <p style="margin-top: 10px;">Nous en gardons l’empreinte de la clé, ces quatre
+            informations, et la première et la dernière date où nous les avons reçues. C’est ce
+            qui nous permet de compter les essais, d’appliquer l’annulation d’une licence
+            remboursée et de repérer une version trop ancienne. <b>Aucune pièce, aucun client,
+            aucun montant</b> n’en fait partie.</p>
         </div>
         <div class="module">
-          <h3>La lecture d’une photo de facture — si vous l’allumez</h3>
-          <p>C’est la seule fonction qui envoie quelque chose, et elle est <b>éteinte par
-            défaut</b>. Elle ne s’active qu’avec une clé que vous saisissez
-            vous-même, après un écran qui énumère ce qui partira. Sans
-            cette clé, l’application refuse explicitement de lire.</p>
+          <h3>La lecture d’une photo de facture — en pause</h3>
+          <p>C’était la seule fonction qui envoyait une pièce, et elle était <b>éteinte par
+            défaut</b>. Elle est aujourd’hui en pause&nbsp;: elle n’est proposée nulle part
+            dans l’application, et reviendra avec une application sur téléphone.</p>
         </div>
       </div>
-      <p class="apres-calcul">Pas de statistiques d’usage, pas de traceur, pas de
-        «&nbsp;télémétrie anonyme&nbsp;». Rien ne nous dit combien de
-        factures vous faites, ni si vous ouvrez le logiciel.</p>
+      <p class="apres-calcul">Pas de statistiques d’usage, pas de traceur, pas de rapport
+        d’erreur envoyé. Rien ne nous dit combien de factures vous faites ni quels écrans
+        vous ouvrez&nbsp;: le signal de présence nous dit seulement qu’un ordinateur a ouvert
+        SkanFact, et quand. SkanFact&nbsp;Cabinet, l’application du comptable, envoie
+        exactement la même chose.</p>
     </div>
   </section>
 
@@ -224,13 +240,15 @@
           dossier à votre comptable&nbsp;: toujours. Jamais de données en otage.</p>
         <p><b>Rien n’est dans un format à nous.</b> Les journaux et les écritures
           sortent en CSV, que n’importe quel tableur ou logiciel comptable relit. Le dossier mensuel
-          du comptable est un ZIP ordinaire, qu’il ouvre avec l’explorateur de son
-          système même si SkanFact disparaît. Les documents sont des PDF.</p>
+          du comptable est un ZIP ordinaire. Quand votre comptable est appairé, ce ZIP est
+          chiffré pour lui seul&nbsp;: il l’ouvre avec SkanFact&nbsp;Cabinet, gratuit, qui
+          continue de fonctionner hors ligne même si SkanFact disparaît. Les documents sont
+          des PDF.</p>
         <p><b>Votre clé ne dépend d’aucun serveur.</b> Elle se vérifie sur
           votre poste, hors ligne. Une entreprise sans connexion ne doit pas perdre sa facturation, et
           une application ne doit pas cesser de fonctionner parce que son éditeur a fermé.</p>
         <p><b>Le code est public.</b> N’importe qui peut lire comment SkanFact range vos
-          données et vérifier qu’il n’envoie rien ailleurs. Une phrase sur un
+          données et vérifier que la liste de ce qui sort, plus haut, est complète. Une phrase sur un
           site se croit ou ne se croit pas&nbsp;; du code se vérifie.</p>
       </div>
     </div>

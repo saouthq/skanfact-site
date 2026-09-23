@@ -209,7 +209,7 @@
       champ.focus();
     };
 
-    var champs = Array.prototype.slice.call(form.querySelectorAll('input[name], textarea[name]'))
+    var champs = Array.prototype.slice.call(form.querySelectorAll('input[name], textarea[name], select[name]'))
       .filter(function (c) { return c.type !== 'radio' && c.type !== 'hidden' && c.name !== 'piege'; });
     champs.forEach(function (c) { c.addEventListener('input', function () { laver(c); }); });
 
@@ -648,9 +648,17 @@
   if (pageTele) {
     var p = navigator.platform || '';
     var ua = navigator.userAgent || '';
-    var estMac = /Mac/i.test(p) || /Mac OS X/i.test(ua);
-    var estWin = /Win/i.test(p) || /Windows/i.test(ua);
+    // Un téléphone passe EN PREMIER : un iPhone s'annonce « like Mac OS X », et la première
+    // version lui montrait la carte Mac comme « Votre système ». Un iPad récent se dit Mac,
+    // mais il a un écran tactile. Sur téléphone, on ne conseille aucun système : on propose
+    // d'envoyer le lien vers l'ordinateur où SkanFact s'installera.
+    var estMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(ua)
+      || (/Mac/i.test(p) && (navigator.maxTouchPoints || 0) > 1);
+    var estMac = !estMobile && (/Mac/i.test(p) || /Mac OS X/i.test(ua));
+    var estWin = !estMobile && (/Win/i.test(p) || /Windows/i.test(ua));
     var cible = estMac ? 'mac' : (estWin ? 'win' : null);
+    var surTel = document.getElementById('sur-telephone');
+    if (estMobile && surTel) surTel.hidden = false;
     if (cible) {
       var carte = document.querySelector('[data-carte="' + cible + '"]');
       if (carte) {

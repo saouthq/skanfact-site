@@ -121,15 +121,30 @@
           affiché dans les réglages de l’application. Elles peuvent être chiffrées par un mot de
           passe que vous choisissez et dont nous n’avons aucune copie.</p>
         <p>L’application ne se connecte à aucune administration, n’effectue aucune déclaration à votre
-          place, et n’envoie aucune donnée d’usage, aucune statistique et aucun rapport d’erreur.</p>
+          place, et n’envoie aucune statistique d’usage ni aucun rapport d’erreur. Elle signale
+          seulement sa présence, comme décrit ci-dessous.</p>
 
-        <h2>Les seules sorties, et elles viennent de vous</h2>
+        <h2>Les seules sorties</h2>
         <ul>
           <li><strong>Les mises à jour.</strong> Au démarrage, l’application vérifie s’il existe une
             version plus récente. Cette requête ne transporte aucune pièce&nbsp;: ni facture, ni
             client, ni montant. Si vous avez une licence, elle présente votre clé — c’est elle qui
             autorise le téléchargement — et cette clé porte le nom et le matricule qui y sont
-            inscrits. Pendant l’essai, aucune identité ne part.</li>
+            inscrits. Pendant l’essai, il n’y a pas de clé à présenter.</li>
+          <li id="signal-presence"><strong>Le signal de présence.</strong> Vingt secondes après
+            l’ouverture, puis toutes les quatre heures tant qu’elle reste ouverte, l’application
+            signale à notre serveur qu’elle est installée, <strong>pendant l’essai aussi</strong>.
+            Elle envoie votre clé de licence s’il y en a une, un identifiant tiré au hasard pour cet
+            ordinateur, le nom de l’ordinateur tel que votre système l’affiche, le système
+            d’exploitation et la version installée. Nous conservons l’empreinte de la clé, ces
+            quatre informations, et la première et la dernière date de réception&nbsp;; pas votre
+            adresse IP. Ces informations servent à compter les essais, à appliquer l’annulation
+            d’une licence remboursée et à repérer une version trop ancienne. Le nom de l’ordinateur
+            contient parfois votre prénom&nbsp;: vous pouvez le changer dans les Paramètres de
+            SkanFact, sous «&nbsp;Le nom de cet ordinateur&nbsp;». SkanFact&nbsp;Cabinet, l’application
+            du comptable, envoie exactement la même chose. Vous pouvez nous demander de consulter
+            ou de supprimer ces informations à
+            <a href="mailto:contact@skanfact.tn">contact@skanfact.tn</a>.</li>
           <li><strong>L’envoi d’un document.</strong> Quand vous envoyez un devis, une facture ou une
             relance, l’application prépare le message dans votre logiciel de messagerie. C’est vous
             qui l’envoyez.</li>
@@ -137,11 +152,11 @@
             fabriquez et que vous transmettez vous-même. Quand le cabinet de votre comptable est
             appairé, ce fichier est chiffré et <strong>lui seul peut l’ouvrir</strong> — nous ne
             pourrions pas en lire le contenu.</li>
-          <li><strong>La lecture d’une photo de facture</strong>, fonction optionnelle et
-            <strong>désactivée par défaut</strong>. Elle n’envoie une image hors de votre ordinateur
-            que si vous saisissez vous-même une clé d’accès à un service de reconnaissance de texte,
-            et l’écran vous dit exactement ce qui partira avant que vous acceptiez. Sans cette clé,
-            aucune requête n’est possible.</li>
+          <li><strong>La lecture d’une photo de facture</strong> est <strong>en pause</strong>&nbsp;:
+            elle n’est proposée nulle part dans l’application. Quand elle existait, elle était
+            désactivée par défaut et n’envoyait une image que si vous saisissiez vous-même une clé
+            d’accès à un service de reconnaissance de texte, après un écran qui disait exactement ce
+            qui partirait.</li>
         </ul>
 
         <h2>Vos clients et vos salariés</h2>
@@ -168,7 +183,8 @@
           disque externe ou un service de synchronisation de votre choix.</p>
 
         <p style="margin-top: 32px; color: var(--gris-clair); font-size: 14px;">Dernière mise à jour :
-          septembre 2026. Toute évolution de cette page sera datée ici.</p>
+          23 septembre 2026 — ajout du signal de présence, qui existait depuis la version 8.4.0 et
+          n’était pas décrit ici. Toute évolution de cette page sera datée ici.</p>
       </div>
     </div>
   </section>

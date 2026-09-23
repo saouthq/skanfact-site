@@ -111,7 +111,7 @@
    "name": "Envoyez-vous quelque chose sur internet ?",
    "acceptedAnswer": {
     "@type": "Answer",
-    "text": "Non, sauf si vous le demandez explicitement : envoyer un email, vérifier les mises à jour. La seule fonction qui sort de votre ordinateur — la lecture d’une facture prise en photo — est éteinte par défaut et ne s’allume qu’avec une clé que vous saisissez vous-même."
+    "text": "Aucune de vos pièces. L’application vérifie les mises à jour et, toutes les quatre heures, signale sa présence à notre serveur, pendant l’essai aussi : votre clé s’il y en a une, un identifiant de l’ordinateur, son nom, le système et la version. Rien d’autre — ni facture, ni client, ni montant. Les emails et le dossier du comptable partent de votre messagerie, quand vous le décidez."
    }
   },
   {
@@ -135,7 +135,7 @@
    "name": "Et la retenue à la source ?",
    "acceptedAnswer": {
     "@type": "Answer",
-    "text": "Les taux usuels sont proposés (1,5 · 3 · 5 · 10 · 15 %) et le calcul se fait sur le TTC hors timbre. L’application vous rappelle aussi les attestations que vos clients doivent vous remettre et qu’on oublie de réclamer."
+    "text": "Onze taux sont proposés, de 0,5 % à 25 %, et n’importe quel autre se saisit : il rejoint alors la liste. Le calcul se fait sur le TTC hors timbre. L’application vous rappelle aussi les attestations que vos clients doivent vous remettre et qu’on oublie de réclamer."
    }
   },
   {
@@ -151,7 +151,7 @@
    "name": "Gérez-vous la facture électronique ?",
    "acceptedAnswer": {
     "@type": "Answer",
-    "text": "La facture électronique est en cours d’intégration, progressivement. Nous n’annonçons pas de date : elle dépend du calendrier de l’administration autant que du nôtre. Elle arrivera par une mise à jour ordinaire, comprise dans votre licence. En attendant, SkanFact produit déjà des factures qui portent toutes les mentions que le format structuré réclamera. Où nous en sommes, en détail."
+    "text": "Pas encore : la facture électronique n’est pas construite dans SkanFact. Nous la construirons quand l’obligation s’appliquera, et nous n’annonçons pas de date. Elle arrivera par une mise à jour ordinaire, comprise dans votre licence. Vos factures portent déjà les montants, la TVA et la numérotation continue qu’un format structuré reprendra ; il manquera la signature électronique et la transmission."
    }
   },
   {
@@ -167,7 +167,7 @@
    "name": "Peut-on être deux à travailler dessus ?",
    "acceptedAnswer": {
     "@type": "Answer",
-    "text": "Oui, sur un dossier partagé — iCloud, OneDrive, disque réseau — chacun à son tour. Ce n’est pas de l’édition simultanée : l’application prévient et fusionne au lieu d’écraser en silence, et la version écartée est archivée plutôt que perdue."
+    "text": "Oui, avec l’offre Entreprise, sur un dossier partagé — iCloud, OneDrive, disque réseau — chacun à son tour. Ce n’est pas de l’édition simultanée : l’application prévient et fusionne au lieu d’écraser en silence, et la version écartée est archivée plutôt que perdue."
    }
   },
   {
@@ -183,7 +183,31 @@
    "name": "Puis-je gérer deux sociétés ?",
    "acceptedAnswer": {
     "@type": "Answer",
-    "text": "Oui : chaque société a son dossier, et on bascule de l’une à l’autre depuis le haut du menu. Les numérotations et les réglages restent séparés."
+    "text": "Oui : chaque société a son dossier, et on bascule de l’une à l’autre depuis le haut du menu. Les numérotations et les réglages restent séparés. Il faut en revanche une licence par société, parce qu’une clé est émise pour un matricule fiscal. Et l’essai de 30 jours se compte par ordinateur, pas par société : une seconde société créée après la fin de l’essai n’en a pas de nouveau."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Mon comptable n’a pas SkanFact : que reçoit-il ?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Chaque mois, un dossier : les factures en PDF, les journaux et les écritures en CSV. Tant qu’aucun cabinet n’est appairé, c’est un ZIP ordinaire qu’il ouvre avec l’explorateur de son ordinateur, sans rien installer. S’il installe SkanFact Cabinet, gratuit pour votre dossier, le fichier est chiffré pour lui seul et vos écritures arrivent directement dans son logiciel."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Un cabinet peut-il reprendre ses dossiers depuis un autre logiciel ?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "En partie. SkanFact Cabinet reprend votre plan de comptes et la balance d’ouverture de chaque dossier depuis un fichier CSV exporté de votre logiciel actuel, et la liste de vos clients se colle depuis un tableur. L’historique détaillé des écritures des années passées ne se reprend pas : il reste consultable dans votre logiciel actuel."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Les données des clients sont-elles protégées dans SkanFact Cabinet ?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Oui : dans l’application du cabinet, le mot de passe n’est pas une option. Tout est chiffré sur votre poste, et rien n’est envoyé chez nous. Une clé de secours à exporter protège de la perte du poste. Si nous disparaissions, l’application continuerait de fonctionner hors ligne, et vos livres s’exportent en CSV."
    }
   },
   {
@@ -247,7 +271,7 @@
    "name": "Puis-je récupérer mes données et partir ?",
    "acceptedAnswer": {
     "@type": "Answer",
-    "text": "Oui, sans rien demander à personne. Vos données sont un fichier sur votre disque ; l’application les exporte en entier, sort chaque journal en CSV, chaque pièce en PDF, et le dossier du comptable est un ZIP ordinaire. Rien de tout cela n’a besoin de nous, ni d’une licence en cours."
+    "text": "Oui, sans rien demander à personne. Vos données sont un fichier sur votre disque ; l’application les exporte en entier, sort chaque journal en CSV, chaque pièce en PDF, et le dossier du comptable est un ZIP ordinaire, chiffré pour son cabinet s’il est appairé. Rien de tout cela n’a besoin de nous, ni d’une licence en cours."
    }
   },
   {
@@ -402,7 +426,7 @@
         </details>
         <details class="qq">
           <summary>Envoyez-vous quelque chose sur internet ?</summary>
-          <p class="rep">Non, sauf si vous le demandez explicitement : envoyer un email, vérifier les mises à jour. La seule fonction qui sort de votre ordinateur — la lecture d’une facture prise en photo — est éteinte par défaut et ne s’allume qu’avec une clé que vous saisissez vous-même.</p>
+          <p class="rep">Aucune de vos pièces. L’application vérifie les mises à jour et, toutes les quatre heures, signale sa présence à notre serveur, pendant l’essai aussi&nbsp;: votre clé s’il y en a une, un identifiant de l’ordinateur, son nom, le système et la version. Rien d’autre — ni facture, ni client, ni montant. Les emails et le dossier du comptable partent de votre messagerie, quand vous le décidez. <a href="vos-donnees.html#signal-presence">La liste complète</a>.</p>
         </details>
         <details class="qq">
           <summary>Et si je me trompe ?</summary>
@@ -410,7 +434,7 @@
         </details>
         <details class="qq">
           <summary>Puis-je récupérer mes données et partir ?</summary>
-          <p class="rep">Oui, sans rien demander à personne. Vos données sont un fichier sur votre disque ; l’application les exporte en entier, sort chaque journal en CSV, chaque pièce en PDF, et le dossier du comptable est un ZIP ordinaire. Rien de tout cela n’a besoin de nous, ni d’une licence en cours.</p>
+          <p class="rep">Oui, sans rien demander à personne. Vos données sont un fichier sur votre disque ; l’application les exporte en entier, sort chaque journal en CSV, chaque pièce en PDF, et le dossier du comptable est un ZIP ordinaire, chiffré pour son cabinet s’il est appairé. Rien de tout cela n’a besoin de nous, ni d’une licence en cours.</p>
         </details>
         <details class="qq">
           <summary>Que se passe-t-il à la fin de la licence ?</summary>
@@ -430,7 +454,7 @@
         </details>
         <details class="qq">
           <summary>Et la retenue à la source ?</summary>
-          <p class="rep">Les taux usuels sont proposés (1,5 · 3 · 5 · 10 · 15 %) et le calcul se fait sur le TTC hors timbre. L’application vous rappelle aussi les attestations que vos clients doivent vous remettre et qu’on oublie de réclamer.</p>
+          <p class="rep">Onze taux sont proposés, de 0,5&nbsp;% à 25&nbsp;%, et n’importe quel autre se saisit&nbsp;: il rejoint alors la liste. Le calcul se fait sur le TTC hors timbre. L’application vous rappelle aussi les attestations que vos clients doivent vous remettre et qu’on oublie de réclamer.</p>
         </details>
         <details class="qq">
           <summary>Si je ne suis pas assujetti à la TVA ?</summary>
@@ -438,7 +462,7 @@
         </details>
         <details class="qq">
           <summary>Gérez-vous la facture électronique ?</summary>
-          <p class="rep">La facture électronique est <b>en cours d’intégration</b>, progressivement. Nous n’annonçons pas de date : elle dépend du calendrier de l’administration autant que du nôtre. Elle arrivera par une mise à jour ordinaire, comprise dans votre licence. En attendant, SkanFact produit déjà des factures qui portent toutes les mentions que le format structuré réclamera. <a href="guide-facture-electronique.html">Où nous en sommes, en détail</a>.</p>
+          <p class="rep">Pas encore&nbsp;: la facture électronique n’est pas construite dans SkanFact. Nous la construirons quand l’obligation s’appliquera, et nous n’annonçons pas de date. Elle arrivera par une mise à jour ordinaire, comprise dans votre licence. Vos factures portent déjà les montants, la TVA et la numérotation continue qu’un format structuré reprendra&nbsp;; il manquera la signature électronique et la transmission. <a href="guide-facture-electronique.html">Ce qui existe déjà, et ce qui manque</a>.</p>
         </details>
         <details class="qq">
           <summary>Les taux sont-ils à jour ?</summary>
@@ -454,15 +478,27 @@
       <div class="questions">
         <details class="qq" open>
           <summary>Peut-on être deux à travailler dessus ?</summary>
-          <p class="rep">Oui, sur un dossier partagé — iCloud, OneDrive, disque réseau — chacun à son tour. Ce n’est pas de l’édition simultanée : l’application prévient et fusionne au lieu d’écraser en silence, et la version écartée est archivée plutôt que perdue.</p>
+          <p class="rep">Oui, avec l’offre Entreprise, sur un dossier partagé — iCloud, OneDrive, disque réseau — chacun à son tour. Ce n’est pas de l’édition simultanée : l’application prévient et fusionne au lieu d’écraser en silence, et la version écartée est archivée plutôt que perdue.</p>
         </details>
         <details class="qq">
           <summary>Mon comptable doit-il payer ?</summary>
-          <p class="rep">Non, pas pour votre dossier. Son application est même entièrement gratuite, sans limite de dossiers, s’il fait partie des 20 premiers cabinets inscrits avant le 31/12/2027. Sinon elle reste gratuite pour tout client qui a une licence SkanFact, plus trois dossiers de plus : chaque client qu’il fait passer sur SkanFact lui coûte donc moins cher.</p>
+          <p class="rep">Non, pas pour votre dossier. Son application est même entièrement gratuite, sans limite de dossiers, s’il fait partie des 20 premiers cabinets inscrits avant le 31/12/2027. Sinon elle reste gratuite pour tout client qui a une licence SkanFact, plus trois dossiers de plus.</p>
         </details>
         <details class="qq">
           <summary>Puis-je gérer deux sociétés ?</summary>
-          <p class="rep">Oui : chaque société a son dossier, et on bascule de l’une à l’autre depuis le haut du menu. Les numérotations et les réglages restent séparés.</p>
+          <p class="rep">Oui&nbsp;: chaque société a son dossier, et on bascule de l’une à l’autre depuis le haut du menu. Les numérotations et les réglages restent séparés. Il faut en revanche une licence par société, parce qu’une clé est émise pour un matricule fiscal. Et l’essai de 30 jours se compte par ordinateur, pas par société&nbsp;: une seconde société créée après la fin de l’essai n’en a pas de nouveau.</p>
+        </details>
+        <details class="qq">
+          <summary>Mon comptable n’a pas SkanFact&nbsp;: que reçoit-il&nbsp;?</summary>
+          <p class="rep">Chaque mois, un dossier&nbsp;: les factures en PDF, les journaux et les écritures en CSV. Tant qu’aucun cabinet n’est appairé, c’est un ZIP ordinaire qu’il ouvre avec l’explorateur de son ordinateur, sans rien installer. S’il installe SkanFact&nbsp;Cabinet, gratuit pour votre dossier, le fichier est chiffré pour lui seul et vos écritures arrivent directement dans son logiciel.</p>
+        </details>
+        <details class="qq">
+          <summary>Un cabinet peut-il reprendre ses dossiers depuis un autre logiciel&nbsp;?</summary>
+          <p class="rep">En partie. SkanFact&nbsp;Cabinet reprend votre plan de comptes et la balance d’ouverture de chaque dossier depuis un fichier CSV exporté de votre logiciel actuel, et la liste de vos clients se colle depuis un tableur. L’historique détaillé des écritures des années passées ne se reprend pas&nbsp;: il reste consultable dans votre logiciel actuel.</p>
+        </details>
+        <details class="qq">
+          <summary>Les données des clients sont-elles protégées dans SkanFact&nbsp;Cabinet&nbsp;?</summary>
+          <p class="rep">Oui&nbsp;: dans l’application du cabinet, le mot de passe n’est pas une option. Tout est chiffré sur votre poste, et rien n’est envoyé chez nous. Une clé de secours à exporter protège de la perte du poste. Si nous disparaissions, l’application continuerait de fonctionner hors ligne, et vos livres s’exportent en CSV.</p>
         </details>
         <details class="qq">
           <summary>Puis-je l’installer sur deux ordinateurs ?</summary>

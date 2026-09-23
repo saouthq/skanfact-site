@@ -471,6 +471,61 @@ script cache reste dans la page, et un lecteur de ce genre y voit deux vérités
 restent le bon mécanisme (la page se tient sans script) — mais on sait maintenant qui les lira
 toutes les deux, et on ne s'étonne plus du constat.
 
+## Trois regards, le 23/09/2026 — expert-comptable, gérant de PME, commercial
+
+Trois lectures indépendantes, chacune dans la peau d'un visiteur, et **avec** JavaScript cette
+fois. Chaque « c'est faux » a été revérifié dans le code des applications avant d'être corrigé. Le
+rapport complet a été remis à Skander ; voici ce qu'il a changé ici.
+
+**Le plus grave : la confidentialité disait le contraire du code.** « Pendant l'essai, aucune
+identité ne part », « Rien ne nous dit si vous ouvrez le logiciel » : faux depuis la 8.4.0 de
+l'application. Les deux applications signalent leur présence toutes les quatre heures, essai
+compris — clé, identifiant du poste, **nom de l'ordinateur**, système, version. Les trois lectures
+l'ont trouvé chacune de leur côté. `confidentialite.html`, `vos-donnees.html` (bloc
+`#signal-presence`), la FAQ et l'accueil le disent désormais champ par champ ; la politique porte
+sa date de modification.
+
+**Faux, et corrigé :**
+
+- « Un ZIP ordinaire que votre comptable ouvre même sans SkanFact » : vrai seulement sans cabinet
+  appairé. Appairé, le paquet est chiffré pour lui seul. Cinq pages nuancées.
+- « La licence part de la date d'activation » (acheter.html et conditions-vente.html) : elle part de
+  l'émission, c'est-à-dire du paiement.
+- L'accueil vendait encore Achats avec l'offre Entreprise, et la FAQ, Tunisie et le guide annonçaient
+  des taux de retenue de 1,5 à 15 % — l'application en propose onze, de 0,5 à 25 %, plus la saisie
+  libre.
+- La facture électronique « en cours d'intégration » : rien n'est construit. Quatre pages, et la
+  phrase « portent toutes les mentions » retirée.
+- Le matricule « exigé, l'application refuse » : c'est un avertissement.
+- L'application du cabinet « ne renvoie rien » : elle renvoie des questions et la clôture.
+- L'empreinte « garantit que le dossier vient bien de lui » : elle garantit que les pièces ne
+  partent que chez le cabinet ; c'est la signature du client qui prouve l'origine.
+- Le quota « sur les dossiers que vous choisissez » : il porte sur tous.
+- La lecture de photo « éteinte par défaut » : elle est en pause.
+- Un iPhone s'annonce « like Mac OS X » : la page de téléchargement lui montrait la carte Mac comme
+  « Votre système ». Un téléphone est maintenant reconnu en premier, et reçoit un bloc « envoyez-vous
+  le lien » (email ou WhatsApp) au lieu d'un installateur qu'il ne peut pas ouvrir.
+
+**Ce qui vendait mal, et corrigé :** le tableau des offres sur téléphone ne montrait que la colonne
+Essai (retirée sous 640 px) ; « Option » sans explication ; « C'est vous [qui vous trompez] » sur la
+page Excel ; les titres de `comptables.html` et `contact.html` sans mot recherché ; le haut de la
+page Cabinet qui proposait d'installer un logiciel non signé avant de proposer une démonstration ;
+« Pour facturer seul », qui ne disait pas s'il s'agissait d'un salarié ou d'un poste ; quatre
+questions de FAQ qui manquaient (deux sociétés, le comptable sans SkanFact, la reprise d'un autre
+logiciel, les données des clients chez le cabinet) ; l'avis de l'Ordre, attendu, désormais dit ; la
+liasse, qui n'a encore été confrontée à aucune liasse réelle, désormais dite ; un champ facultatif
+« Comment nous avez-vous connus ? » dans les deux formulaires (`site.js` collecte maintenant les
+`select`).
+
+**Pas à nous** (dans `A-FAIRE.md`, côté application) : les conditions de vente, la signature des
+exécutables, un téléphone ou WhatsApp, le nom et la photo du fondateur, un témoignage réel du
+cabinet pilote, GoatCounter, et deux décisions de produit — envoyer ou non le nom de l'ordinateur,
+et faire partir la licence du paiement ou de la fin de l'essai.
+
+Règle apprise : **une page de confidentialité se relit contre le code à chaque version qui ajoute
+une sortie réseau.** Le signal de présence est arrivé en 8.4.0 ; la page, écrite avant, a menti
+pendant vingt versions sans que personne la relise.
+
 ## Audit UI/UX de septembre 2026
 
 Onze pages mesurées dans un vrai navigateur, à quatre largeurs (1440, 1024, 768, 380) : débordement

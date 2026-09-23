@@ -83,6 +83,13 @@ trace de ce qui a été touché, pas comme outil.
   Indépendant et Entreprise). Deux endroits qui annoncent deux prix, c'est le genre de
   contradiction qu'un client voit avant nous.
 
+- **Ce qui sort de l'ordinateur se décrit champ par champ, et se relit contre le code.** Le
+  signal de présence (8.4.0 de l'application) a vécu vingt versions sous une page qui affirmait
+  « rien ne part ». Toute version de l'application qui ajoute, retire ou change un champ envoyé à
+  un serveur (`annoncerPlateforme` dans les deux `main.js`) impose de relire `confidentialite.html`,
+  `vos-donnees.html#signal-presence`, la FAQ « Envoyez-vous quelque chose sur internet ? » et le
+  bloc « Le code est public » de l'accueil.
+
 ## Vérifier avant de pousser
 
 Il n'y a pas de tests automatiques ici. Ce qui tient lieu de contrôle :
